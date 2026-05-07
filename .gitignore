@@ -1,1 +1,4 @@
 /.vscode
+node_modules/
+.retype-build/
+retype.manifest

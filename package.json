@@ -1,0 +1,12 @@
+{
+  "name": "2fauth-docs",
+  "private": true,
+  "scripts": {
+    "build": "node ./node_modules/retypeapp/retype.js build --output .retype-build",
+    "validate": "npm run validate:docs",
+    "validate:docs": "npm run build"
+  },
+  "devDependencies": {
+    "retypeapp": "4.5.3"
+  }
+}

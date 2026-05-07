@@ -76,6 +76,8 @@ You can connect using the email address `demo@2fauth.app` and the password `demo
 
 By design, 2FAuth is always at your fingertips: Through a pinned tab, shortcuts, or PWA installation. Browser extensions complement this feature by offering OTP generation directly from your browser toolbar.
 
+When vault encryption is enabled, the extension now unlocks against your vault metadata and reads encrypted account payloads without requiring server-side decryption. The derived vault key is stored only in browser session storage when available and is cleared again when the extension locks.
+
 Note: You must have a running instance of 2FAuth to use these extensions; they are not standalone.
 
 <figure class="content-left">

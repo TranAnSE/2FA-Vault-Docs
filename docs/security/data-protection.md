@@ -36,6 +36,8 @@ If you need to rotate the key, use the [`APP_PREVIOUS_KEYS`](/getting-started/co
 
 2FAuth can automatically log you out to keep your data always protected. The goal is to avoid a long life session that someone could reuse, for example from a public computer you forgot to clean or from your own stolen smartphone.
 
+For browser extension users with vault encryption enabled, locking the extension also clears the derived vault key from session storage and drops decrypted account data kept in the popup session.
+
 Supported trigger | Behavior { class="compact" }
 --- | ---
 _On security code copy_ | You will be logged out immediately after you click/tap on a One-Time Password to copy it

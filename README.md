@@ -6,6 +6,15 @@ Repository used to edit the [2FAuth Documentation](https://docs.2fauth.app)
 
 2FAuth main repository: <https://github.com/Bubka/2FAuth>
 
+## Validation
+
+Install dependencies, then build the Retype documentation into `.retype-build`:
+
+```bash
+npm install
+npm run validate:docs
+```
+
 ## Contributing
 
 Please see [the Contributing guidelines](https://github.com/Bubka/2FAuth-Docs/main/.github/CONTRIBUTING.md)
