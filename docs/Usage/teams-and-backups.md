@@ -3,7 +3,7 @@ order: 95
 ---
 # Teams and encrypted backups
 
-2FA-Vault extends the upstream 2FAuth workflow with team collaboration and encrypted backup endpoints.
+2FA-Vault extends the upstream 2FA-Vault workflow with team collaboration and encrypted backup endpoints.
 
 ## Teams
 

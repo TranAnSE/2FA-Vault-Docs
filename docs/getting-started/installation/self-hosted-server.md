@@ -3,7 +3,7 @@ order: 100
 ---
 # Self-hosted server
 
-You can deploy 2FAuth on your own web server, whether on your local computer or a web host.
+You can deploy 2FA-Vault on your own web server, whether on your local computer or a web host.
 The following guide describes how to proceed and gives basic configurations for both NGINX and Apache2 web servers.  
 
 ## Requirements
@@ -34,7 +34,7 @@ Depending on the chosen database (see below), don't forget to install the corres
 
 ### Database
 
-You need a database to run 2FAuth. Supported databases are the ones supported by Laravel.
+You need a database to run 2FA-Vault. Supported databases are the ones supported by Laravel.
 
 - MariaDB [!badge 10.3+]
 - MySQL [!badge 5.7+]
@@ -43,12 +43,12 @@ You need a database to run 2FAuth. Supported databases are the ones supported by
 - SQL Server [!badge 2017+]
 
 !!! Recommendation
-2FAuth is a very light application with minimal needs and few concurrent connections. __SQLite__ is definitely the best choice if you plan to use 2FAuth in a single-user context or in a multi-user context with a limited number of users. Otherwise prefer a server-based __SQL__ database.
+2FA-Vault is a very light application with minimal needs and few concurrent connections. __SQLite__ is definitely the best choice if you plan to use 2FA-Vault in a single-user context or in a multi-user context with a limited number of users. Otherwise prefer a server-based __SQL__ database.
 !!!
 
 ### Composer
 
-You need __Composer__ to install all PHP dependencies of 2FAuth. As the installation process of Composer may change depending on your operating system, please follow the instructions provided on the official website:
+You need __Composer__ to install all PHP dependencies of 2FA-Vault. As the installation process of Composer may change depending on your operating system, please follow the instructions provided on the official website:
 
 [!ref icon="package-dependents" target="blank" text="Install Composer"](https://getcomposer.org/doc/00-intro.md)
 
@@ -56,33 +56,33 @@ You can test your installation by running `php composer.phar -v` in a terminal (
 
 ---
 
-## Get your 2FAuth copy
+## Get your 2FA-Vault copy
 
-Here are 3 methods to help you download the 2FAuth source code. For the purpose of this guide we will consider `/var/www/2fauth` (which is a common path in the *nix world) to be the location where 2FAuth will sit. Of course, you are free to use another path, just remember to adapt the commands in the following steps with yours.
+Here are 3 methods to help you download the 2FA-Vault source code. For the purpose of this guide we will consider `/var/www/2FA-Vault` (which is a common path in the *nix world) to be the location where 2FA-Vault will sit. Of course, you are free to use another path, just remember to adapt the commands in the following steps with yours.
 
 +++ Download from GitHub
 
-1. Download the source code of the <a href="https://github.com/Bubka/2FAuth/releases/latest" target="_blank">latest 2FAuth release</a>, say v4.1.0
-2. Extract the archive and open the `2fauth-4.1.0` folder it contains
-3. Move its content to `/var/www/2fauth`
+1. Download the source code of the <a href="https://github.com/TranAnSE/2FA-Vault/releases/latest" target="_blank">latest 2FA-Vault release</a>, say v4.1.0
+2. Extract the archive and open the `2FA-Vault-4.1.0` folder it contains
+3. Move its content to `/var/www/2FA-Vault`
 
 +++ Using CLI
 
 === Get the latest release
 
 ```bash
-curl https://api.github.com/repos/Bubka/2FAuth/tags | grep "tarball_url" | \
-    grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs wget -O - | tar -xz --strip-components=1 -C /var/www/2fauth
+curl https://api.github.com/repos/TranAnSE/2FA-Vault/tags | grep "tarball_url" | \
+    grep -Eo 'https://[^\"]*' | sed -n '1p' | xargs wget -O - | tar -xz --strip-components=1 -C /var/www/2FA-Vault
 ```
 
 === Get a specific release
 
 ```bash
-# list existing 2FAuth versions
-curl https://api.github.com/repos/Bubka/2FAuth/releases | grep "\"name\"" | grep -Eo 'v[^\"]*'
+# list existing 2FA-Vault versions
+curl https://api.github.com/repos/TranAnSE/2FA-Vault/releases | grep "\"name\"" | grep -Eo 'v[^\"]*'
 # Replace x.y.z with the version of your choice
-wget -qO- "https://github.com/Bubka/2FAuth/archive/refs/tags/x.y.z.tar.gz" | \
-    tar -xz --strip-components=1 -C /var/www/2fauth
+wget -qO- "https://github.com/TranAnSE/2FA-Vault/archive/refs/tags/x.y.z.tar.gz" | \
+    tar -xz --strip-components=1 -C /var/www/2FA-Vault
 ```
 
 ===
@@ -92,17 +92,17 @@ wget -qO- "https://github.com/Bubka/2FAuth/archive/refs/tags/x.y.z.tar.gz" | \
 === Get the latest release
 
 ```bash
-cd /var/www/2fauth
-git clone https://github.com/bubka/2fauth.git .
-curl https://api.github.com/repos/Bubka/2FAuth/releases/latest | grep "\"name\"" | grep -Eo 'v[^\"]*' | xargs git checkout
+cd /var/www/2FA-Vault
+git clone https://github.com/bubka/2FA-Vault.git .
+curl https://api.github.com/repos/TranAnSE/2FA-Vault/releases/latest | grep "\"name\"" | grep -Eo 'v[^\"]*' | xargs git checkout
 ```
 
 === Get a specific release
 
 ```bash
-cd /var/www/2fauth
-git clone https://github.com/bubka/2fauth.git .
-# list existing 2FAuth versions
+cd /var/www/2FA-Vault
+git clone https://github.com/bubka/2FA-Vault.git .
+# list existing 2FA-Vault versions
 git tag
 # Replace 3.0.0 with the version of your choice
 git checkout v3.0.0
@@ -118,7 +118,7 @@ git checkout v3.0.0
 
 ### Composer
 
-From the `/var/www/2fauth/` directory:
+From the `/var/www/2FA-Vault/` directory:
 
 ```sh
 composer install --prefer-dist --no-scripts --no-dev
@@ -134,7 +134,7 @@ php composer.phar install --prefer-dist --no-scripts --no-dev
 
 ## Web server configuration
 
-As a reminder, the intended installation path is `/var/www/2fauth`. The given commands/scripts should be modified if you are using another path.
+As a reminder, the intended installation path is `/var/www/2FA-Vault`. The given commands/scripts should be modified if you are using another path.
 
 +++ NGINX
 
@@ -150,8 +150,8 @@ http {
 
   server {
       listen 80;
-      server_name 2fAuth;
-      root /var/www/2fauth/public;
+      server_name 2FA-Vault;
+      root /var/www/2FA-Vault/public;
 
       index index.php;
 
@@ -191,7 +191,7 @@ Add a new virtual host:
 
 ```bash
 cd /etc/apache2/sites-available
-sudo nano 2fauth.conf
+sudo nano 2FA-Vault.conf
 ```
 
 Add the following to the newly created file:
@@ -200,9 +200,9 @@ Add the following to the newly created file:
 <VirtualHost *:80>
     ServerName example.com
     ServerAdmin webmaster@example.com
-    DocumentRoot /var/www/2fauth/public
+    DocumentRoot /var/www/2FA-Vault/public
 
-    <Directory /var/www/2fauth/public>
+    <Directory /var/www/2FA-Vault/public>
         Options Indexes MultiViews FollowSymLinks
         AllowOverride All
         Require all granted
@@ -224,8 +224,8 @@ Save and close the file, then enable the new VHost and restart Apache2:
 # Disable the current v-host
 sudo a2dissite 000-default.conf
 
-# Enable the 2fauth v-host
-sudo a2ensite 2fauth
+# Enable the 2FA-Vault v-host
+sudo a2ensite 2FA-Vault
 
 # Restart apache2
 sudo systemctl restart apache2
@@ -235,15 +235,15 @@ sudo systemctl restart apache2
 
 ### Custom base url
 
-You may access 2FAuth from a custom base url, like `mydomain.org/2fauth/`. This is helpful if you do not want to define a dedicated (sub-)domain for 2FAuth.
+You may access 2FA-Vault from a custom base url, like `mydomain.org/2FA-Vault/`. This is helpful if you do not want to define a dedicated (sub-)domain for 2FA-Vault.
 
 For such a setup, you only need to add an alias to your existing server configuration:
 
 +++ NGINX
 
 ```nginx
-location /2fauth/ {
-    alias /var/www/2fauth/public/;
+location /2FA-Vault/ {
+    alias /var/www/2FA-Vault/public/;
 }
 ```
 
@@ -251,7 +251,7 @@ location /2fauth/ {
 
 ```apache
 <IfModule alias_module>
-    Alias /2fauth "/var/www/2fauth/public/"
+    Alias /2FA-Vault "/var/www/2FA-Vault/public/"
 </IfModule>
 ```
 
@@ -266,7 +266,7 @@ Use the CLI of the chosen database to create a new database with one of the foll
 +++ SQLite
 
 ```sh
-sqlite> .open /var/www/2fauth/database/database.sqlite
+sqlite> .open /var/www/2FA-Vault/database/database.sqlite
 sqlite> .quit
 ```
 
@@ -277,7 +277,7 @@ Reference
 +++ MySQL / MariaDB
 
 ```mysql
-mysql> CREATE DATABASE 2fauth;
+mysql> CREATE DATABASE 2FA-Vault;
 ```
 
 Reference
@@ -288,7 +288,7 @@ Reference
 +++ PostgreSQL
 
 ```sql
-CREATE DATABASE 2fauth
+CREATE DATABASE 2FA-Vault
 ```
 
 Reference
@@ -303,9 +303,9 @@ If you are not comfortable with the command line, you may use a db management to
 
 ---
 
-## 2FAuth set up (wizard)
+## 2FA-Vault set up (wizard)
 
-2FAuth provides an __artisan__ command to set up everything easily. If you want to set up all by hand, please follow the next section: [2FAuth set up (manual)](#2fauth-set-up-manual).
+2FA-Vault provides an __artisan__ command to set up everything easily. If you want to set up all by hand, please follow the next section: [2FA-Vault set up (manual)](#2FA-Vault-set-up-manual).
 
 ### Prerequisites
 
@@ -313,16 +313,16 @@ Except if you want to use sqlite (in this case the wizard create the db file for
 
 ### Execution
 
-Open a command prompt on `/var/www/2fauth/`, run the following command and answer the wizard questions.
+Open a command prompt on `/var/www/2FA-Vault/`, run the following command and answer the wizard questions.
 
 ```sh
-php artisan 2fauth:install
+php artisan 2FA-Vault:install
 ```
 
-At the end of the wizard, 2FAuth should be ready to start. Please see [Troubleshooting](/getting-started/troubleshooting/) if something goes wrong.
+At the end of the wizard, 2FA-Vault should be ready to start. Please see [Troubleshooting](/getting-started/troubleshooting/) if something goes wrong.
 
 !!!warning
-You should review the [email](#email) configuration section of the .env file to allow 2FAuth to send emails during the reset password process.
+You should review the [email](#email) configuration section of the .env file to allow 2FA-Vault to send emails during the reset password process.
 !!!
 
 What the wizard do for you is :
@@ -338,11 +338,11 @@ All these steps are detailed below if you want to dive into them.
 
 ---
 
-## 2FAuth set up (manual)
+## 2FA-Vault set up (manual)
 
 ### Set the .env file
 
-Run the following command from the `/var/www/2fauth` directory to create a fresh `.env` file from the `.env.example` template:
+Run the following command from the `/var/www/2FA-Vault` directory to create a fresh `.env` file from the `.env.example` template:
 
 ```sh
 mv .env.example .env
@@ -369,7 +369,7 @@ Set the path to your SQLite database file:
 
 ```env
 # Unix style
-DB_DATABASE="/var/www/2fauth/database/database.sqlite"
+DB_DATABASE="/var/www/2FA-Vault/database/database.sqlite"
 
 # Windows style
 DB_DATABASE="C:\\path\\to\\your\\database.sqlite"
@@ -383,7 +383,7 @@ Uncomment the dedicated lines (and comment the SQLite ones) and replace values w
 DB_CONNECTION=mysql
 DB_HOST=ip.of.your.server
 DB_PORT=3306
-DB_DATABASE=2fauth
+DB_DATABASE=2FA-Vault
 DB_USERNAME=sqlUserName
 DB_PASSWORD=sqlUserPassword
 ```
@@ -396,7 +396,7 @@ Uncomment the dedicated lines (and comment the SQLite ones) and replace values w
 DB_CONNECTION=pgsql
 DB_HOST=ip.of.your.server
 DB_PORT=5432
-DB_DATABASE=2fauth
+DB_DATABASE=2FA-Vault
 DB_USERNAME=sqlUserName
 DB_PASSWORD=sqlUserPassword
 ```
@@ -421,27 +421,27 @@ MAIL_FROM_ADDRESS=john.doe@example.com
 
 #### Subdirectory
 
-In case you [previously](/getting-started/installation/self-hosted-server/#custom-base-url) configured your web server to serve 2FAuth from a custom-base url like `mydomain.org/2fauth/` you must edit the `APP_SUBDIRECTORY` .env var to match the server configuration.
+In case you [previously](/getting-started/installation/self-hosted-server/#custom-base-url) configured your web server to serve 2FA-Vault from a custom-base url like `mydomain.org/2FA-Vault/` you must edit the `APP_SUBDIRECTORY` .env var to match the server configuration.
 
-```env /var/www/2fauth/.env
+```env /var/www/2FA-Vault/.env
 # no leading or trailing slash
-APP_SUBDIRECTORY=2fauth
+APP_SUBDIRECTORY=2FA-Vault
 ```
 
-To complete the custom base url configuration, open the file `/var/www/2fauth/public/.htaccess`, uncomment the `RewriteBase` directive and edit the `subdir` value to match the `APP_SUBDIRECTORY` value:
+To complete the custom base url configuration, open the file `/var/www/2FA-Vault/public/.htaccess`, uncomment the `RewriteBase` directive and edit the `subdir` value to match the `APP_SUBDIRECTORY` value:
 
-```apache /var/www/2fauth/public/.htaccess
+```apache /var/www/2FA-Vault/public/.htaccess
     # Uncomment and set the RewriteBase path to the desired subdirectory if you want to
-    # serve 2FAuth from a domain subdirectory like https://mydomain/2fauth/
+    # serve 2FA-Vault from a domain subdirectory like https://mydomain/2FA-Vault/
     #
     # WARNING: the subdirectory value must match the one set in your .env file
     # Do not forget leading and trailing slashes.
-    RewriteBase /2fauth/
+    RewriteBase /2FA-Vault/
 ```
 
 ### Run Artisan commands
 
-Run the following `Artisan` commands from the `/var/www/2fauth/` directory to set up the Laravel part:
+Run the following `Artisan` commands from the `/var/www/2FA-Vault/` directory to set up the Laravel part:
 
 ```bash
 php artisan migrate:refresh

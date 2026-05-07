@@ -4,12 +4,12 @@ label: 2FA Migration
 
 # 2FA Migration
 
-2FAuth can import data in various formats to ease you migrate from another 2FA app or to restore a backup.
-Note that not all 2FA apps enable data export so 2FAuth will never covers all possible migrations.
+2FA-Vault can import data in various formats to ease you migrate from another 2FA app or to restore a backup.
+Note that not all 2FA apps enable data export so 2FA-Vault will never covers all possible migrations.
 
 ## Exporting From
 
-First step is to export data from the 2FA source app in order to get a migration resource, like a file or a QR code. Follow one of the dedicated section below then jump to the [Importing into 2FAuth](#importing-into-2fauth) step.
+First step is to export data from the 2FA source app in order to get a migration resource, like a file or a QR code. Follow one of the dedicated section below then jump to the [Importing into 2FA-Vault](#importing-into-2FA-Vault) step.
 
 ### Google Authenticator
 
@@ -26,7 +26,7 @@ Next choose one or more accounts to export then click the [!button variant="dark
 :::
 
 !!!success
-Google Authenticator now displays a QR code to import into 2FAuth. Keep it on screen or save a screen capture for later use or backup.
+Google Authenticator now displays a QR code to import into 2FA-Vault. Keep it on screen or save a screen capture for later use or backup.
 !!!
 
 :::mobile-screen
@@ -36,7 +36,7 @@ Google Authenticator now displays a QR code to import into 2FAuth. Keep it on sc
 !!!info Multiple QR codes
 If you choose to export more than 10 2FA accounts, Google Authenticator will generate several QR codes (one by tens).
 
-:icon-arrow-right: __The Import into 2FAuth process should be executed for each G-Auth QR code.__
+:icon-arrow-right: __The Import into 2FA-Vault process should be executed for each G-Auth QR code.__
 !!!
 
 ### 2FAS Authenticator
@@ -60,7 +60,7 @@ __Uncheck the password option__ and click the [!button variant="danger" corners=
 :::
 
 !!!success
-Save (and secure) the .2fas migration file, you are ready to import your accounts into 2FAuth
+Save (and secure) the .2fas migration file, you are ready to import your accounts into 2FA-Vault
 !!!
 
 ### Aegis Authenticator
@@ -85,32 +85,32 @@ Open the _Export_ tool.
 ![Aegis Import & Export](/static/import/Aegis_import_export.png)
 :::
 
-Whatever the export format (both are supported by 2FAuth), __uncheck the encryption option__ and click the [!badge variant="danger" corners="square" text="OK" size="l"] button.
+Whatever the export format (both are supported by 2FA-Vault), __uncheck the encryption option__ and click the [!badge variant="danger" corners="square" text="OK" size="l"] button.
 
 :::mobile-screen
 ![Aegis Export](/static/import/Aegis_export.png)
 :::
 
 !!!success
-Save (and secure) the migration file, you are ready to import your accounts into 2FAuth
+Save (and secure) the migration file, you are ready to import your accounts into 2FA-Vault
 !!!
 
 ---
 
-## Importing into 2FAuth
+## Importing into 2FA-Vault
 
 The import process consists of 2 steps: The preloading (with validation) of the exported data and the recording of all or part of the valid data.
 
 ### Preloading
 
-From the 2FAuth main view:
+From the 2FA-Vault main view:
 
 1. Click the [!button corners="pill" size="xs" text="New"] button, just as if you had to add a new account
 2. Click the [!button corners="pill" size="xs" text="Import"] button in the alternative methods
 3. Submit your migration resource: [!button corners="pill" size="xs" text="Livescan" icon="device-camera"] a QR code or [!button corners="pill" size="xs" text="Upload"] a file/QR code
 
 !!!success
-2FAuth now lists all accounts found in the migration resource.
+2FA-Vault now lists all accounts found in the migration resource.
 !!!
 
 :::mobile-screen
@@ -121,7 +121,7 @@ From the 2FAuth main view:
 :::mobile-screen
 ![](/static/import/import_duplicates.png)
 :::
-2FAuth checks for possible duplicates by comparing preloaded accounts with existing accounts in its database.  
+2FA-Vault checks for possible duplicates by comparing preloaded accounts with existing accounts in its database.  
 Duplicates are simply flagged, they can still be imported.
 !!!
 
@@ -131,11 +131,11 @@ Accounts that do not respect OTP specification are automatically skipped
 
 ### Recording
 
-This final step lets you save the preloaded accounts to the 2FAuth database.
+This final step lets you save the preloaded accounts to the 2FA-Vault database.
 
 - You are free to record or discard the accounts of your choice.
 - Click on account titles to get a fresh OTP if you want to check the integrity of any account.
-- Nothing is added to 2FAuth until you click on an [!button size="xs" text="Import"] button or the [!button corners="pill" size="s" text="Import all"] button.
+- Nothing is added to 2FA-Vault until you click on an [!button size="xs" text="Import"] button or the [!button corners="pill" size="s" text="Import all"] button.
 
 :::mobile-screen
 ![5 accounts registered, 3 remaining](/static/import/import_recorded.png)
@@ -143,35 +143,35 @@ This final step lets you save the preloaded accounts to the 2FAuth database.
 
 ---
 
-## Exporting from 2FAuth
+## Exporting from 2FA-Vault
 
-2FAuth lets you export your 2FA data. This is particulary usefull when you want to create a backup on the fly or to migrate to another 2FA app.
+2FA-Vault lets you export your 2FA data. This is particulary usefull when you want to create a backup on the fly or to migrate to another 2FA app.
 
 ### Selective export
 
-From the main view of 2FAuth, click the [!button size="m" variant="ghost" text="Manage" corners="pill"] button to switch to Edit mode. You will then be able to select the 2FA accounts that you want to export. Use the [!button size="s" icon="checkbox" variant="ghost" text="All" iconAlign="left"] button of the view toolbar to select all of them in a click.
+From the main view of 2FA-Vault, click the [!button size="m" variant="ghost" text="Manage" corners="pill"] button to switch to Edit mode. You will then be able to select the 2FA accounts that you want to export. Use the [!button size="s" icon="checkbox" variant="ghost" text="All" iconAlign="left"] button of the view toolbar to select all of them in a click.
 
 Once your selection is done, click the [!button size="m" text="Export" corners="pill"] button. You will be prompt to download a migration file in JSON format.
 
 !!!
-2FAuth supports importing its own migration resource. See [Importing into 2FAuth](#importing-into-2fauth)
+2FA-Vault supports importing its own migration resource. See [Importing into 2FA-Vault](#importing-into-2FA-Vault)
 !!!
 
 ### Export schema
 
-2FAuth uses its own JSON schema to structure the exported data.
+2FA-Vault uses its own JSON schema to structure the exported data.
 
 +++ Schema
 
 ```json
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "2FAuth Export",
-    "description": "2FA data export by 2FAuth",
+    "title": "2FA-Vault Export",
+    "description": "2FA data export by 2FA-Vault",
     "type": "object",
     "properties": {
         "app": {
-            "description": "The 2FAuth version used to export the data",
+            "description": "The 2FA-Vault version used to export the data",
             "type": "string"
         },
         "schema": {
@@ -248,7 +248,7 @@ Once your selection is done, click the [!button size="m" text="Export" corners="
 
 ```json
 {
-    "app": "2fauth_v5.1.1",
+    "app": "twofauth_v5.1.1",
     "schema": 1,
     "datetime": "2024-04-07T12:16:29.606564Z",
     "data": [

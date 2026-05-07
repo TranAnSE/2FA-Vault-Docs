@@ -3,7 +3,7 @@ label: Welcome
 ---
 # Welcome to 2FA-Vault Docs
 
-> 2FA-Vault is a personal fork of 2FAuth. It is a self-hosted OTP vault for desktop, mobile web, PWA usage, and a browser extension, with fork-specific work around end-to-end encryption, teams, encrypted backups, and web push.
+> 2FA-Vault is a personal fork of 2FA-Vault. It is a self-hosted OTP vault for desktop, mobile web, PWA usage, and a browser extension, with fork-specific work around end-to-end encryption, teams, encrypted backups, and web push.
 
 <style>
     html.dark .light-screen,
@@ -16,10 +16,10 @@ label: Welcome
     }
 </style>
 :::dark-screen
-![Screenshots of 2FAuth on mobile](/static/2fauth_screenshots_dark.png)
+![Screenshots of 2FA-Vault on mobile](/static/2fauth_screenshots_dark.png)
 :::
 :::light-screen
-![Screenshots of 2FAuth on mobile](/static/2fauth_screenshots_light.png)
+![Screenshots of 2FA-Vault on mobile](/static/2fauth_screenshots_light.png)
 :::
 
 ---
@@ -28,19 +28,19 @@ label: Welcome
 
 Two-Factor Authentication has become very popular in recent years, resulting in more and more situations where we face a security code request and an increase in the number of accounts protected by this technology. In other words, 2FA is now inevitable and critical.
 
-2FA-Vault's purpose is to simplify how you use and manage your 2FA with a clean web interface while keeping the deployment model familiar for existing 2FAuth users.
+2FA-Vault's purpose is to simplify how you use and manage your 2FA with a clean web interface while keeping the deployment model familiar for existing 2FA-Vault users.
 
 Moreover, as an open source and self-hosted application, it lets you regain control over your personal security data, giving you privacy and the ability to back it up (Have you lost a smartphone with all your 2FA accounts inside Google Auth? I did... it really sucked)
 
 !!!warning Fork status
-This documentation targets the 2FA-Vault fork, not the official 2FAuth release. Upstream 2FAuth behavior still applies where unchanged, but fork-only features such as E2EE, team sharing, encrypted backups, web push, and encrypted extension sync require a 2FA-Vault instance.
+This documentation targets the 2FA-Vault fork, not the official 2FA-Vault release. Upstream 2FA-Vault behavior still applies where unchanged, but fork-only features such as E2EE, team sharing, encrypted backups, web push, and encrypted extension sync require a 2FA-Vault instance.
 !!!
 
 ## Features
 
 #### :icon-ellipsis: Generate passwords
 
-The main purpose of 2FAuth: Serve you some fresh TOTP/HOTP security codes aka One-Time Passwords.
+The main purpose of 2FA-Vault: Serve you some fresh TOTP/HOTP security codes aka One-Time Passwords.
 
 #### :icon-device-desktop: Work anywhere
 
@@ -72,7 +72,7 @@ When vault encryption is enabled, clients derive keys locally with Argon2id and 
 
 #### :icon-arrow-switch: Import / Export
 
-Migrate from another 2FA app to 2FAuth or export your 2FA data in a breeze.
+Migrate from another 2FA app to 2FA-Vault or export your 2FA data in a breeze.
 
 ## REST API
 
@@ -87,12 +87,12 @@ When vault encryption is enabled, the extension now unlocks against your vault m
 Note: You must have a running 2FA-Vault instance to use the forked extension; it is not standalone.
 
 <figure class="content-left">
-    <a href="https://chromewebstore.google.com/detail/2fauth-beta/kokhpbhfeokchmbimdlaldcmlinjpipm" target="_blank">
+    <a href="https://chromewebstore.google.com/detail/2FA-Vault-beta/kokhpbhfeokchmbimdlaldcmlinjpipm" target="_blank">
         <img src="static/available_on_chrome_web_store_bordered.png" alt="Available on Chrome web store"/>
     </a>
 </figure>
 <figure class="content-left">
-    <a href="https://addons.mozilla.org/fr/firefox/addon/2fauth-addon/" target="_blank">
+    <a href="https://addons.mozilla.org/fr/firefox/addon/2FA-Vault-addon/" target="_blank">
         <img src="static/available_on_amo.webp" alt="Get the Firefox addon"/>
     </a>
 </figure>

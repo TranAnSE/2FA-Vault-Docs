@@ -9,13 +9,13 @@ The API provides endpoints to manage most 2FA-Vault resources:
 
 Resource   | Description { class="compact" }
 ---    | ---
-twofaccounts | The 2FA accounts stored in 2FAuth which you need to generate One-Time Passwords (OTP)
+twofaccounts | The 2FA accounts stored in 2FA-Vault which you need to generate One-Time Passwords (OTP)
 one-time password | The One-Time Passwords (TOTP or HOTP) generated on demand
-groups | The groups used to organize 2FA accounts in 2FAuth
+groups | The groups used to organize 2FA accounts in 2FA-Vault
 qrcode | Two-dimensional barcode used to encode/share 2FA accounts
-icons | Images used to illustrate 2FA accounts in 2FAuth
+icons | Images used to illustrate 2FA accounts in 2FA-Vault
 preferences | The user preferences
-settings | The 2FAuth administrator settings, which can be extended with custom settings
+settings | The 2FA-Vault administrator settings, which can be extended with custom settings
 encryption | End-to-end encryption setup, status, lock, unlock, and disable metadata endpoints
 backups | Encrypted backup export, import, metadata, and statistics endpoints
 push | Web push subscription and test-notification endpoints

@@ -3,7 +3,7 @@ order: 90
 ---
 # Data protection
 
-2FAuth provides several security mechanisms to protect your sensitive 2FA data, at administrator or user level.
+2FA-Vault provides several security mechanisms to protect your sensitive 2FA data, at administrator or user level.
 
 2FA-Vault also supports fork-specific [end-to-end encryption](/security/end-to-end-encryption/). That flow is separate from the database encryption option below: E2EE encrypts account secrets in the client before they reach the server, while DB encryption encrypts selected fields on the server with `APP_KEY`.
 
@@ -15,7 +15,7 @@ order: 90
 
 Sensitive data stored in the database (2FA secret & otpauth URI) can be encrypted to protect them against a database compromise.
 
-:icon-arrow-right: Check the [!badge size="l" icon="checkbox" text="Protect sensitive data"] option in the 2FAuth's _Admin > App setup_ section to enable encryption.
+:icon-arrow-right: Check the [!badge size="l" icon="checkbox" text="Protect sensitive data"] option in the 2FA-Vault's _Admin > App setup_ section to enable encryption.
 
 !!!
 Encryption applies to all users data
@@ -36,7 +36,7 @@ If you need to rotate the key, use the [`APP_PREVIOUS_KEYS`](/getting-started/co
 
 ### Auto lock
 
-2FAuth can automatically log you out to keep your data always protected. The goal is to avoid a long life session that someone could reuse, for example from a public computer you forgot to clean or from your own stolen smartphone.
+2FA-Vault can automatically log you out to keep your data always protected. The goal is to avoid a long life session that someone could reuse, for example from a public computer you forgot to clean or from your own stolen smartphone.
 
 For browser extension users with vault encryption enabled, locking the extension also clears the derived vault key from session storage and drops decrypted account data kept in the popup session.
 
@@ -46,11 +46,11 @@ _On security code copy_ | You will be logged out immediately after you click/tap
 _a time lapse_ | You will be logged out after a certain amount of time
 _Never_ | Disable the Auto lock
 
-:icon-arrow-right: Use the [!badge size="l" icon="single-select" iconAlign="right" text="Auto lock"] combobox in the 2FAuth's _Settings > Options_ section to select a trigger or to disable the feature.
+:icon-arrow-right: Use the [!badge size="l" icon="single-select" iconAlign="right" text="Auto lock"] combobox in the 2FA-Vault's _Settings > Options_ section to select a trigger or to disable the feature.
 
 ### Sensitive data hiding
 
-You can configure 2FAuth to display obfuscated One-Time Password rather than human readable password.
+You can configure 2FA-Vault to display obfuscated One-Time Password rather than human readable password.
 
 Without obfuscation | With obfuscation
 --- | ---
@@ -61,7 +61,7 @@ This protects against attacks like a _shoulder-surfing_ attack, where a third pa
 Of course, this is only suitable if you are able to use the copy/paste feature to provide the password to the destination service.
 
 !!!tip
-Simply click/tap the (obfuscated) password in 2FAuth to copy it!
+Simply click/tap the (obfuscated) password in 2FA-Vault to copy it!
 !!!
 
-:icon-arrow-right: Check the [!badge size="l" icon="checkbox" text="Show generated one-time passwords as dot"] option in the 2FAuth's _Settings > Options_ section to enable obfuscation.
+:icon-arrow-right: Check the [!badge size="l" icon="checkbox" text="Show generated one-time passwords as dot"] option in the 2FA-Vault's _Settings > Options_ section to enable obfuscation.

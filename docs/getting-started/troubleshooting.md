@@ -2,7 +2,7 @@
 
 ## Check logs
 
-Logs can give usefull informations to troubleshoot your installation. 2FAuth logs are stored in the subfolder `storage/logs` of your installation folder.
+Logs can give usefull informations to troubleshoot your installation. 2FA-Vault logs are stored in the subfolder `storage/logs` of your installation folder.
 
 You may enable debug logs by setting `APP_DEBUG=true` and `LOG_LEVEL=debug` in your .env file.
 
@@ -35,13 +35,13 @@ var/log/
 __The uploaded icons are not visible even though I set the storage symlink__
 :   Try to recreate the symlink using relative path.
 
-    Open a terminal on the 2FAuth installation folder and run:
+    Open a terminal on the 2FA-Vault installation folder and run:
 
     ```bash
     ln -sfn ../storage/app/public public/storage
     ```
 
-__2FAuth returns a `500` error with ionos hosting__
+__2FA-Vault returns a `500` error with ionos hosting__
 :   The `.htaccess` configuration should be modified.
 
     Edit the `/public/.htaccess` file and add following lines:
@@ -57,14 +57,14 @@ __2FAuth returns a `500` error with ionos hosting__
     RewriteEngine On
     ```
 
-__2FAuth returns a `404` error on API requests__
+__2FA-Vault returns a `404` error on API requests__
 :   If using Apache2, ensure permissions are set correctly.
 
     Open a terminal and run:
 
     ```bash
-    sudo chown -R www-data:www-data /var/www/2fauth
-    sudo chmod -R 775 /var/www/2fauth
+    sudo chown -R www-data:www-data /var/www/2FA-Vault
+    sudo chmod -R 775 /var/www/2FA-Vault
     ```
     
     Also, ensure `mod_rewrite` is enabled:

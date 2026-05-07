@@ -5,30 +5,30 @@
 
 ## Purpose
 
-User preferences are settings that any user can change to customize the behavior or appearance of 2FAuth. They can be set by the user from the _Settings > Options_ section of 2FAuth. As the name implies, when a user edits a preference, it only affects their own use, not that of other users.
+User preferences are settings that any user can change to customize the behavior or appearance of 2FA-Vault. They can be set by the user from the _Settings > Options_ section of 2FA-Vault. As the name implies, when a user edits a preference, it only affects their own use, not that of other users.
 
-2FAuth comes with a set of default values for user preferences. These defaults are defined to provide a good starting experience for every user, but as an administrator, you may want to control them for a consistent, streamlined, or corporate user experience. 2FAuth supports 2 ways to accomplish this:
+2FA-Vault comes with a set of default values for user preferences. These defaults are defined to provide a good starting experience for every user, but as an administrator, you may want to control them for a consistent, streamlined, or corporate user experience. 2FA-Vault supports 2 ways to accomplish this:
 
 __Custom defaults__
-:   2FAuth defaults are overridden with your default values.
+:   2FA-Vault defaults are overridden with your default values.
 
-    When a preference's default is customized, the custom value is applied to all users who didn't already personalized the preference themselves from the _Settings > Options_ page of 2FAuth. The preference can still be modified by user.
+    When a preference's default is customized, the custom value is applied to all users who didn't already personalized the preference themselves from the _Settings > Options_ page of 2FA-Vault. The preference can still be modified by user.
 
 __Preference locking__
 :   Preferences are locked for change to user.
 
-    Regardless of the value of the preference, no user can edit a locked preference from the _Settings > Options_ section of 2FAuth. The applied value is the last one, according to this priority order:
+    Regardless of the value of the preference, no user can edit a locked preference from the _Settings > Options_ section of 2FA-Vault. The applied value is the last one, according to this priority order:
 
     1. By the user
     2. The custom default (if defined)
-    3. The 2FAuth default
+    3. The 2FA-Vault default
 
 The two features can be combined for a complete control over the preferences:
 
 __Custom defaults__ + __Preference locking__
 :   Your custom defaults are enforced for all users.
 
-    Regardless of the value of the preference, no user can edit a locked preference from the _Settings > Options_ section of 2FAuth. The applied value is yours, for everybody.
+    Regardless of the value of the preference, no user can edit a locked preference from the _Settings > Options_ section of 2FA-Vault. The applied value is yours, for everybody.
 
 !!!info
 Custom defaults and preference locking are done by setting up dedicated environment variables.  
@@ -57,7 +57,7 @@ A locking environment variable is only relevant if you want to lock a preference
 
 ### Example
 
-Say you want to hide one-time password's icons in 2FAuth. The corresponding user preference is named [`SHOW_ACCOUNTS_ICONS`](#show_accounts_icons).  
+Say you want to hide one-time password's icons in 2FA-Vault. The corresponding user preference is named [`SHOW_ACCOUNTS_ICONS`](#show_accounts_icons).  
 Here are the environment variables to set, depending on your needs:
 
 ||| For a custom default only
@@ -81,7 +81,7 @@ USERPREF_LOCKED__SHOW_ACCOUNTS_ICONS=true
 
 |||
 
-Here is another example to control the theme of 2FAuth, given that the 2FAuth default for this preference is `system` (See [`THEME`](#theme))
+Here is another example to control the theme of 2FA-Vault, given that the 2FA-Vault default for this preference is `system` (See [`THEME`](#theme))
 
 ||| For a custom default only
 
@@ -106,11 +106,11 @@ USERPREF_LOCKED__THEME=true
 
 ### Impact on running app
 
-Because of the way 2FAuth is built, adding new environment variables to enforce user preferences may not have an immediate effect if your 2FAuth instance is running.
+Because of the way 2FA-Vault is built, adding new environment variables to enforce user preferences may not have an immediate effect if your 2FA-Vault instance is running.
 
 You must rebuild the configuration cache of the app for the new variables to be loaded or restart your container if you use one. See the [Environment variables](/getting-started/config/env-vars/#how-to) section for details.
 
-Also, logged-in users won't see any changes until they reconnect or visit the _Settings > Options_ page of 2FAuth.
+Also, logged-in users won't see any changes until they reconnect or visit the _Settings > Options_ page of 2FA-Vault.
 
 ---
 
@@ -364,7 +364,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Allows 2FAuth to fetch the official icon of the 2FA provider when a new 2FA account is registered.
+:   Allows 2FA-Vault to fetch the official icon of the 2FA provider when a new 2FA account is registered.
 
     Additional preferences have to be set to refine this preference:
 
@@ -404,7 +404,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   The online icon library queried when 2FAuth needs to fetch an icon.
+:   The online icon library queried when 2FA-Vault needs to fetch an icon.
 
     Only relevant when [ICON_SOURCE](#icon_source) is set to `logolib`.
 
@@ -435,11 +435,11 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   The name of the icon pack queried when 2FAuth needs to fetch an icon.
+:   The name of the icon pack queried when 2FA-Vault needs to fetch an icon.
 
-    An icon pack is merely a collection of image files stored in a directory on the server, in the `[2fauth_install_dir]/storage/app/iconPacks/` location. The name of the icon pack match the name of the directory.
+    An icon pack is merely a collection of image files stored in a directory on the server, in the `[twofauth_install_dir]/storage/app/iconPacks/` location. The name of the icon pack match the name of the directory.
 
-    If the icon pack is stored in a subdirectory, e.g. `[2fauth_install_dir]/storage/app/iconPacks/mysubdir/myiconpack/`, the preference must be set using the subdirectory and pack directory names combined, so `mysubdir/myiconpack`.
+    If the icon pack is stored in a subdirectory, e.g. `[twofauth_install_dir]/storage/app/iconPacks/mysubdir/myiconpack/`, the preference must be set using the subdirectory and pack directory names combined, so `mysubdir/myiconpack`.
 
     Only relevant when [ICON_SOURCE](#icon_source) is set to `iconpack`.
 
@@ -462,7 +462,7 @@ Any icon pack name uploaded to the server
 :::env-var-dl-wrapper
 
 Description
-:   The location where 2FAuth offers to fetch icons
+:   The location where 2FA-Vault offers to fetch icons
 
 Default value
 :   `logolib`
@@ -483,7 +483,7 @@ Default value
     - [ICON_VARIANT_STRICT_FETCH](#icon_variant_strict_fetch)
 
 `iconpack`
-:   Icons are fetched from icon packs uploaded to the server by the 2FAuth administrator.
+:   Icons are fetched from icon packs uploaded to the server by the 2FA-Vault administrator.
 
     Additional preferences have to be set to refine this option:
 
@@ -498,7 +498,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Some icon libraries provide icons in different variations to best suit dark or light user interfaces. Use this preference to indicate 2FAuth the flavor that must be requested first. The regular variant will be fetched automatically by 2FAuth if the specified one is not available.
+:   Some icon libraries provide icons in different variations to best suit dark or light user interfaces. Use this preference to indicate 2FA-Vault the flavor that must be requested first. The regular variant will be fetched automatically by 2FA-Vault if the specified one is not available.
 
     Only relevant when [ICON_SOURCE](#icon_source) is not set to `logolib`.
 
@@ -529,7 +529,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Narrow the fetch to the specified icon variant. If the variant is missing, 2FAuth will not try to fallback to the regular variant.
+:   Narrow the fetch to the specified icon variant. If the variant is missing, 2FA-Vault will not try to fallback to the regular variant.
 
     Only relevant when [ICON_SOURCE](#icon_source) is set to `logolib` and [ICON_VARIANT](#icon_variant) is not set to `regular`.
 
@@ -574,7 +574,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   The language used to translate the 2FAuth user interface
+:   The language used to translate the 2FA-Vault user interface
 
 Default value
 :   `browser`
@@ -586,11 +586,11 @@ Default value
 :::sub-dl-wrapper
 
 `browser`
-:   Uses the preferred language setting of the browser used to visit 2FAuth.
+:   Uses the preferred language setting of the browser used to visit 2FA-Vault.
 
 Any supported language code
 :   The language code of any supported translation, for example `fr`, `en` or `ja`.  
-    See the <a href="https://crowdin.com/project/2fauth" target="_blank">Crowdin project page</a> for the full list.
+    See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin project page</a> for the full list.
 
 :::
 
@@ -771,7 +771,7 @@ Default value
 :::sub-dl-wrapper
 
 `system`
-:   Uses the website appareance setting of the browser used to visit 2FAuth
+:   Uses the website appareance setting of the browser used to visit 2FA-Vault
 
 `light`
 :   Uses a light theme for backgrounds and page content
@@ -788,7 +788,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   The time zone applied to all dates and times displayed in the 2FAuth user interface
+:   The time zone applied to all dates and times displayed in the 2FA-Vault user interface
 
 Default value
 :   `UTC`
@@ -849,7 +849,7 @@ Default value
 
 ## Unlockable preferences
 
-2FAuth has additional preferences that cannot be locked because they depend on specific user data or security considerations. The following preferences will remain editable by users, even if you set the appropriate `USERPREF_LOCKED__*` environment variable:
+2FA-Vault has additional preferences that cannot be locked because they depend on specific user data or security considerations. The following preferences will remain editable by users, even if you set the appropriate `USERPREF_LOCKED__*` environment variable:
 
 - `ACTIVE_GROUP`
 - `DEFAULT_GROUP`

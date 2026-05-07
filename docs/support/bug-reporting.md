@@ -15,12 +15,12 @@ GitHub eases the creation of issues by providing a template which encourage you 
 Check the existing issues before creating a new one, maybe your issue has already been reported.
 !!!
 
-[!ref icon="bug" target="blank" text="2FAuth issues on GitHub"](https://github.com/Bubka/2FAuth/issues)
+[!ref icon="bug" target="blank" text="2FA-Vault issues on GitHub"](https://github.com/TranAnSE/2FA-Vault/issues)
 
 ## Contact
 
 You can also report your issue:
 
-- By email - contact:icon-mention:2fauth.app
+- By email - contact:icon-mention:2FA-Vault.app
 - On Twitter - [@TwoFAuth](https://twitter.com/TwoFAuth)
-- On Mastodon - [@2FAuth@fosstodon](https://fosstodon.org/@2fauth)
+- On Mastodon - [@2fauth@fosstodon](https://fosstodon.org/@2fauth)

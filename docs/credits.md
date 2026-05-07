@@ -5,7 +5,7 @@ order: -1000
 
 ## Contributions
 
-2FAuth is actively developed by [Bubka](https://github.com/Bubka).
+2FA-Vault is actively developed by [Bubka](https://github.com/Bubka).
 
 <style>
     .sponsor a.rounded {

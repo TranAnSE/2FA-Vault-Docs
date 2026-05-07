@@ -1,8 +1,8 @@
 # Heroku
 
-You can deploy 2FAuth to Heroku by clicking the button below:
+You can deploy 2FA-Vault to Heroku by clicking the button below:
 
-[--![](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Bubka/2FAuth)
+[--![](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/TranAnSE/2FA-Vault)
 
 <div style="clear: both;"></div>
 
@@ -10,9 +10,9 @@ You can deploy 2FAuth to Heroku by clicking the button below:
 
 ## Restrictions
 
-Heroku uses an <a href="https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem" target="_blank">ephemeral filesystem</a>, which means 2FAuth cannot use this file system to store and retrieve the 2FA icons across multiple sessions. For now, the only workaround is to disable icon display in 2FAuth:
+Heroku uses an <a href="https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem" target="_blank">ephemeral filesystem</a>, which means 2FA-Vault cannot use this file system to store and retrieve the 2FA icons across multiple sessions. For now, the only workaround is to disable icon display in 2FA-Vault:
 
-:icon-arrow-right: Uncheck the [!badge size="l" icon="checkbox" text="Show icons"] option in the 2FAuth's _Settings > Options_ section
+:icon-arrow-right: Uncheck the [!badge size="l" icon="checkbox" text="Show icons"] option in the 2FA-Vault's _Settings > Options_ section
 
 ---
 
@@ -22,7 +22,7 @@ Although the Heroku button tends to ease the installation process, you have to c
 
 ### Security keys
 
-2FAuth needs an RSA key pair for Laravel Passport to generate security tokens. Normally, these keys are generated automatically and stored in a 2FAuth subfolder, but the Heroku ephemeral filesystem breaks this behavior. You have to generate the keys on your own and then set the corresponding env vars.
+2FA-Vault needs an RSA key pair for Laravel Passport to generate security tokens. Normally, these keys are generated automatically and stored in a 2FA-Vault subfolder, but the Heroku ephemeral filesystem breaks this behavior. You have to generate the keys on your own and then set the corresponding env vars.
 
 #### Generate RSA keys
 
@@ -136,7 +136,7 @@ When using the [!badge Deploy to Heroku] button, you will be prompted to set ema
 It will be appropriate most of the time, but this is not the only possible configuration supported by Laravel.
 
 !!!
-Email setup is only needed for the 2FAuth 'Recover your password' feature. You can skip it if you just want to try 2FAuth.
+Email setup is only needed for the 2FA-Vault 'Recover your password' feature. You can skip it if you just want to try 2FA-Vault.
 !!!
 
 The Email configuration depends on your email provider. You should refer to its documentation to find the relevant values.  
@@ -154,7 +154,7 @@ Read more about email configuration at <https://laravel.com/docs/mail>.
 
 ## Free resources
 
-2FAuth offers a basic Heroku setup which only uses free resources: A single add-ons, `Heroku Postgres` with Hobby plan, and a single `Web` Dyno with `NGINX`. This way, any Heroku user can deploy the app, even if the user account is not verified.
+2FA-Vault offers a basic Heroku setup which only uses free resources: A single add-ons, `Heroku Postgres` with Hobby plan, and a single `Web` Dyno with `NGINX`. This way, any Heroku user can deploy the app, even if the user account is not verified.
 
-Be aware that the Postgres has some limitations, but that should not be a problem as 2FAuth has very few database needs.  
+Be aware that the Postgres has some limitations, but that should not be a problem as 2FA-Vault has very few database needs.  
 Read more about the Heroku Postgres plans at <a href="https://devcenter.heroku.com/articles/heroku-postgres-plans#hobby-tier" target="_blank">devcenter.heroku.com</a>

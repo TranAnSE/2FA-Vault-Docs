@@ -3,14 +3,14 @@ order: 90
 ---
 # Docker CLI
 
-An official Docker image is available to run 2FAuth in a single Docker container.
-These are the __Docker CLI__ Setup instructions, a <a href="https://github.com/Bubka/2FAuth/blob/master/docker/docker-compose.yml" target="_blank">docker-compose.yml</a> file is also available.
+An official Docker image is available to run 2FA-Vault in a single Docker container.
+These are the __Docker CLI__ Setup instructions, a <a href="https://github.com/TranAnSE/2FA-Vault/blob/master/docker/docker-compose.yml" target="_blank">docker-compose.yml</a> file is also available.
 
 ---
 
 ## Features
 
-- [![](https://img.shields.io/docker/image-size/2fauth/2fauth/latest)](https://hub.docker.com/r/2fauth/2fauth/tags)
+- [![](https://img.shields.io/docker/image-size/2FA-Vault/2FA-Vault/latest)](https://hub.docker.com/r/2FA-Vault/2FA-Vault/tags)
 - Compatible with: [!badge amd64], [!badge 386], [!badge arm64], [!badge arm/v6] and [!badge arm/v7]
 - Stores data in a Sqlite database file
 - Runs without root as user with id `1000` and group id `1000`
@@ -22,10 +22,10 @@ Several Docker tags are available to let you choose which version you want to ru
 | Tags | Description | { class="compact" }
 | --- | --- | --- |
 | `latest` | The current state of the master branch.<br />Considered stable. May include some fixes/changes not yet officially released. |
-| Release tags: `3.0.2` `3.1.0` ... `x.y.z` | The version at a corresponding [GitHub release](https://github.com/Bubka/2FAuth/releases).<br />Considered stable, and frozen. |
+| Release tags: `3.0.2` `3.1.0` ... `x.y.z` | The version at a corresponding [GitHub release](https://github.com/TranAnSE/2FA-Vault/releases).<br />Considered stable, and frozen. |
 | `dev` | The current state of the dev branch<br />May be unstable or even broken.
 
-Simply append the tag name to the docker image name in your command or script, separated by a colon, to specify which tag to use. e.g `2fauth/2fauth:3.0.2`, or `2fauth/2fauth:dev`.
+Simply append the tag name to the docker image name in your command or script, separated by a colon, to specify which tag to use. e.g `2FA-Vault/2FA-Vault:3.0.2`, or `2FA-Vault/2FA-Vault:dev`.
 
 If no tag is specified, Docker will default to `latest`.
 
@@ -38,15 +38,15 @@ We assume your current directory is `/yourpath`.
 1. Create a directory on your host
 
     ```sh
-    mkdir 2fauth
+    mkdir 2FA-Vault
     ```
 
     !!!info If your host is not Windows
     Since the container runs without root as user `1000:1000`, you need to fix the ownership and permissions of that directory:
 
     ```sh
-    chown 1000:1000 2fauth
-    chmod 700 2fauth
+    chown 1000:1000 2FA-Vault
+    chmod 700 2FA-Vault
     ```
 
     If you feel like using another ID, you can [build the image with build arguments](#build-the-image-with-build-arguments).
@@ -56,8 +56,8 @@ We assume your current directory is `/yourpath`.
 
     ```sh
     docker run -it --rm -p 8000:8000/tcp \
-    -v /yourpath/2fauth:/2fauth -e APP_KEY=SomeRandomStringOf32CharsExactly \
-    2fauth/2fauth
+    -v /yourpath/2FA-Vault:/2FA-Vault -e APP_KEY=SomeRandomStringOf32CharsExactly \
+    2FA-Vault/2FA-Vault
     ```
 
     !!!warning Mandatory env var
@@ -73,7 +73,7 @@ We assume your current directory is `/yourpath`.
 You can stop it with `CTRL+C`.
 
 - You can also run it in the background by replacing `-it --rm` with `-d`.
-- You can set available environment variables with `-e`, for example `-e APP_NAME=2FAuth`.
+- You can set available environment variables with `-e`, for example `-e APP_NAME=2FA-Vault`.
 
 !!!secondary
 See [Configuration](/getting-started/config/env-vars/) to learn about all the environment variables that can be set.
@@ -81,11 +81,11 @@ See [Configuration](/getting-started/config/env-vars/) to learn about all the en
 
 ### Use an existing SQLite file
 
-If you already have an SQLite file, move it to `/yourpath/2fauth/database.sqlite` on your host before starting the container. Don't forget to fix its ownership and permissions if you run on *nix:
+If you already have an SQLite file, move it to `/yourpath/2FA-Vault/database.sqlite` on your host before starting the container. Don't forget to fix its ownership and permissions if you run on *nix:
 
 ```sh
-chown 1000:1000 /yourpath/2fauth/database.sqlite
-chmod 700 /yourpath/2fauth/database.sqlite
+chown 1000:1000 /yourpath/2FA-Vault/database.sqlite
+chmod 700 /yourpath/2FA-Vault/database.sqlite
 ```
 
 The container will automatically pick it up.
@@ -97,23 +97,23 @@ The container will automatically pick it up.
 You can build the image from the `master` branch with `docker` and `git` using:
 
 ```sh
-docker build -t 2fauth/2fauth https://github.com/Bubka/2FAuth.git
+docker build -t 2FA-Vault/2FA-Vault https://github.com/TranAnSE/2FA-Vault.git
 ```
 
 ### Build the image for a specific release
 
-You can build a [specific release](https://github.com/Bubka/2FAuth/releases) by appending the release tag with `#<release-tag>` to the command. For example:
+You can build a [specific release](https://github.com/TranAnSE/2FA-Vault/releases) by appending the release tag with `#<release-tag>` to the command. For example:
 
 ```sh
-docker build -t 2fauth/2fauth https://github.com/Bubka/2FAuth.git#v2.1.0
+docker build -t 2FA-Vault/2FA-Vault https://github.com/TranAnSE/2FA-Vault.git#v2.1.0
 ```
 
 ### Build the image for a specific commit
 
-You can build a specific commit (see [master's commits](https://github.com/Bubka/2FAuth/commits/master)) by appending the commit hash with `#<commit-hash>` to the command. For example:
+You can build a specific commit (see [master's commits](https://github.com/TranAnSE/2FA-Vault/commits/master)) by appending the commit hash with `#<commit-hash>` to the command. For example:
 
 ```sh
-docker build -t 2fauth/2fauth https://github.com/Bubka/2FAuth.git#fba9e29bd4e3bb697296bb0bde60ae869537528b
+docker build -t 2FA-Vault/2FA-Vault https://github.com/TranAnSE/2FA-Vault.git#fba9e29bd4e3bb697296bb0bde60ae869537528b
 ```
 
 ### Build the image with build arguments
@@ -149,9 +149,9 @@ Example:
 ...
 -e MAIL_HOST=smtp.example.com
 -e MAIL_PORT=587
--e MAIL_FROM_ADDRESS=2fauth@example.com
--e MAIL_FROM_NAME=2fauth
--e MAIL_USERNAME=2fauth@example.com
+-e MAIL_FROM_ADDRESS=2FA-Vault@example.com
+-e MAIL_FROM_NAME=2FA-Vault
+-e MAIL_USERNAME=2FA-Vault@example.com
 -e MAIL_PASSWORD=password1234
 ```
 
@@ -162,5 +162,5 @@ Example:
 - The final Docker image is based on [!badge alpine:3.14](https://hub.docker.com/_/alpine) with minimal packages installed
 - The container runs [`supervisord`](https://github.com/ochinchina/supervisord) to handle both an Nginx server and a PHP-FPM server together
 - The `/srv` directory holds the repository data and PHP code.
-- The `/2fauth` directory is targeted for the container end users.
-- By default, the container logs the Nginx logs and the PHP-FPM logs. The application logs (if any) can be found in `/2fauth/storage/logs`.
+- The `/2FA-Vault` directory is targeted for the container end users.
+- By default, the container logs the Nginx logs and the PHP-FPM logs. The application logs (if any) can be found in `/2FA-Vault/storage/logs`.

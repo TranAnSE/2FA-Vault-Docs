@@ -5,12 +5,12 @@
 
 ## Purpose
 
-Here are the main environment variables that may be set to make 2FAuth work according to its running environment and to meet your needs. It is recommended to review them at least once to ensure minimal requirements are met and to have a picture of what 2FAuth offers in terms of configuration.
+Here are the main environment variables that may be set to make 2FA-Vault work according to its running environment and to meet your needs. It is recommended to review them at least once to ensure minimal requirements are met and to have a picture of what 2FA-Vault offers in terms of configuration.
 
 Asterisks next to the var names aim to identify important vars:
 
-- A blue <span class="expected">asterisk</span> indicates that the var should be set with a suitable value, otherwise 2FAuth may not work as expected.
-- A red <span class="mandatory">asterisk</span> indicates that the var must be set, otherwise 2FAuth will not work at all.
+- A blue <span class="expected">asterisk</span> indicates that the var should be set with a suitable value, otherwise 2FA-Vault may not work as expected.
+- A red <span class="mandatory">asterisk</span> indicates that the var must be set, otherwise 2FA-Vault will not work at all.
 
 !!!primary
 Set only the vars that need to be ajusted. If a var is not set, its default value will be applied.
@@ -22,12 +22,12 @@ Set only the vars that need to be ajusted. If a var is not set, its default valu
 
 You can set environment variables in various ways, depending on the running environment you chose.
 
-- When 2FAuth is deployed directly on a server (e.g. a VM or a bare metal server), the most straightforward method is to edit the `.env` file you should have set up during the [installation process](/getting-started/installation/self-hosted-server.md#set-the-env-file).
+- When 2FA-Vault is deployed directly on a server (e.g. a VM or a bare metal server), the most straightforward method is to edit the `.env` file you should have set up during the [installation process](/getting-started/installation/self-hosted-server.md#set-the-env-file).
 
   !!!secondary
-  The `.env.example` file sets most of these variables for the sole purpose of guiding the user during the configuration of 2FAuth.
+  The `.env.example` file sets most of these variables for the sole purpose of guiding the user during the configuration of 2FA-Vault.
   !!!
-- When running 2FAuth from a Docker container, you can use the `-e "[variable_name]=[new_value]"` or the `--env-file [path_to_env_file]` command-line arguments with the `docker run` command, or set the variables in a _docker-compose_ file.
+- When running 2FA-Vault from a Docker container, you can use the `-e "[variable_name]=[new_value]"` or the `--env-file [path_to_env_file]` command-line arguments with the `docker run` command, or set the variables in a _docker-compose_ file.
 
     [!ref icon="book" target="_blank" text="Ways to set environment variables with Compose"](https://docs.docker.com/compose/environment-variables/set-environment-variables/)
 
@@ -37,7 +37,7 @@ You can set environment variables in various ways, depending on the running envi
 The configuration may have been cached. If so, clear the cache before editing the environment variable:
 
 - Run `php artisan config:clear` OR
-- Delete the file `[2FAuth_directory]/bootstrap/cache/config.php`
+- Delete the file `[twofauth_directory]/bootstrap/cache/config.php`
 
 Once variables have been modified, (re)build the cache by running `php artisan config:cache`
 !!!
@@ -59,7 +59,7 @@ Description
 :   The name of the application. It is used when the app name needs to place in a notification or any other location as required by the application or its packages.
 
 Default value
-:   `2FAuth`
+:   `2FA-Vault`
 
 :::
 
@@ -70,7 +70,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Determines the "environment" 2FAuth is currently running in.
+:   Determines the "environment" 2FA-Vault is currently running in.
 
     If you change it to production, most Artisan console commands will ask for extra confirmation.
 
@@ -113,7 +113,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   When 2FAuth is in debug mode, detailed error messages with stack traces will be shown on every error that occurs within 2FAuth.
+:   When 2FA-Vault is in debug mode, detailed error messages with stack traces will be shown on every error that occurs within 2FA-Vault.
 
     If disabled, a simple generic error page is shown.
 
@@ -171,19 +171,19 @@ Description
 
     ```yml docker-compose.yml
     services:
-      2fauth:
-        image: 2fauth/2fauth
-        container_name: 2fauth
+      2FA-Vault:
+        image: 2FA-Vault/2FA-Vault
+        container_name: 2FA-Vault
         env_file: settings.env
         environment:
           APP_KEY_FILE: /run/secrets/app_key
         volumes:
-          - ./2fauth:/2fauth
+          - ./2FA-Vault:/2FA-Vault
         secrets:
           - app_key
     secrets:
       app_key:
-        file: /2fauth/app_key.txt
+        file: /2FA-Vault/app_key.txt
     ```
 
 Default value
@@ -200,7 +200,7 @@ Default value
 Description
 :   Comma-delimited list of application's former encryption keys.
 
-    When you change [APP_KEY](#app_key), 2FAuth uses `APP_PREVIOUS_KEYS` to decrypt existing data (like session cookies) with old keys, preventing user logouts or data loss after a key rotation.
+    When you change [APP_KEY](#app_key), 2FA-Vault uses `APP_PREVIOUS_KEYS` to decrypt existing data (like session cookies) with old keys, preventing user logouts or data loss after a key rotation.
 
     !!!warning
     Keep this very secure. If you loose it, some encrypted data stored in the database must be considered LOST.
@@ -218,14 +218,14 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   The web address (URL) of your 2FAuth instance, e.g. `https://2fauth.mydomain.com`
+:   The web address (URL) of your 2FA-Vault instance, e.g. `https://2FA-Vault.mydomain.com`
 
     !!!primary
-    Ensure the value you set uses the `https` scheme when 2FAuth is reached through a secure connection
+    Ensure the value you set uses the `https` scheme when 2FA-Vault is reached through a secure connection
     !!!
 
     !!!primary
-    If a custom port is used, it must be appended to the URL: `https://2fauth.mydomain.com:8001`
+    If a custom port is used, it must be appended to the URL: `https://2FA-Vault.mydomain.com:8001`
     !!!
 
     !!!warning
@@ -244,7 +244,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   The URL of your 2FAuth assets (CSS & JS files), e.g. `https://2fauth.cdn.com`
+:   The URL of your 2FA-Vault assets (CSS & JS files), e.g. `https://2FA-Vault.cdn.com`
 
     Only set this variable if you want to serve assets from a location other than your primary server, such as a CDN. Otherwise, do not set this variable.
 
@@ -260,7 +260,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   The domain subdirectory from which you want to serve 2FAuth.
+:   The domain subdirectory from which you want to serve 2FA-Vault.
 
     !!!warning
     This must reflect the path targeted by [APP_URL](#app_url).
@@ -268,9 +268,9 @@ Description
 
     Example:
 
-    If you previously set `APP_URL` to `https://mydomain.org/2fa` to access 2FAuth from the `/2fa/` subdirectory, you have to set `APP_SUBDIRECTORY=2fa`.
+    If you previously set `APP_URL` to `https://mydomain.org/2fa` to access 2FA-Vault from the `/2fa/` subdirectory, you have to set `APP_SUBDIRECTORY=2fa`.
 
-    Leave blank if you serve 2FAuth from the domain root.
+    Leave blank if you serve 2FA-Vault from the domain root.
 
 Default value
 :   _blank_
@@ -284,12 +284,12 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Makes the 2FAuth instance behave like a demonstration app.
+:   Makes the 2FA-Vault instance behave like a demonstration app.
 
     In Demo mode, the app displays some banners and disables certain features such as the password reset.
     
     !!!primary
-    You can feed a demo app with fake data using the artisan command `php artisan 2fauth:reset-demo`.
+    You can feed a demo app with fake data using the artisan command `php artisan 2FA-Vault:reset-demo`.
     
     Setting `IS_DEMO_APP` to `true` is mandatory for this command to run.
     !!!
@@ -372,9 +372,9 @@ Description
 :   The default guard to handle web authentications, such as login/password or webauthn.
 
 `reverse-proxy-guard`
-:   A guard to handle authentication previously made by an auth proxy (like nginx or authelia) in front of 2FAuth.
+:   A guard to handle authentication previously made by an auth proxy (like nginx or authelia) in front of 2FA-Vault.
 
-    2FAuth only look for the dedicated headers and skip all other built-in authentication checks. That means your proxy is fully responsible of the authentication process, 2FAuth will trust him as long as headers are presents.
+    2FA-Vault only look for the dedicated headers and skip all other built-in authentication checks. That means your proxy is fully responsible of the authentication process, 2FA-Vault will trust him as long as headers are presents.
 
     Additional variable is required to be set with this guard:
 
@@ -457,7 +457,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Custom logout URL to open when a user clicks the _Logout_ link in 2FAuth.  
+:   Custom logout URL to open when a user clicks the _Logout_ link in 2FA-Vault.  
     In most case this would send the user to the logout page of your authentication proxy.
 
     Only relevant when [AUTHENTICATION_GUARD](#authentication_guard) is set to `reverse-proxy-guard`.
@@ -490,7 +490,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   ID of the Relying Party in the WebAuthn process. This should equal the application domain (i.e 2fauth.example.com).
+:   ID of the Relying Party in the WebAuthn process. This should equal the application domain (i.e 2FA-Vault.example.com).
 
     While only the [WEBAUTHN_NAME](#webauthn_name) is enough, you can further set a custom domain as ID.  
     If set to `null`, the device will fill it internally.
@@ -546,7 +546,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   The default cache store used by 2FAuth when executing caching functions
+:   The default cache store used by 2FA-Vault when executing caching functions
 
 :::
 
@@ -662,7 +662,7 @@ Description
     !!!
 
 Default value
-:   `2fauth`
+:   `2FA-Vault`
 
 :::
 
@@ -714,7 +714,7 @@ Description
     Does not apply to `sqlite`.
 
 Default value
-:   `2fauth`
+:   `2FA-Vault`
 
 :::
 
@@ -782,7 +782,7 @@ Description
 
     `mysql://root:password@127.0.0.1/forge?charset=UTF-8`
 
-    If set, 2FAuth will use it to extract the database connection and credential information. Other `DB_*` vars are then useless.
+    If set, 2FA-Vault will use it to extract the database connection and credential information. Other `DB_*` vars are then useless.
 
 Default value
 :   _none_
@@ -815,7 +815,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   The default mailer that is used to send any email messages sent by 2FAuth.
+:   The default mailer that is used to send any email messages sent by 2FA-Vault.
 
 :::
 
@@ -984,7 +984,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Name that is used globally for all e-mails that are sent by 2FAuth
+:   Name that is used globally for all e-mails that are sent by 2FA-Vault
 
 Default value
 :   `Example`
@@ -998,7 +998,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Address that is used globally for all e-mails that are sent by 2FAuth
+:   Address that is used globally for all e-mails that are sent by 2FA-Vault
 
 Default value
 :   `hello@example.com`
@@ -1059,14 +1059,14 @@ Description
 :::sub-dl-wrapper
 
 `daily`
-:   Gives you 7 daily rotated log files in `[2FAuth_directory]/storage/logs/`.
+:   Gives you 7 daily rotated log files in `[twofauth_directory]/storage/logs/`.
 
     Additional variable may be set to change the number of files:
     
     - [LOG_DAILY_DAYS](#log_daily_days)
 
 `single`
-:   Gives you one big fat error log file at in `[2FAuth_directory]/storage/logs/laravel.log`
+:   Gives you one big fat error log file at in `[twofauth_directory]/storage/logs/laravel.log`
 
 `errorlog`
 :   Writes entries to the error log
@@ -1253,7 +1253,7 @@ Default value
 Description
 :   A comma separated IP list of trusted proxies.
 
-    When running 2FAuth behind a proxy that terminates TLS / SSL certificates, you may face some errors. Typically this is because 2FAuth is being forwarded traffic from the proxy on port 80 and does not know it should generate secure links.
+    When running 2FA-Vault behind a proxy that terminates TLS / SSL certificates, you may face some errors. Typically this is because 2FA-Vault is being forwarded traffic from the proxy on port 80 and does not know it should generate secure links.
 
     Set to `*` to trust any proxy.
 
@@ -1269,7 +1269,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Proxy for outgoing requests, like SSO connection, 2FAuth releases detection or logo fetching.
+:   Proxy for outgoing requests, like SSO connection, 2FA-Vault releases detection or logo fetching.
 
     You can provide a proxy URL that contains a scheme, username, and password. For example `http://username:password@192.168.16.1:10`.
 
@@ -1389,11 +1389,11 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Prevents 2FAuth to fetch image resources linked in OTPauth URIs (encoded in QR Code).
+:   Prevents 2FA-Vault to fetch image resources linked in OTPauth URIs (encoded in QR Code).
 
     This is mainly used as a defense against Blind Server-Side Request Forgery (SSRF) attacks, in which the application can be induced to issue a back-end HTTP request to a supplied URL without this being visible from the frontend.
 
-    If fetching is allowed, 2FAuth mitigates the risk of Blind SSRF attacks by filtering image link urls. Only public (aka external), HTTP(S) and valid URLs pointing to supported image files are requested.
+    If fetching is allowed, 2FA-Vault mitigates the risk of Blind SSRF attacks by filtering image link urls. Only public (aka external), HTTP(S) and valid URLs pointing to supported image files are requested.
 
 Default value
 :   `true`
@@ -1425,7 +1425,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   The default session driver used by 2FAuth to store sessions
+:   The default session driver used by 2FA-Vault to store sessions
 
 :::
 
@@ -1453,7 +1453,7 @@ Description
     See <a href="https://laravel.com/docs/session#database" target="_blank">how to configure the Database driver</a> on the Laravel documentation.
 
 `file`
-:   Sessions are stored in `[2FAuth_directory]/storage/framework/sessions`
+:   Sessions are stored in `[twofauth_directory]/storage/framework/sessions`
 
 `memcached`
 :   Sessions are stored in Memcached.
@@ -1519,7 +1519,7 @@ Default value
 Description
 :   While using one of the framework's cache driven session backends you may list a cache store that should be used for these sessions.
 
-    This value must match with one of the 2FAuth's configured cache stores.
+    This value must match with one of the 2FA-Vault's configured cache stores.
 
 Accepted values
 :   `apc`, `dynamodb`, `memcached`, `redis`
@@ -1555,10 +1555,10 @@ Default value
 Description
 :   Name of the cookie used to identify a session instance by ID.
 
-    The name specified here will get used every time a new session cookie is created by 2FAuth for every driver.
+    The name specified here will get used every time a new session cookie is created by 2FA-Vault for every driver.
 
 Default value
-:   `2fauth_session`
+:   `twofauth_session`
 
 :::
 
@@ -1569,12 +1569,12 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Domain of the cookie used to identify a session in 2FAuth.
+:   Domain of the cookie used to identify a session in 2FA-Vault.
 
-    This will determine which domains the cookie is available to in 2FAuth.
+    This will determine which domains the cookie is available to in 2FA-Vault.
 
 Default value
-:   Fallbacks to the 2FAuth instance domain
+:   Fallbacks to the 2FA-Vault instance domain
 
 :::
 
@@ -1675,7 +1675,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Secret known only to 2FAuth and the Open ID authorization server
+:   Secret known only to 2FA-Vault and the Open ID authorization server
 
 Default value
 :   _none_
@@ -1724,7 +1724,7 @@ Default value
 :::env-var-dl-wrapper
 
 Description
-:   Secret known only to 2FAuth and Github
+:   Secret known only to 2FA-Vault and Github
 
 Default value
 :   _none_

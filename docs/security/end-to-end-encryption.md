@@ -3,7 +3,7 @@ order: 80
 ---
 # End-to-end encryption
 
-2FA-Vault adds a zero-knowledge vault encryption flow on top of the upstream 2FAuth security model.
+2FA-Vault adds a zero-knowledge vault encryption flow on top of the upstream 2FA-Vault security model.
 
 In this mode, the browser or browser extension derives a vault key from the user's master password with Argon2id, then encrypts OTP secrets with AES-GCM before sending account data to the server. The server stores only metadata and ciphertext:
 

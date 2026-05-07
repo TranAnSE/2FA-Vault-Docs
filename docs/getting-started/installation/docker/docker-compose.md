@@ -2,7 +2,7 @@
 
 ## Basic setup
 
-You can run 2FAuth with [Docker-Compose](https://docs.docker.com/compose/) using the following command and this basic `docker-compose.yml` file:
+You can run 2FA-Vault with [Docker-Compose](https://docs.docker.com/compose/) using the following command and this basic `docker-compose.yml` file:
 
 ```bash
 docker-compose up
@@ -16,15 +16,15 @@ Another way to set your environment vars is to add them to the `environment` att
 
 ```yml:highlight="9-14"
 services:
-  2fauth:
-    image: 2fauth/2fauth:${TAG:-latest}
-    container_name: 2fauth
+  2FA-Vault:
+    image: 2FA-Vault/2FA-Vault:${TAG:-latest}
+    container_name: 2FA-Vault
     volumes:
-      - ./2fauth:/2fauth
+      - ./2FA-Vault:/2FA-Vault
     ports:
       - 8000:8000/tcp
     environment:
-      APP_URL: https://2fauth.domain.com
+      APP_URL: https://2FA-Vault.domain.com
       APP_KEY: "base64:ppkbvJDIlKDv+HgCcgqHtN1gcvbYCDDSU7Y1Y0wBwqg="
       APP_ENV: production
       DB_CONNECTION: sqlite
@@ -41,7 +41,7 @@ If you need to rotate the key, use the [`APP_PREVIOUS_KEYS`](/getting-started/co
 
 ## Using Docker secrets
 
-Since 2FAuth v6.0, sensitive data like passwords may be handled using Docker secrets. The docker image supports the `_FILE` convention for environment variables that receive sensitive data from a bind mount secret.
+Since 2FA-Vault v6.0, sensitive data like passwords may be handled using Docker secrets. The docker image supports the `_FILE` convention for environment variables that receive sensitive data from a bind mount secret.
 
 ||| Supported variables
 `APP_KEY_FILE`  
@@ -58,16 +58,16 @@ In the following example, `APP_KEY_FILE` is set using the injected `app_key` doc
 
 ```yml:highlight="12,16-17,19-21"
 services:
-  2fauth:
+  2FA-Vault:
     env_file: settings.env
-    image: 2fauth/2fauth:${TAG:-latest}
-    container_name: 2fauth
+    image: 2FA-Vault/2FA-Vault:${TAG:-latest}
+    container_name: 2FA-Vault
     volumes:
-      - ./2fauth:/2fauth
+      - ./2FA-Vault:/2FA-Vault
     ports:
       - 8000:8000/tcp
     environment:
-      APP_URL: https://2fauth.domain.com
+      APP_URL: https://2FA-Vault.domain.com
       APP_KEY_FILE: /run/secrets/app_key
       APP_ENV: production
       DB_CONNECTION: sqlite
@@ -77,7 +77,7 @@ services:
 
 secrets:
   app_key:
-    file: /2fauth/app_key.txt
+    file: /2FA-Vault/app_key.txt
 ```
 
 !!!warning

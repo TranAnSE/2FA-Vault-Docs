@@ -6,7 +6,7 @@ order: 1000
 
 ## Admin role
 
-The very first account created is automatically set up as an administrator account. Administrators have access to a dedicated area where they can manage global application settings as well as the user base. Click on the _Admin_ link in the 2FAuth footer to access it.
+The very first account created is automatically set up as an administrator account. Administrators have access to a dedicated area where they can manage global application settings as well as the user base. Click on the _Admin_ link in the 2FA-Vault footer to access it.
 
 ### Granted permissions
 
@@ -53,12 +53,12 @@ In addition to environment information, the _Admin > App Setup_ page provides ad
 
 ### Version checking
 
-2FAuth can automatically check if a new version has been released. When enabled, a request will be made to GitHub every week to retrieve the latest version number. You can also run the check manually by clicking the [!button size="xs" corners="pill" text="Check now"] button.
+2FA-Vault can automatically check if a new version has been released. When enabled, a request will be made to GitHub every week to retrieve the latest version number. You can also run the check manually by clicking the [!button size="xs" corners="pill" text="Check now"] button.
 
-A new available version is reported to the administrators in the 2FAuth footer and the _App Setup_ page.
+A new available version is reported to the administrators in the 2FA-Vault footer and the _App Setup_ page.
 
 :::mobile-screen
-![The new version indicator in the 2FAuth footer](/static/new_version_available.png)
+![The new version indicator in the 2FA-Vault footer](/static/new_version_available.png)
 :::
 
 :::mobile-screen
@@ -73,12 +73,12 @@ If so, set the [PROXY_FOR_OUTGOING_REQUESTS](/getting-started/config/env-vars/#p
 
 ### Email testing
 
-2FAuth requires a valid [email configuration](/getting-started/config/env-vars/#email-setting) to send emails to users. Features like password reset will not work otherwise.
+2FA-Vault requires a valid [email configuration](/getting-started/config/env-vars/#email-setting) to send emails to users. Features like password reset will not work otherwise.
 
 Click the [!button variant="primary" icon="paper-airplane" iconAlign="left" corners="pill" text="Send" size="xs"] button to send a test email. The email will be sent to the email address registered with the [MAIL_FROM_ADDRESS](/getting-started/config/env-vars/#mail_from_address) environment variable.
 
 !!!warning
-2FAuth cannot guarantee whether or not the email was successfully sent because it does not control the entire distribution process. It will display any potential errors that it can handle.
+2FA-Vault cannot guarantee whether or not the email was successfully sent because it does not control the entire distribution process. It will display any potential errors that it can handle.
 
 [Check your logs](/getting-started/troubleshooting/#check-logs) in case the email was never delivered. They might provide more information about the issue.
 !!!
@@ -87,9 +87,9 @@ Click the [!button variant="primary" icon="paper-airplane" iconAlign="left" corn
 
 #### File system storage
 
-By default, 2FAuth stores icons in the server filesystem (or the bind-mounted volume of the Docker container) at `[2FAuth_install_dir]/storage/app/public/icons/`. This directory is exposed by the web server via the `[2FAuth_install_dir]/public/storage` symlink so icons can be accessed by browsers using URLs like `https://2fauth.myserver.com/storage/icons/L0Oz2D63gG74LYcZMILN60aHBBPeoydXbja0sVQm.png`.
+By default, 2FA-Vault stores icons in the server filesystem (or the bind-mounted volume of the Docker container) at `[twofauth_install_dir]/storage/app/public/icons/`. This directory is exposed by the web server via the `[twofauth_install_dir]/public/storage` symlink so icons can be accessed by browsers using URLs like `https://2FA-Vault.myserver.com/storage/icons/L0Oz2D63gG74LYcZMILN60aHBBPeoydXbja0sVQm.png`.
 
-As the example URL above suggests, each icon file is stored under a unique name consisting of a 40-character random string. This prevents name collisions and makes the file names almost impossible to guess. Icons must exist in `[2FAuth_install_dir]/storage/app/public/icons/`; otherwise 2FAuth gracefully replaces them with a visual placeholder until you set up new ones.
+As the example URL above suggests, each icon file is stored under a unique name consisting of a 40-character random string. This prevents name collisions and makes the file names almost impossible to guess. Icons must exist in `[twofauth_install_dir]/storage/app/public/icons/`; otherwise 2FA-Vault gracefully replaces them with a visual placeholder until you set up new ones.
 
 :::desktop-screen
 ![missing icons replaced with placeholder](/static/icon-missing.png)
@@ -100,10 +100,10 @@ As the example URL above suggests, each icon file is stored under a unique name 
 When you enable the [!badge size="l" icon="checkbox" text="Store icons to database"] option, all registered icons are immediately serialized and stored in the `icons` table of the database. By "registered" we mean icons that are linked to a 2FA account record; any orphan icon files found during this operation are deleted. Storing icons in the database simplifies backups, since all 2FA data are kept in one place.
 
 !!!
-Although icons are stored in the database, the `storage/app/public/icons/` directory is still required. It acts as a cache to speed up file serving. If an icon file is deleted from that location, 2FAuth recreates it on the fly using the database record.
+Although icons are stored in the database, the `storage/app/public/icons/` directory is still required. It acts as a cache to speed up file serving. If an icon file is deleted from that location, 2FA-Vault recreates it on the fly using the database record.
 !!!
 
-It is possible to switch back to filesystem storage at any time. 2FAuth will verify that all icons have a corresponding file in the dedicated directory and will then clear the `icons` table.
+It is possible to switch back to filesystem storage at any time. 2FA-Vault will verify that all icons have a corresponding file in the dedicated directory and will then clear the `icons` table.
 
 ### Security
 
@@ -128,14 +128,14 @@ This is an authorization pattern, only email addresses that meet a condition are
 Once the [!badge size="l" icon="checkbox" text="Restrict registration"] setting is enabled in _Admin > App Setup_, there are 2 ways to define the registration policy:
 
 The filtering list
-:   Email addresses from this list are allowed to register on 2FAuth.
+:   Email addresses from this list are allowed to register on 2FA-Vault.
 
     Separate the addresses with a `|`. All must be valid email addresses. Ex: `john@example.org|jane@example.net`
 
     Leave the field blank to disable the filter.
 
 The filtering rule
-:   Email addresses that match a regular expression are allowed to register on 2FAuth.
+:   Email addresses that match a regular expression are allowed to register on 2FA-Vault.
 
     For example, here is the regex to allow registering using any `@example.org` email address :
     
@@ -195,10 +195,10 @@ Possible actions:
 [!button size="xs" text="Revoke"] (<abbr title="Personal Access Token">PAT</abbr>)
 :   Revokes all of the user's [Personal Access Tokens](/api/#authentication).
 
-    Once their PATs have been revoked, the user will no longer be able to authenticate to the 2FAuth API.
+    Once their PATs have been revoked, the user will no longer be able to authenticate to the 2FA-Vault API.
 
     !!!warning
-    This action is irreversible. Revoked tokens are not searchable, cannot be recovered, and cannot be deleted from the 2FAuth pages.
+    This action is irreversible. Revoked tokens are not searchable, cannot be recovered, and cannot be deleted from the 2FA-Vault pages.
     !!!
     
     If for some reason you need to purge revoked (or expired) tokens, run the following Artisan commands:
@@ -216,7 +216,7 @@ Possible actions:
     If the user has checked the [!badge size="l" icon="checkbox" text="Use WebAuthn only"] option at _Settings > WebAuthn_, revoking their security devices will reset the option so they can log in with their username and password.
 
     !!!warning
-    This action is irreversible. Revoked devices are not searchable and cannot be recovered from the 2FAuth pages.
+    This action is irreversible. Revoked devices are not searchable and cannot be recovered from the 2FA-Vault pages.
     !!!
 
 ### User deletion
@@ -237,6 +237,6 @@ There must always be at least one administrator. The last administrator account 
 
 ## Health check
 
-2FAuth provides a special URL to check its health: `/up`
+2FA-Vault provides a special URL to check its health: `/up`
 
 This is a very lightweight resource that responds with a `200` HTTP status code when the application is up and running. It can be used to set up a Docker HEALTHCHECK or a Kubernetes HTTPS liveness probe.
