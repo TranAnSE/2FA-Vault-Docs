@@ -1,10 +1,10 @@
-# 2FAuth-Docs
+# 2FA-Vault Docs
 
-Repository used to edit the [2FAuth Documentation](https://docs.2fauth.app)
+Repository used to edit the public documentation for 2FA-Vault.
 
-2FAuth is a web based self-hosted alternative to One Time Passcode (OTP) generators like Google Authenticator, designed for both mobile and desktop.
+2FA-Vault is a personal fork of 2FAuth. It keeps the upstream self-hosted OTP vault behavior and documents fork-specific work around end-to-end encryption, encrypted backups, teams, web push, and browser-extension encrypted vault sync.
 
-2FAuth main repository: <https://github.com/Bubka/2FAuth>
+2FA-Vault main repository: <https://github.com/TranAnSE/2FA-Vault>
 
 ## Validation
 

@@ -5,6 +5,8 @@ order: 90
 
 2FAuth provides several security mechanisms to protect your sensitive 2FA data, at administrator or user level.
 
+2FA-Vault also supports fork-specific [end-to-end encryption](/security/end-to-end-encryption/). That flow is separate from the database encryption option below: E2EE encrypts account secrets in the client before they reach the server, while DB encryption encrypts selected fields on the server with `APP_KEY`.
+
 ---
 
 ## For administrators

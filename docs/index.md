@@ -1,9 +1,9 @@
 ---
 label: Welcome
 ---
-# Welcome to 2FAuth Docs
+# Welcome to 2FA-Vault Docs
 
-> 2FAuth is a web based self-hosted alternative to One Time Passcode (OTP) generators like Google Authenticator, designed for both mobile and desktop.
+> 2FA-Vault is a personal fork of 2FAuth. It is a self-hosted OTP vault for desktop, mobile web, PWA usage, and a browser extension, with fork-specific work around end-to-end encryption, teams, encrypted backups, and web push.
 
 <style>
     html.dark .light-screen,
@@ -24,13 +24,17 @@ label: Welcome
 
 ---
 
-## Why 2FAuth
+## Why 2FA-Vault
 
 Two-Factor Authentication has become very popular in recent years, resulting in more and more situations where we face a security code request and an increase in the number of accounts protected by this technology. In other words, 2FA is now inevitable and critical.
 
-2FAuth's purpose is to simplify how you use and manage your 2FA with a clean and suitable interface, no matter what device you use. In front of your computer without your smartphone and dealing with a code request? No problemo, just open your 2FAuth instance in a browser tab and voilà!
+2FA-Vault's purpose is to simplify how you use and manage your 2FA with a clean web interface while keeping the deployment model familiar for existing 2FAuth users.
 
 Moreover, as an open source and self-hosted application, it lets you regain control over your personal security data, giving you privacy and the ability to back it up (Have you lost a smartphone with all your 2FA accounts inside Google Auth? I did... it really sucked)
+
+!!!warning Fork status
+This documentation targets the 2FA-Vault fork, not the official 2FAuth release. Upstream 2FAuth behavior still applies where unchanged, but fork-only features such as E2EE, team sharing, encrypted backups, web push, and encrypted extension sync require a 2FA-Vault instance.
+!!!
 
 ## Features
 
@@ -52,11 +56,19 @@ Manage your 2FA accounts, organize and classify them using Groups, edit & delete
 
 #### :icon-shield-check: Protect your data
 
-2FAuth protects your data with Privacy, Self-hosting, Encryption, WebAuthn authentication, OTP obfuscation, and Auto lock.
+2FA-Vault protects your data with privacy-first self-hosting, WebAuthn authentication, OTP obfuscation, auto lock, optional legacy database encryption, and fork-specific end-to-end encryption.
 
 #### :icon-people: Multi-user
 
 Share your instance with your family, your friends. Everyone can have an account.
+
+#### :icon-organization: Teams
+
+Create teams, invite members, assign roles, and share selected accounts with explicit access levels.
+
+#### :icon-lock: End-to-end encryption
+
+When vault encryption is enabled, clients derive keys locally with Argon2id and encrypt secrets with AES-GCM. The server stores salt, encrypted verification payloads, vault lock state, and ciphertext, but not master passwords or derived keys.
 
 #### :icon-arrow-switch: Import / Export
 
@@ -64,21 +76,15 @@ Migrate from another 2FA app to 2FAuth or export your 2FA data in a breeze.
 
 ## REST API
 
-2FAuth provides a REST API which lets you perform most of its functionalities from any external application. Have a look at the [API documentation](/api/) to find out how to use it.
-
-## Demo website
-
-Want to try 2FAuth? A demo is available at <https://demo.2fauth.app>
-
-You can connect using the email address `demo@2fauth.app` and the password `demo`. The demo is reset every hour.
+2FA-Vault provides a REST API which lets you perform most of its functionalities from any external application. Have a look at the [API documentation](/api/) to find out how to use it.
 
 ## Browser extensions
 
-By design, 2FAuth is always at your fingertips: Through a pinned tab, shortcuts, or PWA installation. Browser extensions complement this feature by offering OTP generation directly from your browser toolbar.
+By design, 2FA-Vault is always at your fingertips through a pinned tab, shortcuts, PWA installation, or browser extension. Browser extensions complement this feature by offering OTP generation directly from your browser toolbar.
 
 When vault encryption is enabled, the extension now unlocks against your vault metadata and reads encrypted account payloads without requiring server-side decryption. The derived vault key is stored only in browser session storage when available and is cleared again when the extension locks.
 
-Note: You must have a running instance of 2FAuth to use these extensions; they are not standalone.
+Note: You must have a running 2FA-Vault instance to use the forked extension; it is not standalone.
 
 <figure class="content-left">
     <a href="https://chromewebstore.google.com/detail/2fauth-beta/kokhpbhfeokchmbimdlaldcmlinjpipm" target="_blank">
