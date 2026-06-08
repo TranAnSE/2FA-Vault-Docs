@@ -31,6 +31,28 @@ HOTP accounts can advance their counter through `PATCH /api/v1/twofaccounts/{id}
 
 The forked browser extension can unlock an encrypted vault using the same metadata as the web app. After unlock, it decrypts account payloads locally and generates OTPs in the popup session. Locking the extension clears the derived key and decrypted account data from the extension session.
 
+## Biometric unlock
+
+After setting up vault encryption, you can enroll a WebAuthn platform authenticator (fingerprint, Face ID, Windows Hello, etc.) as an alternative to typing the master password on every unlock.
+
+During enrollment, the browser prompts for biometric verification, then stores the encrypted master password in IndexedDB protected by a locally-generated AES-GCM key. On subsequent unlocks, biometric verification is required to decrypt the stored master password and derive the vault key — the master password itself is never stored in plaintext.
+
+Biometric enrollment is available in **Settings → Encryption** and in the extension popup's unlock screen. The feature is opt-in and the master-password path always remains available as a fallback.
+
+## Key sharing for teams
+
+Team owners can share encrypted OTP secrets with members without the server ever learning the plaintext secret. Each user maintains an RSA-2048 key pair: the public key is registered on the server; the private key stays only in the user's browser (IndexedDB).
+
+When sharing, the owner:
+1. Decrypts the account secret locally using their vault key.
+2. Fetches each recipient member's public key from the server.
+3. Encrypts the secret with RSA-OAEP using each member's public key.
+4. Uploads the per-member wrapped keys via `POST /api/v1/teams/{id}/share-encrypted`.
+
+When a member views shared accounts, they receive their personal `wrapped_key` and decrypt it locally with their private key to generate OTPs. The server stores only opaque ciphertext.
+
+See [Teams and encrypted backups](/usage/teams-and-backups/) for the full workflow.
+
 ## Legacy database encryption
 
 2FA-Vault still documents the upstream database encryption option separately. Legacy DB encryption depends on `APP_KEY` and protects fields at rest on the server. E2EE is different: account secrets are encrypted before they reach the server.

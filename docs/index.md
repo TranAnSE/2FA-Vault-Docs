@@ -74,6 +74,42 @@ When vault encryption is enabled, clients derive keys locally with Argon2id and 
 
 Migrate from another 2FA app to 2FA-Vault or export your 2FA data in a breeze.
 
+#### :icon-tag: Tags & advanced search
+
+Label accounts with colour-coded tags and filter your vault by OTP type, algorithm, group, tag combination, or last-used date. Filters can be saved as named presets.
+
+#### :icon-pulse: Vault health
+
+The admin vault-health dashboard scores your vault 0–100, highlights duplicate secrets, flags accounts unused for 90+ days, and rates secret strength by entropy and algorithm.
+
+#### :icon-share: Encrypted key sharing
+
+Team owners can share encrypted OTP secrets with individual members using RSA-OAEP key wrapping. The server stores only ciphertext — it never sees plaintext secrets or derived keys.
+
+#### :icon-shield-check: Biometric unlock
+
+Enable fingerprint or Face ID unlock for the web app and browser extension using the WebAuthn platform authenticator. The encrypted master key is stored locally; biometric authentication is required to decrypt it.
+
+#### :icon-person: Emergency access
+
+Designate trusted contacts who can request access to your vault. You choose the wait period (7–90 days) and access level. If you do not respond within the window, access is granted automatically.
+
+#### :icon-stack: Multiple vaults
+
+Create up to ten independent vaults, each with its own master password and E2EE key. Switch vaults to separate personal, work, or client accounts.
+
+#### :icon-clock: Team activity log
+
+Every team action — member join/leave, account share/unshare, role change — is recorded in a searchable activity log. Owners and admins can export the log as JSON.
+
+#### :icon-webhook: Webhooks
+
+Subscribe to account, team, and auth events and receive signed HTTP POST notifications. Supports retry with exponential back-off and tracks delivery history per endpoint.
+
+#### :icon-browser: Browser auto-fill
+
+The browser extension detects 2FA input fields on web pages, matches the domain against your vault, and fills the OTP automatically. Auto-fill is opt-in and clears the code from the page after 30 seconds.
+
 ## REST API
 
 2FA-Vault provides a REST API which lets you perform most of its functionalities from any external application. Have a look at the [API documentation](/api/) to find out how to use it.
