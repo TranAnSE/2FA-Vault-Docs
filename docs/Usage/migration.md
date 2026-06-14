@@ -95,6 +95,21 @@ Whatever the export format (both are supported by 2FA-Vault), __uncheck the encr
 Save (and secure) the migration file, you are ready to import your accounts into 2FA-Vault
 !!!
 
+### Other supported formats
+
+In addition to the apps above, 2FA-Vault can import the following migration file formats. Export the file from the source app as plain JSON (decrypt it first if the app encrypted the export), then follow the [Importing into 2FA-Vault](#importing-into-2FA-Vault) step.
+
+| Format | Source app | Notes |
+|--------|------------|-------|
+| **Authy (BETA)** | Authy | Use the Authy BETA/GUI export. Remove any encryption before importing. |
+| **Raivo** | Raivo Authenticator | Raivo JSON export. |
+| **andOTP** | andOTP | Plain (unencrypted) andOTP JSON backup. |
+| **FreeOTP+** | FreeOTP+ | FreeOTP+ JSON export (key URI / token list). |
+
+!!!warning Decrypt before importing
+2FA-Vault cannot read password-protected or encrypted exports. Disable encryption in the source app when exporting, then re-secure the resulting file yourself.
+!!!
+
 ---
 
 ## Importing into 2FA-Vault

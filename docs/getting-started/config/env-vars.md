@@ -1294,6 +1294,44 @@ Default value
 
 :::
 
+## Metrics setting
+
+See [Prometheus metrics](/security/prometheus-metrics/) for endpoint usage and a sample scrape configuration.
+
+### METRICS_ALLOWED_IPS
+
+[!badge variant="info" text="string"] [!badge variant="info" text="since v1.2.0"]
+
+:::env-var-dl-wrapper
+
+Description
+:   Comma-separated list of IPs or CIDRs allowed to scrape the `/metrics` endpoint without a bearer token.
+
+    Example: `192.168.1.0/24,10.0.0.5`
+
+    Leave blank to require a token for every request.
+
+Default value
+:   _none (metrics endpoint disabled)_
+
+:::
+
+### METRICS_TOKEN
+
+[!badge variant="info" text="string"] [!badge variant="info" text="since v1.2.0"]
+
+:::env-var-dl-wrapper
+
+Description
+:   Bearer token accepted by the `/metrics` endpoint when the request does not come from an allowed IP.
+
+    Use a random string of at least 32 characters. Pass it as `Authorization: Bearer <METRICS_TOKEN>`.
+
+Default value
+:   _none (metrics endpoint disabled)_
+
+:::
+
 ## Security setting
 
 ### HASH_DRIVER

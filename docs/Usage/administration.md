@@ -45,6 +45,10 @@ An administrator account is identified as such by a banner in the _Settings > Ac
 ![The administrator banner](/static/admin_account_banner.png)
 :::
 
+### Email invitations
+
+Administrators can invite new users by email instead of creating accounts by hand. Invitation links are valid for 7 days, skip the registration-open check, and can assign a role at invitation time. Pending invitations can be revoked. See [Email invitations](/usage/email-invitations/).
+
 ---
 
 ## Application setup
