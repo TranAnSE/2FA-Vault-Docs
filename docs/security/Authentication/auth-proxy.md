@@ -5,8 +5,9 @@ You can configure 2FA-Vault to let an HTTP proxy handle authentication. In this 
 2FA-Vault will check for an HTTP header, named `REMOTE_USER` by default, in every request from the proxy. (see <a href="https://datatracker.ietf.org/doc/html/rfc3875#section-4.1.10" target="_blank">RFC3875</a>)
 
 !!!warning
-2FA-Vault only check for the header presence, nor its validity nor its content, so be sure your instance cannot be reached otherwise than through your auth proxy.
+The `REMOTE_USER` header is only honoured when the request comes from a **trusted proxy**. Set `TRUSTED_PROXIES` to the IP address(es) of your reverse proxy (never `*`) so that clients reaching the app directly cannot forge the header to impersonate users or auto-create an admin account.
 !!!
+
 
 ---
 
