@@ -1257,6 +1257,10 @@ Description
 
     Set to `*` to trust any proxy.
 
+    !!!warning
+    When using the `reverse-proxy-guard`, this value **must** be set to your real proxy IP(s) (never `*`). The guard only honours the `REMOTE_USER` identity header from trusted proxies, so a specific list prevents header spoofing and unauthorised admin auto-creation.
+    !!!
+
 Default value
 :   `null`
 
@@ -1738,6 +1742,22 @@ Possible values
 
 Default value
 :   `true`
+
+:::
+
+### OTP_LOG_RETENTION
+
+[!badge variant="info" text="number"] [!badge variant="info" text="since v1.3.0"]
+
+:::env-var-dl-wrapper
+
+Description
+:   The OTP generation log retention time, in days.
+
+    Each time a user generates a one-time password for a stored account, an entry is recorded in the OTP generation log. Entries older than this value are purged by the scheduled `php artisan 2fauth:purge-otp-log` command.
+
+Default value
+:   `365`
 
 :::
 
