@@ -107,6 +107,40 @@ You need read/write access to the server hosting 2FA-Vault to perform this actio
 
 Icon packs must be stored in `[twofauth_install_dir]/storage/app/iconPacks/`. Making an icon pack available is as simple as copying its folder to that location. If you run 2FA-Vault in a Docker container, the directory `storage/app/iconPacks/` should be part of the bind-mounted volume you configured. Create it if it doesn't exist.
 
+#### From a zip file (artisan command)
+
+If you have a pack as a `.zip` archive, you can install it without manually
+unzipping on the server:
+
+```bash
+php artisan 2fauth:install-icon-pack /path/to/pack.zip my-pack
+```
+
+This extracts every supported image file (`.svg`, `.png`, `.webp`, `.jpg`,
+`.jpeg`, `.bmp`) from the archive into `storage/app/iconPacks/my-pack/`,
+skipping directories and dotfiles. Nested paths are flattened, so pack zips
+should contain a flat collection of `<service>.svg` style files. Existing
+files with the same name are overwritten. The pack name is slug-safe
+sanitised.
+
+#### Offline-only mode (privacy)
+
+For deployments that must never contact an external icon provider, set:
+
+```env
+ICON_OFFLINE_ONLY=true
+```
+
+When enabled, 2FA-Vault never queries the online collections (selfh.st,
+dashboardicons.com, 2fa.directory) for icons — not even as a fallback. Only
+locally-installed icon packs are used, so the list of services a user has
+2FA for is never disclosed to a third party. Combine this with at least one
+installed pack (see above) so users still get icons where matches exist.
+
+This is independent of the per-user _Get official icons_ preference and of
+the `BLOCK_OPTAUTH_IMAGELINK_FETCHING` SSRF guard, which cover different
+code paths.
+
 ||| Example
 
 ![The Social-Media folder](/static/iconpack_content.png)--

@@ -1442,6 +1442,31 @@ Default value
 
 :::
 
+### ICON_OFFLINE_ONLY
+
+[!badge variant="info" text="boolean"] [!badge variant="info" text="since v1.3.0"]
+
+:::env-var-dl-wrapper
+
+Description
+:   Forces 2FA-Vault to use only locally-installed icon packs and to never
+    contact external icon providers (selfh.st, dashboardicons.com,
+    2fa.directory), even as a fallback.
+
+    This is a privacy control: it ensures the list of services a user has
+    two-factor authentication for is never disclosed to a third party. Pair
+    it with at least one installed pack (see
+    [Icons > Adding an icon pack](/usage/icons/#adding-an-icon-pack)) so
+    users still get icons where matches exist.
+
+    This is independent of the per-user _Get official icons_ preference and
+    of `BLOCK_OPTAUTH_IMAGELINK_FETCHING`, which cover different code paths.
+
+Default value
+:   `false`
+
+:::
+
 ### CONTENT_SECURITY_POLICY
 
 [!badge variant="info" text="boolean"] [!badge variant="info" text="since v5.4.1"]
