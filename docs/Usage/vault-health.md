@@ -64,4 +64,3 @@ When the vault is **locked** the badge shows the server-only grade (marked 🔒)
 | F | below 40 |
 
 The `/health` dashboard lists every account with its grade and numeric score, and offers a **Show weak only** filter that narrows the list to accounts graded C or below. The server half of the score never needs your plaintext secret; entropy and duplicate checks run entirely in your browser.
-

@@ -8,7 +8,6 @@ You can configure 2FA-Vault to let an HTTP proxy handle authentication. In this 
 The `REMOTE_USER` header is only honoured when the request comes from a **trusted proxy**. Set `TRUSTED_PROXIES` to the IP address(es) of your reverse proxy (never `*`) so that clients reaching the app directly cannot forge the header to impersonate users or auto-create an admin account.
 !!!
 
-
 ---
 
 ## Enable the proxy guard

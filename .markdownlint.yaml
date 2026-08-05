@@ -1,3 +1,16 @@
-MD046: false
-MD013: false
-MD033: false
+# Rule configuration (read by markdownlint / markdownlint-cli2).
+default: false
+# Opt-in: enable a curated set of high-signal rules rather than the full
+# default set. The docs were authored before several newer stylistic rules
+# (notably MD060/table-column-style) existed, so default:true produces a lot
+# of subjective churn. The rules below catch real issues without enforcing
+# a particular prose or table style.
+MD009: true   # trailing-spaces
+MD010: true   # no-hard-tabs
+MD012:
+  maximum: 1  # no-multiple-blanks
+MD018: true   # no-missing-space-atx
+MD019: true   # no-multiple-space-atx
+MD026: true   # no-trailing-punctuation (heading)
+MD042: true   # no-empty-links
+MD047: true   # single-trailing-newline

@@ -4,9 +4,13 @@
   "scripts": {
     "build": "node ./node_modules/retypeapp/retype.js build --output .retype-build",
     "validate": "npm run validate:docs",
-    "validate:docs": "npm run build"
+    "lint:docs": "markdownlint-cli2",
+    "check:links": "npm run build && linkinator .retype-build --recurse --silent --directory-listing --skip '^https?://localhost' --timeout 10000",
+    "validate:docs": "npm run lint:docs && npm run build"
   },
   "devDependencies": {
+    "linkinator": "^8.0.3",
+    "markdownlint-cli2": "^0.23.2",
     "retypeapp": "4.5.3"
   }
 }

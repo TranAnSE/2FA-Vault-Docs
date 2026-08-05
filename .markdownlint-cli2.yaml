@@ -1,0 +1,9 @@
+# markdownlint-cli2 tool config (globs + ignores). Rule configuration lives
+# in .markdownlint.yaml, which markdownlint-cli2 also reads.
+globs:
+  - 'docs/**/*.md'
+
+ignores:
+  - '.retype-build/**'
+  - 'public/**'
+  - 'node_modules/**'
