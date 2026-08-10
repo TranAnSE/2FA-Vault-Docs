@@ -1,0 +1,70 @@
+﻿#  - 2FA-Vault Docs
+
+> 2FA-Vault is a personal fork of 2FA-Vault. It is a self-hosted OTP vault for desktop, mobile web, PWA usage, and a browser extension, with fork-specific work around end-to-end encryption, teams, encrypted backups, and web push.
+
+- [Welcome to 2FA-Vault Docs](https://docs.2fa-vault.app/index.md): Welcome to 2FA-Vault Docs
+- [API](https://docs.2fa-vault.app/api.md): 2FA-Vault is built on top of its own REST API (following OpenAPI 3.1 specification), which can be used to make other applications communicate with a 2FA-Vault instance.
+- [Credits](https://docs.2fa-vault.app/credits.md): 2FA-Vault is actively developed by Bubka.
+
+## Getting started
+
+### Installation
+
+- [Self-hosted server](https://docs.2fa-vault.app/getting-started/installation/self-hosted-server.md): You can deploy 2FA-Vault on your own web server, whether on your local computer or a web host. The following guide describes how to proceed and gives basic configurations for both NGINX and Apache2 web servers.
+
+#### Docker
+
+- [Docker CLI](https://docs.2fa-vault.app/getting-started/installation/docker/docker-cli.md): An official Docker image is available to run 2FA-Vault in a single Docker container. These are the Docker CLI Setup instructions, a docker-compose.yml file is also available.
+- [Docker-Compose](https://docs.2fa-vault.app/getting-started/installation/docker/docker-compose.md): You can run 2FA-Vault with Docker-Compose using the following command and this basic docker-compose.yml file:
+- [Heroku](https://docs.2fa-vault.app/getting-started/installation/heroku.md): You can deploy 2FA-Vault to Heroku by clicking the button below:
+- [YunoHost](https://docs.2fa-vault.app/getting-started/installation/yunohost.md): YunoHost is a libre operating system aiming to simplify server administration and democratize self-hosting.
+
+### Configuration
+
+- [Environment variables](https://docs.2fa-vault.app/getting-started/config/env-vars.md): Here are the main environment variables that may be set to make 2FA-Vault work according to its running environment and to meet your needs. It is recommended to review them at least once to ensure minimal requirements are met and to have a picture of what 2FA-Vault offers in terms of configuration.
+- [User preferences](https://docs.2fa-vault.app/getting-started/config/user-preferences.md): User preferences are settings that any user can change to customize the behavior or appearance of 2FA-Vault. They can be set by the user from the Settings > Options section of 2FA-Vault.
+- [Troubleshooting](https://docs.2fa-vault.app/getting-started/troubleshooting.md): Logs can give usefull informations to troubleshoot your installation. 2FA-Vault logs are stored in the subfolder storage/logs of your installation folder.
+- [Upgrade](https://docs.2fa-vault.app/getting-started/upgrade.md): Update the source code in /var/www/2FA-Vault (see Get your 2FA-Vault copy)
+
+## Resources
+
+- [2fav CLI](https://docs.2fa-vault.app/resources/cli-tool.md): The 2fav command-line tool lets you interact with a 2FA-Vault instance from the terminal and from automation scripts. It is a standalone binary distributed from the 2FA-Vault-CLI repository.
+
+## Security
+
+- [Prometheus metrics](https://docs.2fa-vault.app/security/prometheus-metrics.md): 2FA-Vault exposes application and runtime metrics in Prometheus text exposition format at the /metrics endpoint. Scrape it with Prometheus, Grafana Agent, VictoriaMetrics, or any compatible collector.
+- [Data protection](https://docs.2fa-vault.app/security/data-protection.md): 2FA-Vault provides several security mechanisms to protect your sensitive 2FA data, at administrator or user level.
+- [End-to-end encryption](https://docs.2fa-vault.app/security/end-to-end-encryption.md): 2FA-Vault adds a zero-knowledge vault encryption flow on top of the upstream 2FA-Vault security model.
+
+### Authentication
+
+- [Single Sign-On (SSO)](https://docs.2fa-vault.app/security/authentication/sso.md): Single sign-on is an authentication scheme that allows a user to log in with a single ID to any of several related, yet independent, software systems.
+- [WebAuthn (aka Passkey)](https://docs.2fa-vault.app/security/authentication/webauthn.md): 2FA-Vault supports the W3C Web Authentication API aka WebAuthn (learn more). This means you can register a security device like a Yubikey, a Titan Security Key, or a facial recognition system like Apple FaceId and use it to log into 2FA-Vault.
+- [Auth proxy](https://docs.2fa-vault.app/security/authentication/auth-proxy.md): You can configure 2FA-Vault to let an HTTP proxy handle authentication. In this case, 2FA-Vault will consider you logged in as long as you are authenticated at proxy level.
+- [Personal Access Token](https://docs.2fa-vault.app/security/authentication/pat.md): Use Personal Access Tokens (PAT) to authenticate requests sent to the 2FA-Vault REST API.
+
+## Usage
+
+- [Email invitations](https://docs.2fa-vault.app/usage/email-invitations.md): Email invitations let an administrator invite a specific person to create an account by sending them a single-use invitation link. This is the recommended way to onboard users when public registration is restricted or disabled.
+- [Administration](https://docs.2fa-vault.app/usage/administration.md): The very first account created is automatically set up as an administrator account. Administrators have access to a dedicated area where they can manage global application settings as well as the user base.
+- [Teams and encrypted backups](https://docs.2fa-vault.app/usage/teams-and-backups.md): 2FA-Vault extends the upstream 2FA-Vault workflow with team collaboration and encrypted backup endpoints.
+- [Tags & labels](https://docs.2fa-vault.app/usage/tags.md): Tags let you label accounts with colour-coded chips so you can organise them across groups or filter them flexibly.
+- [Advanced search & filter](https://docs.2fa-vault.app/usage/advanced-search.md): The accounts view supports full-text search and multi-criteria filtering to help you find accounts quickly even in large vaults.
+- [Breach monitoring](https://docs.2fa-vault.app/usage/breach-monitoring.md): 2FA-Vault can check the services and email addresses in your vault against HaveIBeenPwned (HIBP) so you know when an account may have appeared in a known data breach.
+- [Vault health dashboard](https://docs.2fa-vault.app/usage/vault-health.md): The vault health dashboard gives administrators a quick summary of the security quality of the vault. All calculations run entirely in the browser — no account secrets or plaintext data are sent to the server.
+- [Session management](https://docs.2fa-vault.app/usage/session-management.md): The session manager shows every active login session for your account and lets you revoke any of them — including on devices you no longer have access to.
+- [Personal activity log](https://docs.2fa-vault.app/usage/personal-activity-log.md): The personal activity log is a per-user audit trail of the actions performed on your account. It lets you review what happened and when, which is useful for spotting unexpected logins or changes.
+- [Multiple vaults](https://docs.2fa-vault.app/usage/multiple-vaults.md): 2FA-Vault lets you create up to 10 independent vaults, each with its own master password and E2EE encryption key. Common uses include separating personal, work, and client accounts.
+- [Auto-backup](https://docs.2fa-vault.app/usage/auto-backup.md): Auto-backup runs scheduled, encrypted backups of your vault and pushes the resulting .vault file to one or more destinations you configure. It builds on the manual encrypted backup flow.
+- [Secure notes](https://docs.2fa-vault.app/usage/secure-notes.md): Secure notes let you store free-form, sensitive text alongside your 2FA accounts: recovery codes, backup phrases, passwords, or any other secret you want to keep with the rest of your vault.
+- [Emergency access](https://docs.2fa-vault.app/usage/emergency-access.md): Emergency access lets you designate trusted contacts who can request access to your vault if you become unavailable. It functions as a configurable dead man's switch.
+- [Webhooks](https://docs.2fa-vault.app/usage/webhooks.md): Webhooks let you receive HTTP POST notifications when events occur in your vault. Use them to trigger automation in n8n, Zapier, custom scripts, or any HTTP-capable service.
+- [Browser extension auto-fill](https://docs.2fa-vault.app/usage/auto-fill.md): The 2FA-Vault browser extension can detect 2FA input fields on web pages and automatically fill the matching OTP code.
+- [2FA Migration](https://docs.2fa-vault.app/usage/migration.md): 2FA-Vault can import data in various formats to ease you migrate from another 2FA app or to restore a backup. Note that not all 2FA apps enable data export so 2FA-Vault will never covers all possible migrations.
+- [Icons](https://docs.2fa-vault.app/usage/icons.md): Icons improve graphical interfaces by making it easier to locate and recognize elements and by giving a visual identity. However, finding and setting up icons can be time-consuming and tedious despite the many resources available online.
+- [Steam Guard](https://docs.2fa-vault.app/usage/steam-guard.md): Steam Guard is the Two-Factor authentication system you can enable to protect your Steam account. It works exactly as any 2FA protection, except that the One-Time Passwords are generated by the Steam Guard Mobile Authenticator only (or received by e-mail).
+
+## Support
+
+- [Contributing](https://docs.2fa-vault.app/support/contributing.md): 2FA-Vault is an Open Source project, that means everybody can participate, in many differents ways. If Open Source is new to you, the following guide
+- [Bug reporting](https://docs.2fa-vault.app/support/bug-reporting.md): Found a bug? A report from you would be greatly appreciated!
