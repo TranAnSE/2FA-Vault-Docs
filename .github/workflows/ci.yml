@@ -11,6 +11,9 @@ on:
       - .github/workflows/ci.yml
       - docs/**
 
+permissions:
+  contents: write # required by retypeapp/action-github-pages to push the built site
+
 jobs:
   retype-build:
     name: Retype build
