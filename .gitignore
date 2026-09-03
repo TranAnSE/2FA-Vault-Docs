@@ -2,3 +2,7 @@
 node_modules/
 .retype-build/
 retype.manifest
+
+.env
+.env.*
+!.env.example
