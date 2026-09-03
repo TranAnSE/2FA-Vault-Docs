@@ -42,6 +42,7 @@
 - [WebAuthn (aka Passkey)](https://docs.2fa-vault.app/security/authentication/webauthn.md): 2FA-Vault supports the W3C Web Authentication API aka WebAuthn (learn more). This means you can register a security device like a Yubikey, a Titan Security Key, or a facial recognition system like Apple FaceId and use it to log into 2FA-Vault.
 - [Auth proxy](https://docs.2fa-vault.app/security/authentication/auth-proxy.md): You can configure 2FA-Vault to let an HTTP proxy handle authentication. In this case, 2FA-Vault will consider you logged in as long as you are authenticated at proxy level.
 - [Personal Access Token](https://docs.2fa-vault.app/security/authentication/pat.md): Use Personal Access Tokens (PAT) to authenticate requests sent to the 2FA-Vault REST API.
+- [Sessions & tokens hardening (v1.3.1)](https://docs.2fa-vault.app/security/sessions-and-tokens-hardening.md): The v1.3.1 workflow-audit release hardened how sessions and API tokens are managed. This page describes the operator- and user-visible changes.
 
 ## Usage
 
