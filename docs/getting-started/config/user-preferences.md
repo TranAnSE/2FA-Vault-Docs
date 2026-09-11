@@ -149,12 +149,14 @@ Also, logged-in users won't see any changes until they reconnect or visit the _S
 - [SHOW_EMAIL_IN_FOOTER](#show_email_in_footer)
 - [SHOW_NEXT_OTP](#show_next_otp)
 - [SHOW_OTP_AS_DOT](#show_otp_as_dot)
+- [SHOW_VIRTUAL_CHIPS](#show_virtual_chips)
 - [SORT_CASE_SENSITIVE](#sort_case_sensitive)
 - [SORT_ORDER](#sort_order)
 - [THEME](#theme)
 - [TIMEZONE](#timezone)
 - [USE_BASIC_QRCODE_READER](#use_basic_qrcode_reader)
 - [USE_DIRECT_CAPTURE](#use_direct_capture)
+- [USE_GROUP_CHIPS](#use_group_chips)
 - [VIEW_DEFAULT_GROUP_ON_COPY](#view_default_group_on_copy)
 
 :::
@@ -712,6 +714,22 @@ Default value
 
 :::
 
+### SHOW_VIRTUAL_CHIPS
+
+[!badge variant="info" text="boolean"] [!badge variant="info" text="since v8.0"]
+
+:::env-var-dl-wrapper
+
+Description
+:   Show virtual groups (accounts without a group, shared by me, shared with me) as chips on the main accounts view.
+
+    Only relevant when [USE_GROUP_CHIPS](#use_group_chips) is set to `true`.
+
+Default value
+:   `false`
+
+:::
+
 ### SORT_CASE_SENSITIVE
 
 [!badge variant="info" text="boolean"] [!badge variant="info" text="since v3.3"]
@@ -825,6 +843,24 @@ Description
     Additional preferences have to be set to refine this behavior:
 
     - [DEFAULT_CAPTURE_MODE](#default_capture_mode)
+
+Default value
+:   `false`
+
+:::
+
+### USE_GROUP_CHIPS
+
+[!badge variant="info" text="boolean"] [!badge variant="info" text="since v8.0"]
+
+:::env-var-dl-wrapper
+
+Description
+:   Displays quick-switching chips for groups on the main accounts view. Each group must additionally be flagged _Show in chips_ (per-group `show_in_chips` flag) to appear as a chip.
+
+    Additional preferences may be set to refine this behavior:
+
+    - [SHOW_VIRTUAL_CHIPS](#show_virtual_chips)
 
 Default value
 :   `false`

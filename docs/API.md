@@ -22,6 +22,10 @@ push | Web push subscription and test-notification endpoints
 teams | Team, invitation, member, and account-sharing endpoints
 features | Runtime feature-flag discovery endpoints
 
+!!!
+The `withSecret` query parameter on the twofaccounts endpoints is policy-gated: only users holding the _read secret_ permission (the account owner) get the secret fields back. Team members working with shared accounts receive the account without its secret, even when asking with `withSecret=true`.
+!!!
+
 ---
 
 ## Authentication

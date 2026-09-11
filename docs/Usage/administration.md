@@ -31,6 +31,10 @@ When the user registered using SSO:
 Although administrators can view information on users, they cannot generate OTPs or even view users's 2FA.
 !!!
 
+!!!
+Administrators no longer implicitly bypass ownership policies. In particular, when _Use SSO only_ is enabled, the PAT and WebAuthn restrictions apply to administrator accounts as well (see [SSO](/security/authentication/sso/#use-sso-only)). The admin panel itself remains accessible to administrators.
+!!!
+
 ### Promote to administrator
 
 Any user may be promoted to administrator by another administrator. Edit the user account at _Admin > Users > [User] >_ [!button size="xs" variant="ghost" text="Manage"] and check the [!badge size="l" icon="checkbox" text="Is administrator"] flag. The change is effective immediately, without notification to the promoted user. Demoting is done the same way.
@@ -85,6 +89,10 @@ Click the [!button variant="primary" icon="paper-airplane" iconAlign="left" corn
 2FA-Vault cannot guarantee whether or not the email was successfully sent because it does not control the entire distribution process. It will display any potential errors that it can handle.
 
 [Check your logs](/getting-started/troubleshooting/#check-logs) in case the email was never delivered. They might provide more information about the issue.
+!!!
+
+!!!
+Application emails (password reset, invitations, notifications) no longer fail the request when mail is not configured or a message cannot be sent: the failure is logged as a warning with a hint about the `MAIL_*` environment variables. The test email above is the exception — it surfaces delivery errors on purpose so administrators can validate the [mail configuration](/getting-started/config/env-vars/#email-setting).
 !!!
 
 ### Icon storage
