@@ -114,6 +114,7 @@ Enabling this setting has the following effects:
 
 - Most authentication features are disabled for standard users: Password & WebAuthn Login, Password Reset, Registration, [OAuth PAT](/security/authentication/pat/) and [WebAuthn](/security/authentication/webauthn/) devices management.
 - Administrators can still log in with their password or WebAuthn. This is a security feature to prevent lockout if no SSO provider is available.
+- Administrators are otherwise subject to the same restrictions as everyone: since the upstream v8 sync, the [OAuth PAT](/security/authentication/pat/) and [WebAuthn](/security/authentication/webauthn/) restrictions also apply to administrator accounts (administrators previously bypassed them implicitly).
 
 ### Allowing PAT
 

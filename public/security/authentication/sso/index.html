@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.841754033627">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.842505294323">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -44,12 +44,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../../static/2fauth_favicon.png" />
-    <link href="../../../resources/css/retype.css?v=4.6.0.841754033627" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.842505294323" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.841754033627" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.842505294323" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.841754033627" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.841754033627" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.842505294323" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.842505294323" defer></script>
 
     <link href="/static/custom.css" rel="stylesheet" />
 </head>
@@ -407,6 +407,7 @@ OPENID_CLIENT_SECRET=1QzLnSc1Rc3MCPm0QV2FLNaKk-Jk0bUjaCageDvxIkd2-Mp50ipiP-MCPm0
 <ul>
 <li>Most authentication features are disabled for standard users: Password &amp; WebAuthn Login, Password Reset, Registration, <a href="../pat/">OAuth PAT</a> and <a href="../webauthn/">WebAuthn</a> devices management.</li>
 <li>Administrators can still log in with their password or WebAuthn. This is a security feature to prevent lockout if no SSO provider is available.</li>
+<li>Administrators are otherwise subject to the same restrictions as everyone: since the upstream v8 sync, the <a href="../pat/">OAuth PAT</a> and <a href="../webauthn/">WebAuthn</a> restrictions also apply to administrator accounts (administrators previously bypassed them implicitly).</li>
 </ul>
 <h3 id="allowing-pat">Allowing PAT</h3>
 <p>Personal Access Tokens may be explicitly allowed when the <em>Use SSO only</em> setting is enabled.<br />

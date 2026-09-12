@@ -39,3 +39,13 @@ The selected tags and mode can be saved as a named preset so you can restore the
 | PUT | `/api/v1/tags/{id}` | Rename or recolour a tag |
 | DELETE | `/api/v1/tags/{id}` | Delete tag (removed from all accounts) |
 | POST | `/api/v1/twofaccounts/{id}/tags` | Sync tags for an account `{tags: [id]}` |
+
+---
+
+## Group chips
+
+Groups can also be surfaced as quick-switching chips on the main accounts view (since v8.0):
+
+- Each group carries a _Show in chips_ flag (`show_in_chips`, editable when creating or editing the group, also available via the API on the group endpoints).
+- The feature is controlled per user by the [USE_GROUP_CHIPS](/getting-started/config/user-preferences/#use_group_chips) preference, and virtual groups (accounts without a group, shared by me, shared with me) by [SHOW_VIRTUAL_CHIPS](/getting-started/config/user-preferences/#show_virtual_chips).
+- Both preferences can be defaulted or locked instance-wide via the `USERPREF_DEFAULT__USE_GROUP_CHIPS` and `USERPREF_DEFAULT__SHOW_VIRTUAL_CHIPS` environment variables.

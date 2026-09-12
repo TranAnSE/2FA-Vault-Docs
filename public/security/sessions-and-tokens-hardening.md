@@ -24,6 +24,8 @@ managed. This page describes the operator- and user-visible changes.
   - The browser extension works best with `read` + `otp` (+ `write` if you
     let it sync accounts); the CLI needs `read` + `otp`.
 - New PATs expire after **90 days** by default (previously 1 year).
+- The token list in _Settings → OAUTH_ now shows each token's expiration date,
+  so an approaching 90-day expiry is visible before a token stops working.
 - PATs created before this release were stamped with an internal
   `legacy_full_access` marker by a one-time migration and keep working
   unchanged. **Rotate them at your convenience** by creating scoped
