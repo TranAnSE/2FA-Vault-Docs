@@ -70,6 +70,42 @@ yunohost app upgrade 2FA-Vault
 
 ---
 
+## Laravel 13 platform upgrade (release 1.3.3)
+
+Release 1.3.3 is a **platform-only release**: it moves the app from Laravel 12 to Laravel 13 (with WebAuthn library v5 and PHPUnit 13) and ships zero user-facing features. Read the notes below, then apply the upgrade as usual.
+
+### Mandatory after updating: clear every cache
+
+The CSRF middleware class was renamed in this release. If a stale route or config cache survives the update, the app can fail to boot. Run this **before** the install wizard:
+
+```sh
+php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan cache:clear
+```
+
+### Config additions (if you maintain a customized config)
+
+- `config/cache.php` gains a `storage` store and a `serializable_classes` allow-list (`Illuminate\Support\Collection` + `Illuminate\Support\LazyCollection`). The allow-list keeps cached settings working under Laravel 13's unserialize gate — do not replace it with `false`.
+- `config/session.php` gains `'serialization' => 'json'` (see the session advisory below).
+- `config/database.php` refreshes the MySQL SSL option to the PHP 8.4 `Pdo\Mysql` constants and reads the Postgres `sslmode` from the `DB_SSLMODE` env var.
+
+### Session serialization: one-time logout
+
+Session payloads now serialize as JSON (upstream default). Existing PHP-serialized sessions are discarded, so **every user is logged out once** after the upgrade. If a deployment cannot afford that, keep the old behavior by setting `'serialization' => 'php'` in `config/session.php` (not recommended: JSON avoids PHP object-injection gadget chains if `APP_KEY` ever leaks).
+
+### Personal access tokens: expected no-op, verify anyway
+
+Token minting and verification are untouched by the framework bump — existing PATs keep working. The install wizard now also runs `2fauth:fix-passport-key-permissions` (Docker entrypoint runs it on boot as well), which tightens the `storage/oauth-*.key` file permissions for rootless Docker deployments. As a precaution, verify one of your existing PATs after upgrading (e.g. from the browser extension or CLI) and review/rotate tokens in _Settings > OAUTH_ if anything misbehaves.
+
+### WebAuthn library archived upstream
+
+The `laragear/webauthn` package (v5) that powers passwordless login was **archived by its author in May 2026** — it receives no further security fixes. This release is its last stop in 2FA-Vault. A migration to Laravel Passkeys is planned as a follow-up release; WebAuthn login continues to work unchanged in the meantime.
+
+### CSRF rename — no client impact
+
+`App\Http\Middleware\VerifyCsrfToken` was renamed to `App\Http\Middleware\PreventRequestForgery` (upstream parity). Behavior is unchanged for browsers, the browser extension, and the CLI: first-party web forms keep using the CSRF token, `/api/v1` endpoints stay CSRF-free (Bearer authentication), and Laravel 13's new `Sec-Fetch-Site` check only *relaxes* protection (same-origin browser requests may skip the token check).
+
+---
+
 ## Upstream v8 sync
 
 This release syncs 2FA-Vault with upstream 2FAuth v8. Read the notes below before upgrading, then apply the upgrade as usual — the install wizard runs `php artisan migrate` for you.

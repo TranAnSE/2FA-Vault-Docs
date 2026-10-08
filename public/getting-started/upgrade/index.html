@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.842505294323">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.844800539538">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,12 +38,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../static/2fauth_favicon.png" />
-    <link href="../../resources/css/retype.css?v=4.6.0.842505294323" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.844800539538" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.842505294323" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.844800539538" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.842505294323" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.842505294323" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.844800539538" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.844800539538" defer></script>
 
     <link href="/static/custom.css" rel="stylesheet" />
 </head>
@@ -311,6 +311,28 @@ You can therefore pull the image with <code translate="no" v-pre>docker pull 2FA
 <div id="yunohost-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">yunohost app upgrade 2FA-Vault</code></pre>
 </doc-codeblock></div>
+<hr>
+<h2 id="laravel-13-platform-upgrade-release-133">Laravel 13 platform upgrade (release 1.3.3)</h2>
+<p>Release 1.3.3 is a <strong>platform-only release</strong>: it moves the app from Laravel 12 to Laravel 13 (with WebAuthn library v5 and PHPUnit 13) and ships zero user-facing features. Read the notes below, then apply the upgrade as usual.</p>
+<h3 id="mandatory-after-updating-clear-every-cache">Mandatory after updating: clear every cache</h3>
+<p>The CSRF middleware class was renamed in this release. If a stale route or config cache survives the update, the app can fail to boot. Run this <strong>before</strong> the install wizard:</p>
+<div id="mandatory-after-updating-clear-every-cache-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">php artisan config:clear &amp;&amp; php artisan route:clear &amp;&amp; php artisan view:clear &amp;&amp; php artisan cache:clear</code></pre>
+</doc-codeblock></div>
+<h3 id="config-additions-if-you-maintain-a-customized-config">Config additions (if you maintain a customized config)</h3>
+<ul>
+<li><code translate="no" v-pre>config/cache.php</code> gains a <code translate="no" v-pre>storage</code> store and a <code translate="no" v-pre>serializable_classes</code> allow-list (<code translate="no" v-pre>Illuminate\Support\Collection</code> + <code translate="no" v-pre>Illuminate\Support\LazyCollection</code>). The allow-list keeps cached settings working under Laravel 13&#x27;s unserialize gate — do not replace it with <code translate="no" v-pre>false</code>.</li>
+<li><code translate="no" v-pre>config/session.php</code> gains <code translate="no" v-pre>'serialization' =&gt; 'json'</code> (see the session advisory below).</li>
+<li><code translate="no" v-pre>config/database.php</code> refreshes the MySQL SSL option to the PHP 8.4 <code translate="no" v-pre>Pdo\Mysql</code> constants and reads the Postgres <code translate="no" v-pre>sslmode</code> from the <code translate="no" v-pre>DB_SSLMODE</code> env var.</li>
+</ul>
+<h3 id="session-serialization-one-time-logout">Session serialization: one-time logout</h3>
+<p>Session payloads now serialize as JSON (upstream default). Existing PHP-serialized sessions are discarded, so <strong>every user is logged out once</strong> after the upgrade. If a deployment cannot afford that, keep the old behavior by setting <code translate="no" v-pre>'serialization' =&gt; 'php'</code> in <code translate="no" v-pre>config/session.php</code> (not recommended: JSON avoids PHP object-injection gadget chains if <code translate="no" v-pre>APP_KEY</code> ever leaks).</p>
+<h3 id="personal-access-tokens-expected-no-op-verify-anyway">Personal access tokens: expected no-op, verify anyway</h3>
+<p>Token minting and verification are untouched by the framework bump — existing PATs keep working. The install wizard now also runs <code translate="no" v-pre>2fauth:fix-passport-key-permissions</code> (Docker entrypoint runs it on boot as well), which tightens the <code translate="no" v-pre>storage/oauth-*.key</code> file permissions for rootless Docker deployments. As a precaution, verify one of your existing PATs after upgrading (e.g. from the browser extension or CLI) and review/rotate tokens in <em>Settings &gt; OAUTH</em> if anything misbehaves.</p>
+<h3 id="webauthn-library-archived-upstream">WebAuthn library archived upstream</h3>
+<p>The <code translate="no" v-pre>laragear/webauthn</code> package (v5) that powers passwordless login was <strong>archived by its author in May 2026</strong> — it receives no further security fixes. This release is its last stop in 2FA-Vault. A migration to Laravel Passkeys is planned as a follow-up release; WebAuthn login continues to work unchanged in the meantime.</p>
+<h3 id="csrf-rename--no-client-impact">CSRF rename — no client impact</h3>
+<p><code translate="no" v-pre>App\Http\Middleware\VerifyCsrfToken</code> was renamed to <code translate="no" v-pre>App\Http\Middleware\PreventRequestForgery</code> (upstream parity). Behavior is unchanged for browsers, the browser extension, and the CLI: first-party web forms keep using the CSRF token, <code translate="no" v-pre>/api/v1</code> endpoints stay CSRF-free (Bearer authentication), and Laravel 13&#x27;s new <code translate="no" v-pre>Sec-Fetch-Site</code> check only <em>relaxes</em> protection (same-origin browser requests may skip the token check).</p>
 <hr>
 <h2 id="upstream-v8-sync">Upstream v8 sync</h2>
 <p>This release syncs 2FA-Vault with upstream 2FAuth v8. Read the notes below before upgrading, then apply the upgrade as usual — the install wizard runs <code translate="no" v-pre>php artisan migrate</code> for you.</p>
