@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.844800539538">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.844823391189">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,12 +38,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../static/2fauth_favicon.png" />
-    <link href="../../resources/css/retype.css?v=4.6.0.844800539538" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.844823391189" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.844800539538" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.844823391189" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.844800539538" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.844800539538" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.844823391189" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.844823391189" defer></script>
 
     <link href="/static/custom.css" rel="stylesheet" />
 </head>
@@ -311,6 +311,45 @@ You can therefore pull the image with <code translate="no" v-pre>docker pull 2FA
 <div id="yunohost-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">yunohost app upgrade 2FA-Vault</code></pre>
 </doc-codeblock></div>
+<hr>
+<h2 id="release-140-backup-snapshots-restore-versioning-team-roles">Release 1.4.0 (backup snapshots, restore versioning, team roles)</h2>
+<p>Release 1.4.0 ships three feature areas: <strong>server-side backup snapshots with restore</strong> (dry-run diff, merge and destructive replace restores), <strong>per-team custom roles with a permission matrix</strong>, and the <strong>CLI 0.3.0</strong> (local vault unlock + offline OTP for E2EE vaults, opt-in keychain caching, HOTP counter sync). Read the notes below, then apply the upgrade as usual.</p>
+<h3 id="database-migrations-2-new">Database migrations (2 new)</h3>
+<p><code translate="no" v-pre>php artisan migrate</code> (the install wizard does this automatically) runs:</p>
+<ol>
+<li><code translate="no" v-pre>team_users.role</code> and <code translate="no" v-pre>team_invitations.role</code> widen from the 4-value enum to a 50-char string (custom role slugs).</li>
+<li>A new <code translate="no" v-pre>team_roles</code> table is created and the 4 system presets are seeded for <strong>every existing team</strong> — existing teams behave exactly as before the upgrade.</li>
+</ol>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-warning" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
+                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>Take a DB backup before migrating</h5>
+<p>The enum-to-string widen runs one <code translate="no" v-pre>ALTER TABLE</code> per table. On large <code translate="no" v-pre>team_users</code> tables the ALTER takes a metadata lock for its duration — schedule accordingly, and <strong>take a database backup before upgrading</strong> (also required for a clean downgrade, see below).</p>
+        </div>
+    </div>
+</div>
+<h3 id="behavior-notes">Behavior notes</h3>
+<ul>
+<li><strong>Team authorization is now permission-based.</strong> The preset roles reproduce the previous behavior exactly, including quirks (viewers may still share their <em>own</em> accounts). Team owners can add custom roles in <em>Teams → team → Roles &amp; permissions</em>. Activity-log <strong>export</strong> stays owner-only.</li>
+<li><strong>Snapshot restores are safety-gated.</strong> A destructive (replace) restore always requires a dry-run diff first, a single-use confirmation token (10 min TTL), and the typed word <code translate="no" v-pre>RESTORE</code>; an automatic pre-restore snapshot is kept. On <strong>multi-node deployments the cache store must be shared between nodes</strong> (<code translate="no" v-pre>redis</code>/<code translate="no" v-pre>database</code>) — restore tokens live in the cache.</li>
+<li><strong>The CLI remembers derived keys only on request</strong> (<code translate="no" v-pre>2fav get &lt;service&gt; --remember</code>) — keychain entries expire after 24h by default and never store the master password itself.</li>
+</ul>
+<h3 id="downgrade-story-rolling-back-to-13x">Downgrade story (rolling back to 1.3.x)</h3>
+<ul>
+<li>The migrations&#x27; <code translate="no" v-pre>down()</code> <strong>remaps any custom role slug to <code translate="no" v-pre>member</code></strong> before re-narrowing the role columns to the old enum — a rollback never fails or blanks roles, but custom role definitions are lost (they live in the dropped <code translate="no" v-pre>team_roles</code> table).</li>
+<li>The snapshot store <strong>survives a downgrade but becomes inert</strong>: the <code translate="no" v-pre>backup_snapshots</code> rows and their encrypted files remain on the <code translate="no" v-pre>snapshots</code> disk and can be removed later with <code translate="no" v-pre>php artisan snapshots:prune</code>.</li>
+<li>Snapshots are encrypted with the application key: a past or future <strong>APP_KEY rotation invalidates historical snapshots</strong> (they report <code translate="no" v-pre>app_key_rotated</code> and cannot be restored).</li>
+<li>Team members assigned a custom role fall back to <code translate="no" v-pre>member</code> permissions after a downgrade (custom slugs resolve to nothing on 1.3.x, which is the safe direction).</li>
+</ul>
 <hr>
 <h2 id="laravel-13-platform-upgrade-release-133">Laravel 13 platform upgrade (release 1.3.3)</h2>
 <p>Release 1.3.3 is a <strong>platform-only release</strong>: it moves the app from Laravel 12 to Laravel 13 (with WebAuthn library v5 and PHPUnit 13) and ships zero user-facing features. Read the notes below, then apply the upgrade as usual.</p>

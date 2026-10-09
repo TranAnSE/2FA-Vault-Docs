@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.844800539538">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.844823391189">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,11 +38,11 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../static/2fauth_favicon.png" />
-    <link href="../../resources/css/retype.css?v=4.6.0.844800539538" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.844823391189" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.844800539538" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.844823391189" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.844800539538" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.844823391189" data-turbo-eval="false" defer></script>
 
     <link href="/static/custom.css" rel="stylesheet" />
 </head>
@@ -240,8 +240,73 @@
 <li>update member roles</li>
 <li>share or unshare selected accounts</li>
 </ul>
-<p>Supported invitation/member roles are <code translate="no" v-pre>admin</code>, <code translate="no" v-pre>member</code>, and <code translate="no" v-pre>viewer</code>. Shared account access levels are <code translate="no" v-pre>read</code>, <code translate="no" v-pre>write</code>, and <code translate="no" v-pre>admin</code>.</p>
+<p>Supported invitation/member roles are <code translate="no" v-pre>admin</code>, <code translate="no" v-pre>member</code>, and <code translate="no" v-pre>viewer</code> — plus per-team <strong>custom roles</strong> (see <doc-anchor-trigger to="#roles--permissions">Roles &amp; permissions</doc-anchor-trigger>). Shared account access levels are <code translate="no" v-pre>read</code>, <code translate="no" v-pre>write</code>, and <code translate="no" v-pre>admin</code>.</p>
 <p>Team routes live under <code translate="no" v-pre>/api/v1/teams/*</code> and require an authenticated Personal Access Token. Team authorization is enforced server-side, so clients should expect <code translate="no" v-pre>403 Forbidden</code> when the current user is not allowed to view, invite, manage members, or share accounts for a team.</p>
+<h2 id="roles--permissions">Roles &amp; permissions</h2>
+<p>Since v1.4.0, team authorization is driven by a per-team <strong>permission matrix</strong>. Every team gets four system presets whose behavior exactly matches earlier releases, and the owner can define additional custom roles.</p>
+<retype-table copy-text="| Permission | Gates |
+|---|---|
+| `members.invite` | Inviting members and managing pending invitations |
+| `members.remove` | Removing members (revokes their shared access) |
+| `roles.assign` | Changing member roles — a non-owner assigner can only assign roles whose permissions do not exceed their own |
+| `accounts.share` | Sharing your own accounts with the team |
+| `accounts.unshare_others` | Removing shares created by other members |
+| `team.edit` | Renaming the team |
+| `activity.view` | Viewing the team activity log |">
+<div class="table-wrapper scrollbar overflow-hidden">
+<table class="comfortable">
+<thead>
+<tr>
+<th>Permission</th>
+<th>Gates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code translate="no" v-pre>members.invite</code></td>
+<td>Inviting members and managing pending invitations</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>members.remove</code></td>
+<td>Removing members (revokes their shared access)</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>roles.assign</code></td>
+<td>Changing member roles — a non-owner assigner can only assign roles whose permissions do not exceed their own</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>accounts.share</code></td>
+<td>Sharing your own accounts with the team</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>accounts.unshare_others</code></td>
+<td>Removing shares created by other members</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>team.edit</code></td>
+<td>Renaming the team</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>activity.view</code></td>
+<td>Viewing the team activity log</td>
+</tr>
+</tbody>
+</table>
+</div>
+</retype-table>
+<p>System presets:</p>
+<ul>
+<li><strong>owner</strong> — everything. Ownership is keyed on <code translate="no" v-pre>owner_id</code>, never on a role string: <code translate="no" v-pre>team.delete</code>, <code translate="no" v-pre>roles.manage</code> (creating/editing/deleting role definitions), <code translate="no" v-pre>activity.export</code>, and ownership transfer are <strong>owner-locked</strong> and can never be granted through the matrix.</li>
+<li><strong>admin</strong> — everything except role assignment (matches the previous owner-only behavior).</li>
+<li><strong>member</strong> — share own accounts; removing others&#x27; shares requires <code translate="no" v-pre>accounts.unshare_others</code> (admin/owner).</li>
+<li><strong>viewer</strong> — read-only, plus the historical quirk that viewers may still share (and unshare) <strong>their own</strong> accounts.</li>
+</ul>
+<p>Custom roles are created by the team owner (<code translate="no" v-pre>POST /api/v1/teams/{id}/roles</code>, UI: team page → Roles &amp; permissions): a slug unique within the team, a display name, and a non-empty subset of the catalog above. Unknown permission values are rejected — there is no wildcard. A custom role can be deleted only while no member holds it and no pending invitation targets it.</p>
+<p>Two safety rules apply everywhere:</p>
+<ul>
+<li><strong>Reserved owner slug</strong> — the slug <code translate="no" v-pre>owner</code> is rejected at invitation and accept time; a member row forged to <code translate="no" v-pre>role: owner</code> gains nothing beyond its role definition.</li>
+<li><strong>Fail closed</strong> — if a role definition disappears while a member still references it (a racing deletion), that member resolves to an empty permission set rather than an error.</li>
+</ul>
 <h2 id="encrypted-key-sharing">Encrypted key sharing</h2>
 <p>When vault encryption is enabled, a team owner can share an account with individual members without the server ever seeing the plaintext secret.</p>
 <p><strong>How it works:</strong></p>
@@ -332,6 +397,41 @@
 </ul>
 <p>The backup metadata endpoint, <code translate="no" v-pre>POST /api/v1/backups/metadata</code>, reads preview information from an uploaded backup file without importing it. <code translate="no" v-pre>GET /api/v1/backups/info</code> returns backup-related stats for the authenticated user.</p>
 <p>Legacy singular routes under <code translate="no" v-pre>/api/v1/backup/*</code> remain available for backward compatibility, but new clients should prefer <code translate="no" v-pre>/api/v1/backups/*</code>.</p>
+<h2 id="snapshots--versioning">Snapshots &amp; versioning</h2>
+<p>Beyond downloadable <code translate="no" v-pre>.vault</code> files, 2FA-Vault keeps <strong>server-side snapshots</strong> of your vault — row-level copies of your accounts and groups as they were at a point in time. You can create a snapshot manually from <strong>Settings → Backup → Snapshots</strong>, and the app creates snapshots automatically before every destructive restore and on a schedule you configure in <strong>Settings → Backup → Auto-Backup</strong>.</p>
+<p>Snapshots live on the server, are encrypted at rest with the application key, and never expose your secrets through the API — end-to-end-encrypted secrets remain ciphertext inside a snapshot.</p>
+<h3 id="restoring-a-snapshot">Restoring a snapshot</h3>
+<p>Restoring always starts with a <strong>dry-run diff</strong>: the server compares the snapshot with your current vault over stable columns and reports which accounts would be created, updated, or deleted, then issues a single-use confirmation token. Matching is primarily done by account id; when an id no longer exists, accounts are matched by service + account name and every such fallback match is disclosed as a warning. Volatile fields (last-used timestamps, HOTP counters) are ignored by the diff.</p>
+<ul>
+<li><strong>Merge</strong> re-creates accounts missing from your vault and restores lost fields on existing ones. Nothing is deleted. A single failing account does not affect the others.</li>
+<li><strong>Replace</strong> wipes your vault and restores exactly the snapshot state. Accounts created after the snapshot are deleted. Replace requires a second, explicit step in the UI where you type <code translate="no" v-pre>RESTORE</code>, and always keeps an automatic <strong>pre-restore snapshot</strong> of your vault as it was just before the wipe (that safety snapshot cannot be evicted by the quota during the restore).</li>
+</ul>
+<p>If your vault changes between the diff and the restore, the restore is refused with <code translate="no" v-pre>restore_state_changed</code> — re-run the diff and confirm again. Confirmation tokens expire after 10 minutes and are single-use.</p>
+<div class="flex mb-6 note">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>note Multi-node deployments</h5>
+<p>Restore confirmation tokens live in the application cache. On multi-node setups the cache store must be shared between nodes (e.g. <code translate="no" v-pre>redis</code> or <code translate="no" v-pre>database</code>) — a dry-run answered by one node and the restore by another would otherwise never see the token.</p>
+        </div>
+    </div>
+</div>
+<h3 id="warnings-to-watch-for">Warnings to watch for</h3>
+<ul>
+<li><strong>Master password changed since the snapshot</strong> (<code translate="no" v-pre>salt_changed_since_snapshot</code>): secrets that were end-to-end encrypted under your old password may not decrypt after a restore.</li>
+<li><strong>Application key rotated</strong> (<code translate="no" v-pre>unreadable_reason: app_key_rotated</code>): the snapshot can no longer be read or restored.</li>
+</ul>
+<h3 id="quota">Quota</h3>
+<p>Snapshots are subject to a per-user retention quota (defaults: 10 snapshots, 100 MB total — configurable by the instance administrator). When the quota is exceeded, the oldest evictable snapshot is removed. Automatic snapshots (scheduled and pre-restore) are evicted first and can <strong>never</strong> evict a manual snapshot you created deliberately.</p>
 
                 
                 <!-- Required only on API pages -->

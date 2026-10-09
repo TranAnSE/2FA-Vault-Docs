@@ -70,6 +70,36 @@ yunohost app upgrade 2FA-Vault
 
 ---
 
+## Release 1.4.0 (backup snapshots, restore versioning, team roles)
+
+Release 1.4.0 ships three feature areas: **server-side backup snapshots with restore** (dry-run diff, merge and destructive replace restores), **per-team custom roles with a permission matrix**, and the **CLI 0.3.0** (local vault unlock + offline OTP for E2EE vaults, opt-in keychain caching, HOTP counter sync). Read the notes below, then apply the upgrade as usual.
+
+### Database migrations (2 new)
+
+`php artisan migrate` (the install wizard does this automatically) runs:
+
+1. `team_users.role` and `team_invitations.role` widen from the 4-value enum to a 50-char string (custom role slugs).
+2. A new `team_roles` table is created and the 4 system presets are seeded for **every existing team** — existing teams behave exactly as before the upgrade.
+
+!!!warning Take a DB backup before migrating
+The enum-to-string widen runs one `ALTER TABLE` per table. On large `team_users` tables the ALTER takes a metadata lock for its duration — schedule accordingly, and **take a database backup before upgrading** (also required for a clean downgrade, see below).
+!!!
+
+### Behavior notes
+
+- **Team authorization is now permission-based.** The preset roles reproduce the previous behavior exactly, including quirks (viewers may still share their *own* accounts). Team owners can add custom roles in _Teams → team → Roles & permissions_. Activity-log **export** stays owner-only.
+- **Snapshot restores are safety-gated.** A destructive (replace) restore always requires a dry-run diff first, a single-use confirmation token (10 min TTL), and the typed word `RESTORE`; an automatic pre-restore snapshot is kept. On **multi-node deployments the cache store must be shared between nodes** (`redis`/`database`) — restore tokens live in the cache.
+- **The CLI remembers derived keys only on request** (`2fav get <service> --remember`) — keychain entries expire after 24h by default and never store the master password itself.
+
+### Downgrade story (rolling back to 1.3.x)
+
+- The migrations' `down()` **remaps any custom role slug to `member`** before re-narrowing the role columns to the old enum — a rollback never fails or blanks roles, but custom role definitions are lost (they live in the dropped `team_roles` table).
+- The snapshot store **survives a downgrade but becomes inert**: the `backup_snapshots` rows and their encrypted files remain on the `snapshots` disk and can be removed later with `php artisan snapshots:prune`.
+- Snapshots are encrypted with the application key: a past or future **APP_KEY rotation invalidates historical snapshots** (they report `app_key_rotated` and cannot be restored).
+- Team members assigned a custom role fall back to `member` permissions after a downgrade (custom slugs resolve to nothing on 1.3.x, which is the safe direction).
+
+---
+
 ## Laravel 13 platform upgrade (release 1.3.3)
 
 Release 1.3.3 is a **platform-only release**: it moves the app from Laravel 12 to Laravel 13 (with WebAuthn library v5 and PHPUnit 13) and ships zero user-facing features. Read the notes below, then apply the upgrade as usual.
