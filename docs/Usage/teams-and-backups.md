@@ -109,7 +109,7 @@ Snapshots live on the server, are encrypted at rest with the application key, an
 Restoring always starts with a **dry-run diff**: the server compares the snapshot with your current vault over stable columns and reports which accounts would be created, updated, or deleted, then issues a single-use confirmation token. Matching is primarily done by account id; when an id no longer exists, accounts are matched by service + account name and every such fallback match is disclosed as a warning. Volatile fields (last-used timestamps, HOTP counters) are ignored by the diff.
 
 - **Merge** re-creates accounts missing from your vault and restores lost fields on existing ones. Nothing is deleted. A single failing account does not affect the others.
-- **Replace** wipes your vault and restores exactly the snapshot state. Accounts created after the snapshot are deleted. Replace requires a second, explicit step in the UI where you type `RESTORE`, and always keeps an automatic **pre-restore snapshot** of your vault as it was just before the wipe (that safety snapshot cannot be evicted by the quota during the restore).
+- **Replace** wipes your vault and restores exactly the snapshot state. Accounts and groups that are not in the snapshot are deleted. Replace requires a second, explicit step in the UI where you type `RESTORE`, and always keeps an automatic **pre-restore snapshot** of your vault as it was just before the wipe (that safety snapshot cannot be evicted by the quota during the restore).
 
 If your vault changes between the diff and the restore, the restore is refused with `restore_state_changed` — re-run the diff and confirm again. Confirmation tokens expire after 10 minutes and are single-use.
 
