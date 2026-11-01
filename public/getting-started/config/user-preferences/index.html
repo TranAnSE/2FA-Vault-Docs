@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.844865056661">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.846879206706">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,12 +38,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../../static/2fauth_favicon.png" />
-    <link href="../../../resources/css/retype.css?v=4.6.0.844865056661" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.846879206706" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.844865056661" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.846879206706" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.844865056661" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.844865056661" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.846879206706" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.846879206706" defer></script>
 
     <link href="/static/custom.css" rel="stylesheet" />
 </head>
@@ -66,7 +66,7 @@
                             <img class="max-h-10 hidden dark:inline-block" src="../../../static/2fauth_light.png" alt="" width="29" height="40">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">2FA-Vault</span>
-                    </a><span id="retype-branding-label" class="inline-flex mt-1 px-2 py-1 ml-4 text-xs font-medium leading-none items-center rounded-md bg-branding-label-bg text-branding-label-text ring-1 ring-branding-label-border ring-inset md:inline-block">v6.1</span>
+                    </a><span id="retype-branding-label" class="inline-flex mt-1 px-2 py-1 ml-4 text-xs font-medium leading-none items-center rounded-md bg-branding-label-bg text-branding-label-text ring-1 ring-branding-label-border ring-inset md:inline-block">v1.5.0</span>
                 </div>
     
                 <span class="hidden h-8 border-r md:inline-block border-base-border"></span>
@@ -554,6 +554,41 @@ USERPREF_LOCKED__THEME=true</code></pre>
 </dd>
 </dl>
 </div>
+<div class="flex mb-6 note">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>note Desktop table layout</h5>
+<p>The desktop-oriented <strong>table</strong> rendering is governed by its own preference, <doc-anchor-trigger to="#use_desktop_table_layout">USE_DESKTOP_TABLE_LAYOUT</doc-anchor-trigger>. It overrides the grid/list presentation on screens at least 1215px wide.</p>
+        </div>
+    </div>
+</div>
+<h3 id="enable_favorites">ENABLE_FAVORITES</h3>
+<p><span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-info-text bg-badge-info border border-badge-info-border h-6 px-2 text-xs rounded-md">
+    <span>boolean</span>
+</span> <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-info-text bg-badge-info border border-badge-info-border h-6 px-2 text-xs rounded-md">
+    <span>since v1.5</span>
+</span></p>
+<div class="env-var-dl-wrapper">
+<dl>
+<dt id="description-7">Description</dt>
+<dd><p>Lets the user mark 2FA accounts as favorites and filter the accounts view to favorites only. The favorite is a per-user marker (star) and is distinct from the pin, which sorts an account to the top of the list.</p>
+<p>Requires the 2FA-Vault server to expose the <code translate="no" v-pre>favorites</code> feature flag. Setting <code translate="no" v-pre>USERPREF_LOCKED__ENABLE_FAVORITES=true</code> locks the preference server-side.</p>
+</dd>
+<dt id="default-value-7">Default value</dt>
+<dd><p><code translate="no" v-pre>true</code></p>
+</dd>
+</dl>
+</div>
 <h3 id="format_password">FORMAT_PASSWORD</h3>
 <p><span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-info-text bg-badge-info border border-badge-info-border h-6 px-2 text-xs rounded-md">
     <span>boolean</span>
@@ -562,14 +597,14 @@ USERPREF_LOCKED__THEME=true</code></pre>
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-7">Description</dt>
+<dt id="description-8">Description</dt>
 <dd><p>Applies a digit formatting to one-time password display.</p>
 <p>Additional preferences have to be set to refine this behavior:</p>
 <ul>
 <li><doc-anchor-trigger to="#format_password_by">FORMAT_PASSWORD_BY</doc-anchor-trigger></li>
 </ul>
 </dd>
-<dt id="default-value-7">Default value</dt>
+<dt id="default-value-8">Default value</dt>
 <dd><p><code translate="no" v-pre>true</code></p>
 </dd>
 </dl>
@@ -582,11 +617,11 @@ USERPREF_LOCKED__THEME=true</code></pre>
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-8">Description</dt>
+<dt id="description-9">Description</dt>
 <dd><p>Formatting pattern applied to one-time password display.</p>
 <p>Only relevant when <doc-anchor-trigger to="#format_password">FORMAT_PASSWORD</doc-anchor-trigger> is set to <code translate="no" v-pre>true</code>.</p>
 </dd>
-<dt id="default-value-8">Default value</dt>
+<dt id="default-value-9">Default value</dt>
 <dd><p><code translate="no" v-pre>0.5</code></p>
 </dd>
 </dl>
@@ -611,14 +646,14 @@ USERPREF_LOCKED__THEME=true</code></pre>
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-9">Description</dt>
+<dt id="description-10">Description</dt>
 <dd><p>Allows 2FA-Vault to fetch the official icon of the 2FA provider when a new 2FA account is registered.</p>
 <p>Additional preferences have to be set to refine this preference:</p>
 <ul>
 <li><doc-anchor-trigger to="#icon_source">ICON_SOURCE</doc-anchor-trigger></li>
 </ul>
 </dd>
-<dt id="default-value-9">Default value</dt>
+<dt id="default-value-10">Default value</dt>
 <dd><p><code translate="no" v-pre>true</code></p>
 </dd>
 </dl>
@@ -631,7 +666,7 @@ USERPREF_LOCKED__THEME=true</code></pre>
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-10">Description</dt>
+<dt id="description-11">Description</dt>
 <dd><p>Generates and displays one-time passwords in a dedicated popup, only when the user requests them by clicking on 2FA account titles.</p>
 <p>When disabled, OTPs are always visible on the main screen, no action is required to generate or rotate them.</p>
 <p>Additional preferences may be set to refine this behavior:</p>
@@ -641,7 +676,7 @@ USERPREF_LOCKED__THEME=true</code></pre>
 <li><doc-anchor-trigger to="#copy_otp_on_display">COPY_OTP_ON_DISPLAY</doc-anchor-trigger></li>
 </ul>
 </dd>
-<dt id="default-value-10">Default value</dt>
+<dt id="default-value-11">Default value</dt>
 <dd><p><code translate="no" v-pre>true</code></p>
 </dd>
 </dl>
@@ -654,11 +689,11 @@ USERPREF_LOCKED__THEME=true</code></pre>
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-11">Description</dt>
+<dt id="description-12">Description</dt>
 <dd><p>The online icon library queried when 2FA-Vault needs to fetch an icon.</p>
 <p>Only relevant when <doc-anchor-trigger to="#icon_source">ICON_SOURCE</doc-anchor-trigger> is set to <code translate="no" v-pre>logolib</code>.</p>
 </dd>
-<dt id="default-value-11">Default value</dt>
+<dt id="default-value-12">Default value</dt>
 <dd><p><code translate="no" v-pre>selfh</code></p>
 </dd>
 </dl>
@@ -683,13 +718,13 @@ USERPREF_LOCKED__THEME=true</code></pre>
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-12">Description</dt>
+<dt id="description-13">Description</dt>
 <dd><p>The name of the icon pack queried when 2FA-Vault needs to fetch an icon.</p>
 <p>An icon pack is merely a collection of image files stored in a directory on the server, in the <code translate="no" v-pre>[twofauth_install_dir]/storage/app/iconPacks/</code> location. The name of the icon pack match the name of the directory.</p>
 <p>If the icon pack is stored in a subdirectory, e.g. <code translate="no" v-pre>[twofauth_install_dir]/storage/app/iconPacks/mysubdir/myiconpack/</code>, the preference must be set using the subdirectory and pack directory names combined, so <code translate="no" v-pre>mysubdir/myiconpack</code>.</p>
 <p>Only relevant when <doc-anchor-trigger to="#icon_source">ICON_SOURCE</doc-anchor-trigger> is set to <code translate="no" v-pre>iconpack</code>.</p>
 </dd>
-<dt id="default-value-12">Default value</dt>
+<dt id="default-value-13">Default value</dt>
 <dd><p><code translate="no" v-pre>null</code></p>
 </dd>
 </dl>
@@ -708,9 +743,9 @@ USERPREF_LOCKED__THEME=true</code></pre>
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-13">Description</dt>
+<dt id="description-14">Description</dt>
 <dd>The location where 2FA-Vault offers to fetch icons</dd>
-<dt id="default-value-13">Default value</dt>
+<dt id="default-value-14">Default value</dt>
 <dd><p><code translate="no" v-pre>logolib</code></p>
 </dd>
 </dl>
@@ -745,11 +780,11 @@ USERPREF_LOCKED__THEME=true</code></pre>
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-14">Description</dt>
+<dt id="description-15">Description</dt>
 <dd><p>Some icon libraries provide icons in different variations to best suit dark or light user interfaces. Use this preference to indicate 2FA-Vault the flavor that must be requested first. The regular variant will be fetched automatically by 2FA-Vault if the specified one is not available.</p>
 <p>Only relevant when <doc-anchor-trigger to="#icon_source">ICON_SOURCE</doc-anchor-trigger> is not set to <code translate="no" v-pre>logolib</code>.</p>
 </dd>
-<dt id="default-value-14">Default value</dt>
+<dt id="default-value-15">Default value</dt>
 <dd><p><code translate="no" v-pre>regular</code></p>
 </dd>
 </dl>
@@ -774,11 +809,11 @@ USERPREF_LOCKED__THEME=true</code></pre>
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-15">Description</dt>
+<dt id="description-16">Description</dt>
 <dd><p>Narrow the fetch to the specified icon variant. If the variant is missing, 2FA-Vault will not try to fallback to the regular variant.</p>
 <p>Only relevant when <doc-anchor-trigger to="#icon_source">ICON_SOURCE</doc-anchor-trigger> is set to <code translate="no" v-pre>logolib</code> and <doc-anchor-trigger to="#icon_variant">ICON_VARIANT</doc-anchor-trigger> is not set to <code translate="no" v-pre>regular</code>.</p>
 </dd>
-<dt id="default-value-15">Default value</dt>
+<dt id="default-value-16">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -791,9 +826,9 @@ USERPREF_LOCKED__THEME=true</code></pre>
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-16">Description</dt>
+<dt id="description-17">Description</dt>
 <dd>Action or inactivity time span that triggers the automatic disconnection of the user, aka Auto-lock</dd>
-<dt id="default-value-16">Default value</dt>
+<dt id="default-value-17">Default value</dt>
 <dd><p><code translate="no" v-pre>15</code></p>
 </dd>
 </dl>
@@ -818,9 +853,9 @@ USERPREF_LOCKED__THEME=true</code></pre>
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-17">Description</dt>
+<dt id="description-18">Description</dt>
 <dd>The language used to translate the 2FA-Vault user interface</dd>
-<dt id="default-value-17">Default value</dt>
+<dt id="default-value-18">Default value</dt>
 <dd><p><code translate="no" v-pre>browser</code></p>
 </dd>
 </dl>
@@ -844,9 +879,9 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-18">Description</dt>
+<dt id="description-19">Description</dt>
 <dd>Enables email notification of failed login attempts</dd>
-<dt id="default-value-18">Default value</dt>
+<dt id="default-value-19">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -859,9 +894,9 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-19">Description</dt>
+<dt id="description-20">Description</dt>
 <dd>Enables email notification of successful logon from a new device</dd>
-<dt id="default-value-19">Default value</dt>
+<dt id="default-value-20">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -872,9 +907,9 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-20">Description</dt>
+<dt id="description-21">Description</dt>
 <dd>Saves the last group filter applied and restores it on your next visit</dd>
-<dt id="default-value-20">Default value</dt>
+<dt id="default-value-21">Default value</dt>
 <dd><p><code translate="no" v-pre>true</code></p>
 </dd>
 </dl>
@@ -887,11 +922,11 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-21">Description</dt>
+<dt id="description-22">Description</dt>
 <dd><p>Displays a button to make the OTP readable while it is obfuscated.</p>
 <p>Only relevant when <doc-anchor-trigger to="#show_otp_as_dot">SHOW_OTP_AS_DOT</doc-anchor-trigger> is set to <code translate="no" v-pre>true</code>.</p>
 </dd>
-<dt id="default-value-21">Default value</dt>
+<dt id="default-value-22">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -904,9 +939,9 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-22">Description</dt>
+<dt id="description-23">Description</dt>
 <dd>Show/Hide the icons that depict 2FA accounts</dd>
-<dt id="default-value-22">Default value</dt>
+<dt id="default-value-23">Default value</dt>
 <dd><p><code translate="no" v-pre>true</code></p>
 </dd>
 </dl>
@@ -919,9 +954,9 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-23">Description</dt>
+<dt id="description-24">Description</dt>
 <dd>Switch between the old footer layout and the new one that displays the email address of the currently logged in user</dd>
-<dt id="default-value-23">Default value</dt>
+<dt id="default-value-24">Default value</dt>
 <dd><p><code translate="no" v-pre>true</code></p>
 </dd>
 </dl>
@@ -934,9 +969,9 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-24">Description</dt>
+<dt id="description-25">Description</dt>
 <dd>Previews the next OTP near the current valid OTP</dd>
-<dt id="default-value-24">Default value</dt>
+<dt id="default-value-25">Default value</dt>
 <dd><p><code translate="no" v-pre>true</code></p>
 </dd>
 </dl>
@@ -949,14 +984,14 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-25">Description</dt>
+<dt id="description-26">Description</dt>
 <dd><p>Obfuscates OTPs by replacing digits with dots.</p>
 <p>Additional preferences may be set to refine this behavior:</p>
 <ul>
 <li><doc-anchor-trigger to="#reveal_dotted_otp">REVEAL_DOTTED_OTP</doc-anchor-trigger></li>
 </ul>
 </dd>
-<dt id="default-value-25">Default value</dt>
+<dt id="default-value-26">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -969,11 +1004,11 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-26">Description</dt>
+<dt id="description-27">Description</dt>
 <dd><p>Show virtual groups (accounts without a group, shared by me, shared with me) as chips on the main accounts view.</p>
 <p>Only relevant when <doc-anchor-trigger to="#use_group_chips">USE_GROUP_CHIPS</doc-anchor-trigger> is set to <code translate="no" v-pre>true</code>.</p>
 </dd>
-<dt id="default-value-26">Default value</dt>
+<dt id="default-value-27">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -986,9 +1021,9 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-27">Description</dt>
+<dt id="description-28">Description</dt>
 <dd>Applies case-sensitive sorting when reordering 2FA accounts</dd>
-<dt id="default-value-27">Default value</dt>
+<dt id="default-value-28">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -1001,9 +1036,9 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-28">Description</dt>
+<dt id="description-29">Description</dt>
 <dd>The order 2FA accounts are sorted</dd>
-<dt id="default-value-28">Default value</dt>
+<dt id="default-value-29">Default value</dt>
 <dd><p><code translate="no" v-pre>asc</code></p>
 </dd>
 </dl>
@@ -1026,9 +1061,9 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-29">Description</dt>
+<dt id="description-30">Description</dt>
 <dd>The theme applied to the app pages</dd>
-<dt id="default-value-29">Default value</dt>
+<dt id="default-value-30">Default value</dt>
 <dd><p><code translate="no" v-pre>system</code></p>
 </dd>
 </dl>
@@ -1053,9 +1088,9 @@ See the <a href="https://crowdin.com/project/2FA-Vault" target="_blank">Crowdin 
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-30">Description</dt>
+<dt id="description-31">Description</dt>
 <dd>The time zone applied to all dates and times displayed in the 2FA-Vault user interface</dd>
-<dt id="default-value-30">Default value</dt>
+<dt id="default-value-31">Default value</dt>
 <dd><code translate="no" v-pre>UTC</code></dd>
 <dt id="accepted-values">Accepted values</dt>
 <dd><p>Any timezone identifier, for example <code translate="no" v-pre>Africa/Asmara</code>.<br />
@@ -1071,9 +1106,26 @@ See <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" targe
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-31">Description</dt>
+<dt id="description-32">Description</dt>
 <dd>Switches to an alternative QR code reader</dd>
-<dt id="default-value-31">Default value</dt>
+<dt id="default-value-32">Default value</dt>
+<dd><p><code translate="no" v-pre>false</code></p>
+</dd>
+</dl>
+</div>
+<h3 id="use_desktop_table_layout">USE_DESKTOP_TABLE_LAYOUT</h3>
+<p><span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-info-text bg-badge-info border border-badge-info-border h-6 px-2 text-xs rounded-md">
+    <span>boolean</span>
+</span> <span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-info-text bg-badge-info border border-badge-info-border h-6 px-2 text-xs rounded-md">
+    <span>since v1.5</span>
+</span></p>
+<div class="env-var-dl-wrapper">
+<dl>
+<dt id="description-33">Description</dt>
+<dd><p>Displays the 2FA account collection as a full-width table when 2FAuth is viewed on a desktop-sized screen (1215px or wider). The table shows all available controls without requiring the Manage mode.</p>
+<p>Below the desktop breakpoint the collection falls back to the grid/list rendering chosen by <doc-anchor-trigger to="#display_mode">DISPLAY_MODE</doc-anchor-trigger>.</p>
+</dd>
+<dt id="default-value-33">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -1086,14 +1138,14 @@ See <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" targe
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-32">Description</dt>
+<dt id="description-34">Description</dt>
 <dd><p>Skips the input mode selection screen.</p>
 <p>Additional preferences have to be set to refine this behavior:</p>
 <ul>
 <li><doc-anchor-trigger to="#default_capture_mode">DEFAULT_CAPTURE_MODE</doc-anchor-trigger></li>
 </ul>
 </dd>
-<dt id="default-value-32">Default value</dt>
+<dt id="default-value-34">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -1106,14 +1158,14 @@ See <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" targe
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-33">Description</dt>
+<dt id="description-35">Description</dt>
 <dd><p>Displays quick-switching chips for groups on the main accounts view. Each group must additionally be flagged <em>Show in chips</em> (per-group <code translate="no" v-pre>show_in_chips</code> flag) to appear as a chip.</p>
 <p>Additional preferences may be set to refine this behavior:</p>
 <ul>
 <li><doc-anchor-trigger to="#show_virtual_chips">SHOW_VIRTUAL_CHIPS</doc-anchor-trigger></li>
 </ul>
 </dd>
-<dt id="default-value-33">Default value</dt>
+<dt id="default-value-35">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -1126,9 +1178,9 @@ See <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones" targe
 </span></p>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="description-34">Description</dt>
+<dt id="description-36">Description</dt>
 <dd>Always return to the default group filter when a click/tap is done on a one-time password to copy it</dd>
-<dt id="default-value-34">Default value</dt>
+<dt id="default-value-36">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>

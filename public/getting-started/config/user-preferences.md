@@ -307,6 +307,26 @@ Default value
 
 :::
 
+!!!note Desktop table layout
+The desktop-oriented **table** rendering is governed by its own preference, [USE_DESKTOP_TABLE_LAYOUT](#use_desktop_table_layout). It overrides the grid/list presentation on screens at least 1215px wide.
+!!!
+
+### ENABLE_FAVORITES
+
+[!badge variant="info" text="boolean"] [!badge variant="info" text="since v1.5"]
+
+:::env-var-dl-wrapper
+
+Description
+:   Lets the user mark 2FA accounts as favorites and filter the accounts view to favorites only. The favorite is a per-user marker (star) and is distinct from the pin, which sorts an account to the top of the list.
+
+    Requires the 2FA-Vault server to expose the `favorites` feature flag. Setting `USERPREF_LOCKED__ENABLE_FAVORITES=true` locks the preference server-side.
+
+Default value
+:   `true`
+
+:::
+
 ### FORMAT_PASSWORD
 
 [!badge variant="info" text="boolean"] [!badge variant="info" text="since v4.0"]
@@ -822,6 +842,22 @@ Accepted values
 
 Description
 :   Switches to an alternative QR code reader
+
+Default value
+:   `false`
+
+:::
+
+### USE_DESKTOP_TABLE_LAYOUT
+
+[!badge variant="info" text="boolean"] [!badge variant="info" text="since v1.5"]
+
+:::env-var-dl-wrapper
+
+Description
+:   Displays the 2FA account collection as a full-width table when 2FAuth is viewed on a desktop-sized screen (1215px or wider). The table shows all available controls without requiring the Manage mode.
+
+    Below the desktop breakpoint the collection falls back to the grid/list rendering chosen by [DISPLAY_MODE](#display_mode).
 
 Default value
 :   `false`

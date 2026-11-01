@@ -101,6 +101,7 @@ In addition to the apps above, 2FA-Vault can import the following migration file
 | **Raivo** | Raivo Authenticator | Raivo JSON export. |
 | **andOTP** | andOTP | Plain (unencrypted) andOTP JSON backup. |
 | **FreeOTP+** | FreeOTP+ | FreeOTP+ JSON export (key URI / token list). |
+| **Ente** | Ente Auth | Ente plain text JSON export (choose the *Plain text* option, not the encrypted export). |
 
 !!!warning Decrypt before importing
 2FA-Vault cannot read password-protected or encrypted exports. Disable encryption in the source app when exporting, then re-secure the resulting file yourself.
