@@ -69,14 +69,4 @@ Don't forget to revoke the lost device in the _Settings > Webauthn_ section.
 
 Most authenticators and smartphones will ask the user to actively verify themselves to log in. For example, through a touch plus pin code, password entry, or biometric recognition (e.g., presenting a fingerprint). The intent is to distinguish one user from any other.
 
-You can configure how the user verification step behave during the WebAuthn login flow with the `WEBAUTHN_USER_VERIFICATION` env var:
-
-```env In your .env file:
-WEBAUTHN_USER_VERIFICATION=preferred
-```
-
-Supported value | Behavior { class="compact" }
---- | ---
-_required_ | Will ALWAYS ask for user verification
-_preferred_ (default) | Will ask for user verification IF POSSIBLE
-_discouraged_ | Will NOT ask for user verification (for example, to minimize disruption to the user interaction flow)
+Since v1.6.0 user verification is **always required** during the passkey login flow. Biometric devices (Touch ID, Windows Hello, face unlock) behave as before. Security keys **without a configured PIN** prompt for — or require — one, so make sure yours has a PIN set before upgrading to v1.6.0.

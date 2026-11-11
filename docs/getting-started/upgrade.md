@@ -3,6 +3,27 @@ order: 0
 ---
 # Upgrade
 
+## Release 1.6.0 — WebAuthn engine swap to laravel/passkeys
+
+Release 1.6.0 replaces the abandoned `laragear/webauthn` package with first-party `laravel/passkeys`. **Every registered WebAuthn device keeps working**, but its stored record is converted once during the upgrade:
+
+- **Docker installs:** the container entrypoint runs the conversion automatically (idempotent) and refuses to start the service if it fails. Run the container at least once after pulling v1.6.0 before switching traffic.
+- **Self-hosted (composer/bare-metal):** after `composer install` and migrations, run the migration BEFORE letting users log in:
+
+```sh
+php artisan 2fauth:migrate-webauthn-credentials --dry-run   # report only, no writes
+php artisan 2fauth:migrate-webauthn-credentials --force     # convert (backup first!)
+php artisan 2fauth:migrate-webauthn-credentials --force     # post-cutover re-run, sweeps late registrations
+```
+
+The full operator runbook (report reading, abort rules, rollback constraints) lives in `docs/guides/passkeys-migration.md` in the app repository.
+
+!!!warning "User verification is now always required"
+    Passkey ceremonies always perform **user verification** (the former fast/secure switch was dead code and is removed). Biometric devices (Touch ID, Windows Hello) behave as before. **Security keys without a configured PIN** now prompt for — or require — a PIN; tell your users to set one before upgrading.
+
+!!!note
+    The `WEBAUTHN_USER_VERIFICATION` env var documentation is removed (it was never read by the app).
+
 ## Self-hosted server
 
 Update the source code in `/var/www/2FA-Vault` (see [Get your 2FA-Vault copy](/getting-started/installation/self-hosted-server/#get-your-2FA-Vault-copy))
