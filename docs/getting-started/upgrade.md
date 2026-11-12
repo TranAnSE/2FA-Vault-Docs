@@ -24,6 +24,14 @@ The full operator runbook (report reading, abort rules, rollback constraints) li
 !!!note
     The `WEBAUTHN_USER_VERIFICATION` env var documentation is removed (it was never read by the app).
 
+## Release 1.6.1 — legacy WebAuthn cleanup
+
+Release 1.6.1 removes the abandoned package and the legacy storage. **Upgrade through 1.6.0 first**:
+
+- The `2fauth:migrate-webauthn-credentials` command **no longer exists** — it was a one-time v1.6.0 artifact.
+- The legacy `webauthn_credentials` table is dropped by a migration. The migration **refuses to run** while the table still holds unconverted credentials and the new `passkeys` table is empty (a direct 1.5.x → 1.6.1 jump would destroy every registered device). If `php artisan migrate` aborts with this guard error: deploy 1.6.0 first, let the conversion run (boot the Docker container once, or run the ETL per the 1.6.0 section above), then retry the 1.6.1 migration.
+- The `WEBAUTHN_NAME` env var (never read by the app) is removed from the env reference; `WEBAUTHN_ID` and `WEBAUTHN_ORIGINS` remain the supported WebAuthn settings.
+
 ## Self-hosted server
 
 Update the source code in `/var/www/2FA-Vault` (see [Get your 2FA-Vault copy](/getting-started/installation/self-hosted-server/#get-your-2FA-Vault-copy))
