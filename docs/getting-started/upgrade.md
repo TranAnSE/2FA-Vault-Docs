@@ -3,6 +3,16 @@ order: 0
 ---
 # Upgrade
 
+## Release 1.7.0 — passkey vault unlock (WebAuthn PRF)
+
+Release 1.7.0 adds **passkey vault unlock**: a PRF-capable passkey can unlock the E2EE vault instead of typing the master password. The master password remains the mandatory fallback and recovery path.
+
+- **The disabled "Biometric unlock" stub is removed.** It never shipped enabled (it kept the master password recoverable from disk by design) and its Settings section, unlock-screen button, and the leftover `biometric_*` IndexedDB settings are deleted. The web app purges those inert IndexedDB keys on the first visit to the unlock screen. No user action is required; the feature that replaces it is passkey unlock (below).
+- **New database surface:** a migration adds the nullable `users.prf_salt` column and the `passkey_prf_credentials` table (one row per enrolled passkey: opaque `public_key`, `wrapped_private_key`, `wrapped_vault_key` blobs). `php artisan migrate` (run by the install wizard) applies it. Disabling E2EE, deleting a passkey, or the device-lost account recovery flushes the rows.
+- **Behavior:** enroll a passkey for vault unlock in _Settings → Security devices_ (the vault must be unlocked once). The unlock screen shows **Unlock with passkey** when at least one enrollment exists. Master-password rotation re-wraps enrolled passkeys automatically, without a passkey prompt.
+- **Requirements:** the passkey's authenticator must support the WebAuthn **prf** extension. YubiKey firmware < 5.8 shows a second verification prompt during enrollment (accepted UX).
+- **Key custody:** the server stores only opaque blobs and a per-user PRF salt; the PRF output never leaves the authenticator. Details in the [E2EE docs](/security/end-to-end-encryption/#passkey-unlock-webauthn-prf).
+
 ## Release 1.6.0 — WebAuthn engine swap to laravel/passkeys
 
 Release 1.6.0 replaces the abandoned `laragear/webauthn` package with first-party `laravel/passkeys`. **Every registered WebAuthn device keeps working**, but its stored record is converted once during the upgrade:
