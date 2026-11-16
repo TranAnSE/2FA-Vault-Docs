@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.846879206706">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.848106426169">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>Upgrade - 2FA-Vault Docs</title>
     <meta name="title" content="Upgrade - 2FA-Vault Docs">
-    <meta name="description" content="Update the source code in /var/www/2FA-Vault (see Get your 2FA-Vault copy)">
+    <meta name="description" content="Release 1.7.0 adds passkey vault unlock: a PRF-capable passkey can unlock the E2EE vault instead of typing the master password. The master password remains the mandatory fallback and recovery path.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.2fa-vault.app/getting-started/upgrade/">
@@ -22,7 +22,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.2fa-vault.app/getting-started/upgrade/">
     <meta property="og:title" content="Upgrade - 2FA-Vault Docs">
-    <meta property="og:description" content="Update the source code in /var/www/2FA-Vault (see Get your 2FA-Vault copy)">
+    <meta property="og:description" content="Release 1.7.0 adds passkey vault unlock: a PRF-capable passkey can unlock the E2EE vault instead of typing the master password. The master password remains the mandatory fallback and recovery path.">
     <meta property="og:site_name" content="2FA-Vault">
     <meta property="og:locale" content="en_US">
 
@@ -30,7 +30,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.2fa-vault.app/getting-started/upgrade/">
     <meta name="twitter:title" content="Upgrade - 2FA-Vault Docs">
-    <meta name="twitter:description" content="Update the source code in /var/www/2FA-Vault (see Get your 2FA-Vault copy)">
+    <meta name="twitter:description" content="Release 1.7.0 adds passkey vault unlock: a PRF-capable passkey can unlock the E2EE vault instead of typing the master password. The master password remains the mandatory fallback and recovery path.">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.2fa-vault.app/getting-started/upgrade.md">
@@ -38,12 +38,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../static/2fauth_favicon.png" />
-    <link href="../../resources/css/retype.css?v=4.6.0.846879206706" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.848106426169" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.846879206706" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.848106426169" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.846879206706" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.846879206706" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.848106426169" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.848106426169" defer></script>
 
     <link href="/static/custom.css" rel="stylesheet" />
 </head>
@@ -230,6 +230,67 @@
 
                 <!-- Page content  -->
 <h1 id="upgrade">Upgrade</h1>
+<h2 id="release-170--passkey-vault-unlock-webauthn-prf">Release 1.7.0 — passkey vault unlock (WebAuthn PRF)</h2>
+<p>Release 1.7.0 adds <strong>passkey vault unlock</strong>: a PRF-capable passkey can unlock the E2EE vault instead of typing the master password. The master password remains the mandatory fallback and recovery path.</p>
+<ul>
+<li><strong>The disabled &quot;Biometric unlock&quot; stub is removed.</strong> It never shipped enabled (it kept the master password recoverable from disk by design) and its Settings section, unlock-screen button, and the leftover <code translate="no" v-pre>biometric_*</code> IndexedDB settings are deleted. The web app purges those inert IndexedDB keys on the first visit to the unlock screen. No user action is required; the feature that replaces it is passkey unlock (below).</li>
+<li><strong>New database surface:</strong> a migration adds the nullable <code translate="no" v-pre>users.prf_salt</code> column and the <code translate="no" v-pre>passkey_prf_credentials</code> table (one row per enrolled passkey: opaque <code translate="no" v-pre>public_key</code>, <code translate="no" v-pre>wrapped_private_key</code>, <code translate="no" v-pre>wrapped_vault_key</code> blobs). <code translate="no" v-pre>php artisan migrate</code> (run by the install wizard) applies it. Disabling E2EE, deleting a passkey, or the device-lost account recovery flushes the rows.</li>
+<li><strong>Behavior:</strong> enroll a passkey for vault unlock in <em>Settings → Security devices</em> (the vault must be unlocked once). The unlock screen shows <strong>Unlock with passkey</strong> when at least one enrollment exists. Master-password rotation re-wraps enrolled passkeys automatically, without a passkey prompt.</li>
+<li><strong>Requirements:</strong> the passkey&#x27;s authenticator must support the WebAuthn <strong>prf</strong> extension. YubiKey firmware &lt; 5.8 shows a second verification prompt during enrollment (accepted UX).</li>
+<li><strong>Key custody:</strong> the server stores only opaque blobs and a per-user PRF salt; the PRF output never leaves the authenticator. Details in the <a href="../../security/end-to-end-encryption/#passkey-unlock-webauthn-prf">E2EE docs</a>.</li>
+</ul>
+<h2 id="release-160--webauthn-engine-swap-to-laravelpasskeys">Release 1.6.0 — WebAuthn engine swap to laravel/passkeys</h2>
+<p>Release 1.6.0 replaces the abandoned <code translate="no" v-pre>laragear/webauthn</code> package with first-party <code translate="no" v-pre>laravel/passkeys</code>. <strong>Every registered WebAuthn device keeps working</strong>, but its stored record is converted once during the upgrade:</p>
+<ul>
+<li><strong>Docker installs:</strong> the container entrypoint runs the conversion automatically (idempotent) and refuses to start the service if it fails. Run the container at least once after pulling v1.6.0 before switching traffic.</li>
+<li><strong>Self-hosted (composer/bare-metal):</strong> after <code translate="no" v-pre>composer install</code> and migrations, run the migration BEFORE letting users log in:</li>
+</ul>
+<div id="release-160--webauthn-engine-swap-to-laravelpasskeys-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">php artisan 2fauth:migrate-webauthn-credentials --dry-run   # report only, no writes
+php artisan 2fauth:migrate-webauthn-credentials --force     # convert (backup first!)
+php artisan 2fauth:migrate-webauthn-credentials --force     # post-cutover re-run, sweeps late registrations</code></pre>
+</doc-codeblock></div>
+<p>The full operator runbook (report reading, abort rules, rollback constraints) lives in <code translate="no" v-pre>docs/guides/passkeys-migration.md</code> in the app repository.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-warning" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
+                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>&quot;User verification is now always required&quot;</h5>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
+<pre translate="no" class="language-none"><code v-pre class="language-none">Passkey ceremonies always perform **user verification** (the former fast/secure switch was dead code and is removed). Biometric devices (Touch ID, Windows Hello) behave as before. **Security keys without a configured PIN** now prompt for — or require — a PIN; tell your users to set one before upgrading.</code></pre>
+</doc-codeblock></div>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
+    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
+                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>note</h5>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
+<pre translate="no" class="language-none"><code v-pre class="language-none">The `WEBAUTHN_USER_VERIFICATION` env var documentation is removed (it was never read by the app).</code></pre>
+</doc-codeblock></div>
+<h2 id="release-161--legacy-webauthn-cleanup">Release 1.6.1 — legacy WebAuthn cleanup</h2>
+<p>Release 1.6.1 removes the abandoned package and the legacy storage. <strong>Upgrade through 1.6.0 first</strong>:</p>
+<ul>
+<li>The <code translate="no" v-pre>2fauth:migrate-webauthn-credentials</code> command <strong>no longer exists</strong> — it was a one-time v1.6.0 artifact.</li>
+<li>The legacy <code translate="no" v-pre>webauthn_credentials</code> table is dropped by a migration. The migration <strong>refuses to run</strong> while the table still holds unconverted credentials and the new <code translate="no" v-pre>passkeys</code> table is empty (a direct 1.5.x → 1.6.1 jump would destroy every registered device). If <code translate="no" v-pre>php artisan migrate</code> aborts with this guard error: deploy 1.6.0 first, let the conversion run (boot the Docker container once, or run the ETL per the 1.6.0 section above), then retry the 1.6.1 migration.</li>
+<li>The <code translate="no" v-pre>WEBAUTHN_NAME</code> env var (never read by the app) is removed from the env reference; <code translate="no" v-pre>WEBAUTHN_ID</code> and <code translate="no" v-pre>WEBAUTHN_ORIGINS</code> remain the supported WebAuthn settings.</li>
+</ul>
 <h2 id="self-hosted-server">Self-hosted server</h2>
 <p>Update the source code in <code translate="no" v-pre>/var/www/2FA-Vault</code> (see <a href="../installation/self-hosted-server/#get-your-2FA-Vault-copy">Get your 2FA-Vault copy</a>)</p>
 <div class="flex mb-6">
@@ -248,24 +309,30 @@
         </div>
     </div>
 </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+</div>
 <p>Depending on how you update your files, you could have to set the permissions again:</p>
-<div id="self-hosted-server-code-1" class="codeblock-wrapper"><doc-codeblock>
+<div id="release-160--webauthn-engine-swap-to-laravelpasskeys-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">chown -R www-data:www-data /var/www/2FA-Vault
 chmod -R 775 /var/www/2FA-Vault</code></pre>
 </doc-codeblock></div>
 <p>Update the dependencies by running:</p>
-<div id="self-hosted-server-code-2" class="codeblock-wrapper"><doc-codeblock>
+<div id="release-160--webauthn-engine-swap-to-laravelpasskeys-code-3" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">composer install
 
 # or if you didn't add composer to your system PATH
 php composer.phar install</code></pre>
 </doc-codeblock></div>
 <p>Then start the installation wizard by running:</p>
-<div id="self-hosted-server-code-3" class="codeblock-wrapper"><doc-codeblock>
+<div id="release-160--webauthn-engine-swap-to-laravelpasskeys-code-4" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">php artisan 2FA-Vault:install</code></pre>
 </doc-codeblock></div>
 <p>The wizard automatically runs the following commands:</p>
-<div id="self-hosted-server-code-4" class="codeblock-wrapper"><doc-codeblock>
+<div id="release-160--webauthn-engine-swap-to-laravelpasskeys-code-5" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">php artisan cache:clear
 php artisan config:clear
 php artisan migrate

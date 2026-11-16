@@ -62,18 +62,23 @@ Don't forget to revoke the lost device in the _Settings > Webauthn_ section.
 
 ---
 
+## Vault unlock with a passkey (PRF)
+
+Since v1.7.0, a registered passkey with PRF support (hmac-secret extension) can also **unlock the E2EE vault** in addition to logging you in. See [Passkey unlock](/security/end-to-end-encryption/#passkey-unlock-webauthn-prf) for the full key-custody story.
+
+1. Log in, **unlock the vault** (once), open _Settings → Security devices_.
+2. Each passkey row shows an **Enable vault unlock** action.
+3. One user-verification gesture — the authenticator evaluates its PRF for the account salt in the same ceremony.
+4. The unlock screen then shows an **Unlock with passkey** button next to the master-password form.
+
+!!!warning
+YubiKey firmware below 5.8 evaluates the PRF in two user-verification prompts during enrollment. This is normal for those keys and is accepted; the enrollment still completes.
+!!!
+
+---
+
 ## User verification
 
 Most authenticators and smartphones will ask the user to actively verify themselves to log in. For example, through a touch plus pin code, password entry, or biometric recognition (e.g., presenting a fingerprint). The intent is to distinguish one user from any other.
 
-You can configure how the user verification step behave during the WebAuthn login flow with the `WEBAUTHN_USER_VERIFICATION` env var:
-
-```env In your .env file:
-WEBAUTHN_USER_VERIFICATION=preferred
-```
-
-Supported value | Behavior { class="compact" }
---- | ---
-_required_ | Will ALWAYS ask for user verification
-_preferred_ (default) | Will ask for user verification IF POSSIBLE
-_discouraged_ | Will NOT ask for user verification (for example, to minimize disruption to the user interaction flow)
+Since v1.6.0 user verification is **always required** during the passkey login flow. Biometric devices (Touch ID, Windows Hello, face unlock) behave as before. Security keys **without a configured PIN** prompt for — or require — one, so make sure yours has a PIN set before upgrading to v1.6.0.

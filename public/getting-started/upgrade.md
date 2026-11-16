@@ -1,5 +1,44 @@
 # Upgrade
 
+## Release 1.7.0 — passkey vault unlock (WebAuthn PRF)
+
+Release 1.7.0 adds **passkey vault unlock**: a PRF-capable passkey can unlock the E2EE vault instead of typing the master password. The master password remains the mandatory fallback and recovery path.
+
+- **The disabled "Biometric unlock" stub is removed.** It never shipped enabled (it kept the master password recoverable from disk by design) and its Settings section, unlock-screen button, and the leftover `biometric_*` IndexedDB settings are deleted. The web app purges those inert IndexedDB keys on the first visit to the unlock screen. No user action is required; the feature that replaces it is passkey unlock (below).
+- **New database surface:** a migration adds the nullable `users.prf_salt` column and the `passkey_prf_credentials` table (one row per enrolled passkey: opaque `public_key`, `wrapped_private_key`, `wrapped_vault_key` blobs). `php artisan migrate` (run by the install wizard) applies it. Disabling E2EE, deleting a passkey, or the device-lost account recovery flushes the rows.
+- **Behavior:** enroll a passkey for vault unlock in _Settings → Security devices_ (the vault must be unlocked once). The unlock screen shows **Unlock with passkey** when at least one enrollment exists. Master-password rotation re-wraps enrolled passkeys automatically, without a passkey prompt.
+- **Requirements:** the passkey's authenticator must support the WebAuthn **prf** extension. YubiKey firmware < 5.8 shows a second verification prompt during enrollment (accepted UX).
+- **Key custody:** the server stores only opaque blobs and a per-user PRF salt; the PRF output never leaves the authenticator. Details in the [E2EE docs](/security/end-to-end-encryption/#passkey-unlock-webauthn-prf).
+
+## Release 1.6.0 — WebAuthn engine swap to laravel/passkeys
+
+Release 1.6.0 replaces the abandoned `laragear/webauthn` package with first-party `laravel/passkeys`. **Every registered WebAuthn device keeps working**, but its stored record is converted once during the upgrade:
+
+- **Docker installs:** the container entrypoint runs the conversion automatically (idempotent) and refuses to start the service if it fails. Run the container at least once after pulling v1.6.0 before switching traffic.
+- **Self-hosted (composer/bare-metal):** after `composer install` and migrations, run the migration BEFORE letting users log in:
+
+```sh
+php artisan 2fauth:migrate-webauthn-credentials --dry-run   # report only, no writes
+php artisan 2fauth:migrate-webauthn-credentials --force     # convert (backup first!)
+php artisan 2fauth:migrate-webauthn-credentials --force     # post-cutover re-run, sweeps late registrations
+```
+
+The full operator runbook (report reading, abort rules, rollback constraints) lives in `docs/guides/passkeys-migration.md` in the app repository.
+
+!!!warning "User verification is now always required"
+    Passkey ceremonies always perform **user verification** (the former fast/secure switch was dead code and is removed). Biometric devices (Touch ID, Windows Hello) behave as before. **Security keys without a configured PIN** now prompt for — or require — a PIN; tell your users to set one before upgrading.
+
+!!!note
+    The `WEBAUTHN_USER_VERIFICATION` env var documentation is removed (it was never read by the app).
+
+## Release 1.6.1 — legacy WebAuthn cleanup
+
+Release 1.6.1 removes the abandoned package and the legacy storage. **Upgrade through 1.6.0 first**:
+
+- The `2fauth:migrate-webauthn-credentials` command **no longer exists** — it was a one-time v1.6.0 artifact.
+- The legacy `webauthn_credentials` table is dropped by a migration. The migration **refuses to run** while the table still holds unconverted credentials and the new `passkeys` table is empty (a direct 1.5.x → 1.6.1 jump would destroy every registered device). If `php artisan migrate` aborts with this guard error: deploy 1.6.0 first, let the conversion run (boot the Docker container once, or run the ETL per the 1.6.0 section above), then retry the 1.6.1 migration.
+- The `WEBAUTHN_NAME` env var (never read by the app) is removed from the env reference; `WEBAUTHN_ID` and `WEBAUTHN_ORIGINS` remain the supported WebAuthn settings.
+
 ## Self-hosted server
 
 Update the source code in `/var/www/2FA-Vault` (see [Get your 2FA-Vault copy](/getting-started/installation/self-hosted-server/#get-your-2FA-Vault-copy))

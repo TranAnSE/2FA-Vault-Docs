@@ -499,42 +499,17 @@ Default value
 
 :::
 
-### WEBAUTHN_USER_VERIFICATION
-
-[!badge variant="info" text="string"]
+### WEBAUTHN_USER_VERIFICATION (removed in v1.6.0)
 
 :::env-var-dl-wrapper
 
 Description
-:   Setting to control how user verification behave during the WebAuthn authentication flow.
-
-    See [WebAuthn user verification](/security/authentication/webauthn/#user-verification).
-
-:::
-
-<span class="fw-500">Accepted values</span>
-
-:::sub-dl-wrapper
-
-`required`
-:   Will ALWAYS ask for user verification
-
-`preferred`
-:   Will ask for user verification IF POSSIBLE
-
-`discouraged`
-:   Will NOT ask for user verification (for example, to minimize disruption to the user interaction flow)
+:   **Removed in v1.6.0.** This variable was dead code (never read by the app) and has been
+    dropped from the docs. Passkey ceremonies now ALWAYS require user verification: devices
+    without a configured PIN (some security keys) prompt for one. See
+    [WebAuthn authentication](/security/Authentication/webauthn/) and the v1.6.0 upgrade notes.
 
 :::
-
-:::env-var-dl-wrapper
-
-Default value
-:   `preferred`
-
-:::
-
-## Cache setting
 
 ### CACHE_DRIVER
 

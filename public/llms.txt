@@ -24,7 +24,7 @@
 - [Environment variables](https://docs.2fa-vault.app/getting-started/config/env-vars.md): Here are the main environment variables that may be set to make 2FA-Vault work according to its running environment and to meet your needs. It is recommended to review them at least once to ensure minimal requirements are met and to have a picture of what 2FA-Vault offers in terms of configuration.
 - [User preferences](https://docs.2fa-vault.app/getting-started/config/user-preferences.md): User preferences are settings that any user can change to customize the behavior or appearance of 2FA-Vault. They can be set by the user from the Settings > Options section of 2FA-Vault.
 - [Troubleshooting](https://docs.2fa-vault.app/getting-started/troubleshooting.md): Logs can give usefull informations to troubleshoot your installation. 2FA-Vault logs are stored in the subfolder storage/logs of your installation folder.
-- [Upgrade](https://docs.2fa-vault.app/getting-started/upgrade.md): Update the source code in /var/www/2FA-Vault (see Get your 2FA-Vault copy)
+- [Upgrade](https://docs.2fa-vault.app/getting-started/upgrade.md): Release 1.7.0 adds passkey vault unlock: a PRF-capable passkey can unlock the E2EE vault instead of typing the master password. The master password remains the mandatory fallback and recovery path.
 
 ## Resources
 

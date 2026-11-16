@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.846879206706">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.848106426169">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,12 +38,12 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../../static/2fauth_favicon.png" />
-    <link href="../../../resources/css/retype.css?v=4.6.0.846879206706" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.848106426169" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.846879206706" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.848106426169" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.846879206706" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.846879206706" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.848106426169" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=4.6.0.848106426169" defer></script>
 
     <link href="/static/custom.css" rel="stylesheet" />
 </head>
@@ -930,38 +930,17 @@ If set to <code translate="no" v-pre>null</code>, the device will fill it intern
 </dd>
 </dl>
 </div>
-<h3 id="webauthn_user_verification">WEBAUTHN_USER_VERIFICATION</h3>
-<p><span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-info-text bg-badge-info border border-badge-info-border h-6 px-2 text-xs rounded-md">
-    <span>string</span>
-</span></p>
+<h3 id="webauthn_user_verification-removed-in-v160">WEBAUTHN_USER_VERIFICATION (removed in v1.6.0)</h3>
 <div class="env-var-dl-wrapper">
 <dl>
 <dt id="description-21">Description</dt>
-<dd><p>Setting to control how user verification behave during the WebAuthn authentication flow.</p>
-<p>See <a href="../../../security/authentication/webauthn/#user-verification">WebAuthn user verification</a>.</p>
+<dd><p><strong>Removed in v1.6.0.</strong> This variable was dead code (never read by the app) and has been
+dropped from the docs. Passkey ceremonies now ALWAYS require user verification: devices
+without a configured PIN (some security keys) prompt for one. See
+<a href="../../../security/authentication/webauthn/">WebAuthn authentication</a> and the v1.6.0 upgrade notes.</p>
 </dd>
 </dl>
 </div>
-<p><span class="fw-500">Accepted values</span></p>
-<div class="sub-dl-wrapper">
-<dl>
-<dt id="term-2"><code translate="no" v-pre>required</code></dt>
-<dd>Will ALWAYS ask for user verification</dd>
-<dt id="term-3"><code translate="no" v-pre>preferred</code></dt>
-<dd>Will ask for user verification IF POSSIBLE</dd>
-<dt id="term-4"><code translate="no" v-pre>discouraged</code></dt>
-<dd><p>Will NOT ask for user verification (for example, to minimize disruption to the user interaction flow)</p>
-</dd>
-</dl>
-</div>
-<div class="env-var-dl-wrapper">
-<dl>
-<dt id="default-value-20">Default value</dt>
-<dd><p><code translate="no" v-pre>preferred</code></p>
-</dd>
-</dl>
-</div>
-<h2 id="cache-setting">Cache setting</h2>
 <h3 id="cache_driver">CACHE_DRIVER</h3>
 <p><span class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-badge-info-text bg-badge-info border border-badge-info-border h-6 px-2 text-xs rounded-md">
     <span>string</span>
@@ -976,13 +955,13 @@ If set to <code translate="no" v-pre>null</code>, the device will fill it intern
 <p><span class="fw-500">Accepted values</span></p>
 <div class="sub-dl-wrapper">
 <dl>
-<dt id="term-5"><code translate="no" v-pre>database</code></dt>
+<dt id="term-2"><code translate="no" v-pre>database</code></dt>
 <dd><p>Data are cached to the database set with <doc-anchor-trigger to="#database-setting">database setting</doc-anchor-trigger>.</p>
 <p>See <a href="https://laravel.com/docs/cache#prerequisites-database" target="_blank">how to configure the Database driver</a> on the Laravel documentation.</p>
 </dd>
-<dt id="term-6"><code translate="no" v-pre>file</code></dt>
+<dt id="term-3"><code translate="no" v-pre>file</code></dt>
 <dd>Data are cached to the filesystem</dd>
-<dt id="term-7"><code translate="no" v-pre>memcached</code></dt>
+<dt id="term-4"><code translate="no" v-pre>memcached</code></dt>
 <dd><p>A distributed memory object caching system (<a href="https://memcached.org/" target="_blank">memcached.org</a>)</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
@@ -1002,7 +981,7 @@ If set to <code translate="no" v-pre>null</code>, the device will fill it intern
 </div>
 <p>See <a href="https://laravel.com/docs/cache#memcached" target="_blank">how to configure the Memcached driver</a> on the Laravel documentation.</p>
 </dd>
-<dt id="term-8"><code translate="no" v-pre>redis</code></dt>
+<dt id="term-5"><code translate="no" v-pre>redis</code></dt>
 <dd><p>An in-memory data structure store, used as a database, cache, and message broker (<a href="https://redis.io/" target="_blank">redis.io</a>)</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
@@ -1022,7 +1001,7 @@ If set to <code translate="no" v-pre>null</code>, the device will fill it intern
 </div>
 <p>See <a href="https://laravel.com/docs/cache#redis" target="_blank">how to configure the Redis driver</a> on the Laravel documentation.</p>
 </dd>
-<dt id="term-9"><code translate="no" v-pre>dynamodb</code></dt>
+<dt id="term-6"><code translate="no" v-pre>dynamodb</code></dt>
 <dd><p>Serverless, NoSQL, fully managed database with single-digit millisecond performance at any scale (<a href="https://aws.amazon.com/dynamodb/" target="_blank">dynamodb</a>)</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
@@ -1042,16 +1021,16 @@ If set to <code translate="no" v-pre>null</code>, the device will fill it intern
 </div>
 <p>See <a href="https://laravel.com/docs/cache#dynamodb" target="_blank">how to configure the DynamoDB driver</a> on the Laravel documentation.</p>
 </dd>
-<dt id="term-10"><code translate="no" v-pre>array</code></dt>
+<dt id="term-7"><code translate="no" v-pre>array</code></dt>
 <dd>Convenient cache backend for automated tests</dd>
-<dt id="term-11"><code translate="no" v-pre>null</code></dt>
+<dt id="term-8"><code translate="no" v-pre>null</code></dt>
 <dd><p>Convenient cache backend for automated tests</p>
 </dd>
 </dl>
 </div>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="default-value-21">Default value</dt>
+<dt id="default-value-20">Default value</dt>
 <dd><code translate="no" v-pre>file</code></dd>
 <dt id="alias-1">Alias</dt>
 <dd><p><code translate="no" v-pre>CACHE_STORE</code></p>
@@ -1074,20 +1053,20 @@ If set to <code translate="no" v-pre>null</code>, the device will fill it intern
 <p><span class="fw-500">Accepted values</span></p>
 <div class="sub-dl-wrapper">
 <dl>
-<dt id="term-12"><code translate="no" v-pre>mysql</code></dt>
+<dt id="term-9"><code translate="no" v-pre>mysql</code></dt>
 <dd>MySQL database</dd>
-<dt id="term-13"><code translate="no" v-pre>pgsql</code></dt>
+<dt id="term-10"><code translate="no" v-pre>pgsql</code></dt>
 <dd>PostgreSQL database</dd>
-<dt id="term-14"><code translate="no" v-pre>sqlsrv</code></dt>
+<dt id="term-11"><code translate="no" v-pre>sqlsrv</code></dt>
 <dd>SQL Server database</dd>
-<dt id="term-15"><code translate="no" v-pre>sqlite</code></dt>
+<dt id="term-12"><code translate="no" v-pre>sqlite</code></dt>
 <dd><p>SQLite database</p>
 </dd>
 </dl>
 </div>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="default-value-22">Default value</dt>
+<dt id="default-value-21">Default value</dt>
 <dd><p><code translate="no" v-pre>mysql</code></p>
 </dd>
 </dl>
@@ -1119,7 +1098,7 @@ If set to <code translate="no" v-pre>null</code>, the device will fill it intern
     </div>
 </div>
 </dd>
-<dt id="default-value-23">Default value</dt>
+<dt id="default-value-22">Default value</dt>
 <dd><p><code translate="no" v-pre>2FA-Vault</code></p>
 </dd>
 </dl>
@@ -1138,7 +1117,7 @@ If set to <code translate="no" v-pre>null</code>, the device will fill it intern
 <dd><p>Address of the resource hosting your database.</p>
 <p>Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 </dd>
-<dt id="default-value-24">Default value</dt>
+<dt id="default-value-23">Default value</dt>
 <dd><p><code translate="no" v-pre>127.0.0.1</code></p>
 </dd>
 </dl>
@@ -1170,7 +1149,7 @@ If set to <code translate="no" v-pre>null</code>, the device will fill it intern
 <dd><p>The username used to connect to the database.</p>
 <p>Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 </dd>
-<dt id="default-value-25">Default value</dt>
+<dt id="default-value-24">Default value</dt>
 <dd><p><code translate="no" v-pre>2FA-Vault</code></p>
 </dd>
 </dl>
@@ -1186,7 +1165,7 @@ If set to <code translate="no" v-pre>null</code>, the device will fill it intern
 <p>When using <code translate="no" v-pre>.env</code> file, if the password contains special characters like <code translate="no" v-pre>#</code>, put quotes around it.
 Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 </dd>
-<dt id="default-value-26">Default value</dt>
+<dt id="default-value-25">Default value</dt>
 <dd><p>An empty string</p>
 </dd>
 </dl>
@@ -1222,7 +1201,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dd><p>The collation of the database.</p>
 <p>Only applies to <code translate="no" v-pre>mysql</code>.</p>
 </dd>
-<dt id="default-value-27">Default value</dt>
+<dt id="default-value-26">Default value</dt>
 <dd><p><code translate="no" v-pre>utf8mb4_unicode_ci</code></p>
 </dd>
 </dl>
@@ -1240,7 +1219,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <p><code translate="no" v-pre>mysql://root:password@127.0.0.1/forge?charset=UTF-8</code></p>
 <p>If set, 2FA-Vault will use it to extract the database connection and credential information. Other <code translate="no" v-pre>DB_*</code> vars are then useless.</p>
 </dd>
-<dt id="default-value-28">Default value</dt>
+<dt id="default-value-27">Default value</dt>
 <dd><em>none</em></dd>
 <dt id="alias-2">Alias</dt>
 <dd><p><code translate="no" v-pre>DB_URL</code></p>
@@ -1257,7 +1236,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dl>
 <dt id="description-32">Description</dt>
 <dd>Absolute path to the root CA bundle if you&#x27;re connecting to the MySQL database via SSL</dd>
-<dt id="default-value-29">Default value</dt>
+<dt id="default-value-28">Default value</dt>
 <dd><p><code translate="no" v-pre>null</code></p>
 </dd>
 </dl>
@@ -1277,7 +1256,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <p><span class="fw-500">Accepted values</span></p>
 <div class="sub-dl-wrapper">
 <dl>
-<dt id="term-16"><code translate="no" v-pre>smtp</code></dt>
+<dt id="term-13"><code translate="no" v-pre>smtp</code></dt>
 <dd><p>Use an SMTP server to send emails.</p>
 <p>Additional variables are required to be set with this driver:</p>
 <ul>
@@ -1292,14 +1271,14 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <li><doc-anchor-trigger to="#mail_verify_ssl_peer">MAIL_VERIFY_SSL_PEER</doc-anchor-trigger></li>
 </ul>
 </dd>
-<dt id="term-17"><code translate="no" v-pre>sendmail</code></dt>
+<dt id="term-14"><code translate="no" v-pre>sendmail</code></dt>
 <dd><p>Use a sendmail server to send emails.</p>
 <p>Additional variable may be set to customize the <code translate="no" v-pre>sendmail</code> driver configuration:</p>
 <ul>
 <li><doc-anchor-trigger to="#mail_sendmail_path">MAIL_SENDMAIL_PATH</doc-anchor-trigger></li>
 </ul>
 </dd>
-<dt id="term-18"><code translate="no" v-pre>mailgun</code></dt>
+<dt id="term-15"><code translate="no" v-pre>mailgun</code></dt>
 <dd><p>Use the mailgun API to send emails.</p>
 <p>Additional variables are required to be set with this driver:</p>
 <ul>
@@ -1309,7 +1288,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 </ul>
 <p>See <a href="https://laravel.com/docs/mail#mailgun-driver" target="_blank">how to configure the Mailgun Driver</a> on the Laravel documentation.</p>
 </dd>
-<dt id="term-19"><code translate="no" v-pre>ses</code>, <code translate="no" v-pre>ses-v2</code></dt>
+<dt id="term-16"><code translate="no" v-pre>ses</code>, <code translate="no" v-pre>ses-v2</code></dt>
 <dd><p>Use the Amazon SES API to send emails.</p>
 <p>Additional variables are required to be set with this driver:</p>
 <ul>
@@ -1319,7 +1298,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 </ul>
 <p>See <a href="https://laravel.com/docs/mail#ses-driver" target="_blank">how to configure the SES Driver</a> on the Laravel documentation.</p>
 </dd>
-<dt id="term-20"><code translate="no" v-pre>postmark</code></dt>
+<dt id="term-17"><code translate="no" v-pre>postmark</code></dt>
 <dd><p>Use the postmark API to send emails.</p>
 <p>Additional variables are required to be set with this driver:</p>
 <ul>
@@ -1327,7 +1306,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 </ul>
 <p>See <a href="https://laravel.com/docs/mail#postmark-driver" target="_blank">how to configure the Postmark Driver</a> on the Laravel documentation.</p>
 </dd>
-<dt id="term-21"><code translate="no" v-pre>log</code></dt>
+<dt id="term-18"><code translate="no" v-pre>log</code></dt>
 <dd><p>Use the mail log channel to send emails.</p>
 <p>Instead of sending your emails, the log mail driver will write all email messages to your log files for inspection.</p>
 <p>Additional variable is required to be set with this driver:</p>
@@ -1336,14 +1315,14 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 </ul>
 <p>(See accepted values of <doc-anchor-trigger to="#log_channel">LOG_CHANNEL</doc-anchor-trigger>)</p>
 </dd>
-<dt id="term-22"><code translate="no" v-pre>failover</code></dt>
+<dt id="term-19"><code translate="no" v-pre>failover</code></dt>
 <dd><p>Backup mail delivery configurations that will be used in case your primary delivery driver is down</p>
 </dd>
 </dl>
 </div>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="default-value-30">Default value</dt>
+<dt id="default-value-29">Default value</dt>
 <dd><p><code translate="no" v-pre>smtp</code></p>
 </dd>
 </dl>
@@ -1356,7 +1335,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dl>
 <dt id="description-34">Description</dt>
 <dd>Username used to connect to the SMTP server</dd>
-<dt id="default-value-31">Default value</dt>
+<dt id="default-value-30">Default value</dt>
 <dd><p><em>none</em></p>
 </dd>
 </dl>
@@ -1371,7 +1350,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dd><p>Password used to connect to the SMTP server.</p>
 <p>When using <code translate="no" v-pre>.env</code> file, if the password contains special characters like <code translate="no" v-pre>#</code>, put quotes around it.</p>
 </dd>
-<dt id="default-value-32">Default value</dt>
+<dt id="default-value-31">Default value</dt>
 <dd><p><em>none</em></p>
 </dd>
 </dl>
@@ -1386,7 +1365,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dd><p>Encryption protocol used to secure email delivery.</p>
 <p>This var applies only to the <code translate="no" v-pre>smtp</code> driver.</p>
 </dd>
-<dt id="default-value-33">Default value</dt>
+<dt id="default-value-32">Default value</dt>
 <dd><p><code translate="no" v-pre>tls</code></p>
 </dd>
 </dl>
@@ -1405,7 +1384,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dd><p>Domain of the mail server.</p>
 <p>This var applies only to the <code translate="no" v-pre>smtp</code> driver.</p>
 </dd>
-<dt id="default-value-34">Default value</dt>
+<dt id="default-value-33">Default value</dt>
 <dd><p><code translate="no" v-pre>smtp.mailtrap.io</code></p>
 </dd>
 </dl>
@@ -1420,7 +1399,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dd><p>Port used to communicate with the mail server.</p>
 <p>This var applies only to the <code translate="no" v-pre>smtp</code> driver.</p>
 </dd>
-<dt id="default-value-35">Default value</dt>
+<dt id="default-value-34">Default value</dt>
 <dd><p><code translate="no" v-pre>587</code></p>
 </dd>
 </dl>
@@ -1433,7 +1412,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dl>
 <dt id="description-39">Description</dt>
 <dd>Name that is used globally for all e-mails that are sent by 2FA-Vault</dd>
-<dt id="default-value-36">Default value</dt>
+<dt id="default-value-35">Default value</dt>
 <dd><p><code translate="no" v-pre>Example</code></p>
 </dd>
 </dl>
@@ -1448,7 +1427,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dl>
 <dt id="description-40">Description</dt>
 <dd>Address that is used globally for all e-mails that are sent by 2FA-Vault</dd>
-<dt id="default-value-37">Default value</dt>
+<dt id="default-value-36">Default value</dt>
 <dd><p><code translate="no" v-pre>hello@example.com</code></p>
 </dd>
 </dl>
@@ -1481,7 +1460,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 </div>
 <p>This var applies only to the <code translate="no" v-pre>smtp</code> driver.</p>
 </dd>
-<dt id="default-value-38">Default value</dt>
+<dt id="default-value-37">Default value</dt>
 <dd><p><code translate="no" v-pre>true</code></p>
 </dd>
 </dl>
@@ -1496,7 +1475,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dl>
 <dt id="description-42">Description</dt>
 <dd>Path to the sendmail binary</dd>
-<dt id="default-value-39">Default value</dt>
+<dt id="default-value-38">Default value</dt>
 <dd><p><code translate="no" v-pre>/usr/sbin/sendmail -bs -i</code></p>
 </dd>
 </dl>
@@ -1517,31 +1496,31 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <p><span class="fw-500">Accepted values</span></p>
 <div class="sub-dl-wrapper">
 <dl>
-<dt id="term-23"><code translate="no" v-pre>daily</code></dt>
+<dt id="term-20"><code translate="no" v-pre>daily</code></dt>
 <dd><p>Gives you 7 daily rotated log files in <code translate="no" v-pre>[twofauth_directory]/storage/logs/</code>.</p>
 <p>Additional variable may be set to change the number of files:</p>
 <ul>
 <li><doc-anchor-trigger to="#log_daily_days">LOG_DAILY_DAYS</doc-anchor-trigger></li>
 </ul>
 </dd>
-<dt id="term-24"><code translate="no" v-pre>single</code></dt>
+<dt id="term-21"><code translate="no" v-pre>single</code></dt>
 <dd>Gives you one big fat error log file at in <code translate="no" v-pre>[twofauth_directory]/storage/logs/laravel.log</code></dd>
-<dt id="term-25"><code translate="no" v-pre>errorlog</code></dt>
+<dt id="term-22"><code translate="no" v-pre>errorlog</code></dt>
 <dd>Writes entries to the error log</dd>
-<dt id="term-26"><code translate="no" v-pre>syslog</code></dt>
+<dt id="term-23"><code translate="no" v-pre>syslog</code></dt>
 <dd><p>Writes entries to the system log</p>
 <p>Additional variable may be set to customize the channel:</p>
 <ul>
 <li><doc-anchor-trigger to="#log_syslog_facility">LOG_SYSLOG_FACILITY</doc-anchor-trigger></li>
 </ul>
 </dd>
-<dt id="term-27"><code translate="no" v-pre>papertrail</code></dt>
+<dt id="term-24"><code translate="no" v-pre>papertrail</code></dt>
 <dd><p>Writes entries to a Papertrail instance.</p>
 <p>Additional variables are required to be set:<br />
 <code translate="no" v-pre>PAPERTRAIL_URL</code> URL of the papertrail instance<br />
 <code translate="no" v-pre>PAPERTRAIL_PORT</code> Port used to communicate with the papertrail instance</p>
 </dd>
-<dt id="term-28"><code translate="no" v-pre>slack</code></dt>
+<dt id="term-25"><code translate="no" v-pre>slack</code></dt>
 <dd><p>Writes entries to a Slack channel.</p>
 <p>Additional variable is required to be set with this channel:</p>
 <ul>
@@ -1553,7 +1532,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <li><doc-anchor-trigger to="#log_slack_emoji">LOG_SLACK_EMOJI</doc-anchor-trigger></li>
 </ul>
 </dd>
-<dt id="term-29"><code translate="no" v-pre>stack</code></dt>
+<dt id="term-26"><code translate="no" v-pre>stack</code></dt>
 <dd><p>A wrapper to facilitate creating &quot;multi-channel&quot; channels.</p>
 <p>Additional variable may be set to define the stack:</p>
 <ul>
@@ -1564,7 +1543,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 </div>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="default-value-40">Default value</dt>
+<dt id="default-value-39">Default value</dt>
 <dd><p><code translate="no" v-pre>daily</code></p>
 </dd>
 </dl>
@@ -1583,7 +1562,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dd><p>A comma-separated list of valid <doc-anchor-trigger to="#log_channel">LOG_CHANNEL</doc-anchor-trigger>: <code translate="no" v-pre>daily</code>, <code translate="no" v-pre>single</code>, <code translate="no" v-pre>errorlog</code>, <code translate="no" v-pre>syslog</code>, <code translate="no" v-pre>papertrail</code>, <code translate="no" v-pre>slack</code></p>
 <p>Ex: <code translate="no" v-pre>slack, papertrail</code></p>
 </dd>
-<dt id="default-value-41">Default value</dt>
+<dt id="default-value-40">Default value</dt>
 <dd><p><code translate="no" v-pre>daily</code></p>
 </dd>
 </dl>
@@ -1603,7 +1582,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <p><code translate="no" v-pre>debug</code>, <code translate="no" v-pre>info</code>, <code translate="no" v-pre>notice</code>, <code translate="no" v-pre>warning</code>, <code translate="no" v-pre>error</code>, <code translate="no" v-pre>critical</code>, <code translate="no" v-pre>alert</code>, <code translate="no" v-pre>emergency</code></p>
 <p>See <a href="https://tools.ietf.org/html/rfc5424" target="_blank">RFC 5424</a> for level definitions.</p>
 </dd>
-<dt id="default-value-42">Default value</dt>
+<dt id="default-value-41">Default value</dt>
 <dd><p><code translate="no" v-pre>notice</code></p>
 </dd>
 </dl>
@@ -1618,7 +1597,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dl>
 <dt id="description-46">Description</dt>
 <dd>Number of log files to generate/rotate when using the <code translate="no" v-pre>daily</code> log channel.</dd>
-<dt id="default-value-43">Default value</dt>
+<dt id="default-value-42">Default value</dt>
 <dd><p><code translate="no" v-pre>7</code></p>
 </dd>
 </dl>
@@ -1633,7 +1612,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dl>
 <dt id="description-47">Description</dt>
 <dd>URL of the Slak webhook to use when using the <code translate="no" v-pre>slack</code> log channel.</dd>
-<dt id="default-value-44">Default value</dt>
+<dt id="default-value-43">Default value</dt>
 <dd><p>none</p>
 </dd>
 </dl>
@@ -1648,7 +1627,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dl>
 <dt id="description-48">Description</dt>
 <dd>The name of the user sending the log messages when using the <code translate="no" v-pre>slack</code> log channel.</dd>
-<dt id="default-value-45">Default value</dt>
+<dt id="default-value-44">Default value</dt>
 <dd><p><code translate="no" v-pre>Laravel Log</code></p>
 </dd>
 </dl>
@@ -1665,7 +1644,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dl>
 <dt id="description-49">Description</dt>
 <dd>The Emoji code of the emoji used to illustrate log messages when using the <code translate="no" v-pre>slack</code> log channel.</dd>
-<dt id="default-value-46">Default value</dt>
+<dt id="default-value-45">Default value</dt>
 <dd><p><code translate="no" v-pre>:boom:</code></p>
 </dd>
 </dl>
@@ -1681,7 +1660,7 @@ Does not apply to <code translate="no" v-pre>sqlite</code>.</p>
 <dt id="description-50">Description</dt>
 <dd>The syslog facility that provides a rough clue of where in a system the message originated.<br />
 Only applies when log channel is set to <code translate="no" v-pre>syslog</code>.</dd>
-<dt id="default-value-47">Default value</dt>
+<dt id="default-value-46">Default value</dt>
 <dd><p><code translate="no" v-pre>LOG_USER</code></p>
 </dd>
 </dl>
@@ -1696,7 +1675,7 @@ Only applies when log channel is set to <code translate="no" v-pre>syslog</code>
 <dd><p>A log channel to use to log the PHP &amp; Laravel deprecation warnings.</p>
 <p>Should match one of the channels described at <doc-anchor-trigger to="#log_channel">LOG_CHANNEL</doc-anchor-trigger></p>
 </dd>
-<dt id="default-value-48">Default value</dt>
+<dt id="default-value-47">Default value</dt>
 <dd><p><code translate="no" v-pre>null</code></p>
 </dd>
 </dl>
@@ -1729,7 +1708,7 @@ Only applies when log channel is set to <code translate="no" v-pre>syslog</code>
     </div>
 </div>
 </dd>
-<dt id="default-value-49">Default value</dt>
+<dt id="default-value-48">Default value</dt>
 <dd><p><code translate="no" v-pre>null</code></p>
 </dd>
 </dl>
@@ -1748,7 +1727,7 @@ Only applies when log channel is set to <code translate="no" v-pre>syslog</code>
 <dd><p>Proxy for outgoing requests, like SSO connection, 2FA-Vault releases detection or logo fetching.</p>
 <p>You can provide a proxy URL that contains a scheme, username, and password. For example <code translate="no" v-pre>http://username:password@192.168.16.1:10</code>.</p>
 </dd>
-<dt id="default-value-50">Default value</dt>
+<dt id="default-value-49">Default value</dt>
 <dd><p><em>blank</em></p>
 </dd>
 </dl>
@@ -1765,7 +1744,7 @@ Only applies when log channel is set to <code translate="no" v-pre>syslog</code>
 <dd><p>Name of the HTTP header sent by a reverse proxy to pass the original visitor IP address.</p>
 <p>Check the proxy documentation to find out how this header is named (i.e <code translate="no" v-pre>HTTP_CF_CONNECTING_IP</code> for cloudflare).</p>
 </dd>
-<dt id="default-value-51">Default value</dt>
+<dt id="default-value-50">Default value</dt>
 <dd><p><code translate="no" v-pre>null</code></p>
 </dd>
 </dl>
@@ -1785,7 +1764,7 @@ Only applies when log channel is set to <code translate="no" v-pre>syslog</code>
 <p>Example: <code translate="no" v-pre>192.168.1.0/24,10.0.0.5</code></p>
 <p>Leave blank to require a token for every request.</p>
 </dd>
-<dt id="default-value-52">Default value</dt>
+<dt id="default-value-51">Default value</dt>
 <dd><p><em>none (metrics endpoint disabled)</em></p>
 </dd>
 </dl>
@@ -1802,7 +1781,7 @@ Only applies when log channel is set to <code translate="no" v-pre>syslog</code>
 <dd><p>Bearer token accepted by the <code translate="no" v-pre>/metrics</code> endpoint when the request does not come from an allowed IP.</p>
 <p>Use a random string of at least 32 characters. Pass it as <code translate="no" v-pre>Authorization: Bearer &lt;METRICS_TOKEN&gt;</code>.</p>
 </dd>
-<dt id="default-value-53">Default value</dt>
+<dt id="default-value-52">Default value</dt>
 <dd><p><em>none (metrics endpoint disabled)</em></p>
 </dd>
 </dl>
@@ -1841,10 +1820,10 @@ Only applies when log channel is set to <code translate="no" v-pre>syslog</code>
 <div class="sub-dl-wrapper"><p><code translate="no" v-pre>bcrypt</code>, <code translate="no" v-pre>argon</code>, <code translate="no" v-pre>argon2id</code></p>
 </div>
 <dl>
-<dt id="default-value-54">Default value</dt>
+<dt id="default-value-53">Default value</dt>
 <dd>
 <dl>
-<dt id="term-30"><code translate="no" v-pre>bcrypt</code></dt>
+<dt id="term-27"><code translate="no" v-pre>bcrypt</code></dt>
 <dd>:</dd>
 </dl>
 </dd>
@@ -1859,7 +1838,7 @@ Only applies when log channel is set to <code translate="no" v-pre>syslog</code>
 <dd><p>Number of rounds when passwords are hashed using the Bcrypt algorithm.</p>
 <p>Increasing this up to 12 or even 13 will benefit to password security. Be careful, a higher value may significantly affect performance.</p>
 </dd>
-<dt id="default-value-55">Default value</dt>
+<dt id="default-value-54">Default value</dt>
 <dd><p><code translate="no" v-pre>10</code></p>
 </dd>
 </dl>
@@ -1874,7 +1853,7 @@ Only applies when log channel is set to <code translate="no" v-pre>syslog</code>
 <dl>
 <dt id="description-59">Description</dt>
 <dd>Maximum memory (in kibibytes) that may be used to compute an Argon2 hash.</dd>
-<dt id="default-value-56">Default value</dt>
+<dt id="default-value-55">Default value</dt>
 <dd><p><code translate="no" v-pre>65536</code></p>
 </dd>
 </dl>
@@ -1889,7 +1868,7 @@ Only applies when log channel is set to <code translate="no" v-pre>syslog</code>
 <dl>
 <dt id="description-60">Description</dt>
 <dd>Number of threads that Argon2 will use to compute a hash.</dd>
-<dt id="default-value-57">Default value</dt>
+<dt id="default-value-56">Default value</dt>
 <dd><p><code translate="no" v-pre>1</code></p>
 </dd>
 </dl>
@@ -1904,7 +1883,7 @@ Only applies when log channel is set to <code translate="no" v-pre>syslog</code>
 <dl>
 <dt id="description-61">Description</dt>
 <dd>Maximum amount of time it may take to compute an Argon2 hash.</dd>
-<dt id="default-value-58">Default value</dt>
+<dt id="default-value-57">Default value</dt>
 <dd><p><code translate="no" v-pre>4</code></p>
 </dd>
 </dl>
@@ -1922,7 +1901,7 @@ Only applies when log channel is set to <code translate="no" v-pre>syslog</code>
 <p>This is mainly used as a defense against Blind Server-Side Request Forgery (SSRF) attacks, in which the application can be induced to issue a back-end HTTP request to a supplied URL without this being visible from the frontend.</p>
 <p>If fetching is allowed, 2FA-Vault mitigates the risk of Blind SSRF attacks by filtering image link urls. Only public (aka external), HTTP(S) and valid URLs pointing to supported image files are requested.</p>
 </dd>
-<dt id="default-value-59">Default value</dt>
+<dt id="default-value-58">Default value</dt>
 <dd><p><code translate="no" v-pre>true</code></p>
 </dd>
 </dl>
@@ -1947,7 +1926,7 @@ users still get icons where matches exist.</p>
 <p>This is independent of the per-user <em>Get official icons</em> preference and
 of <code translate="no" v-pre>BLOCK_OPTAUTH_IMAGELINK_FETCHING</code>, which cover different code paths.</p>
 </dd>
-<dt id="default-value-60">Default value</dt>
+<dt id="default-value-59">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -1964,7 +1943,7 @@ of <code translate="no" v-pre>BLOCK_OPTAUTH_IMAGELINK_FETCHING</code>, which cov
 <dd><p>Set this to true to enable Content-Security-Policy (CSP).</p>
 <p>CSP helps to prevent or minimize the risk of certain types of security threats. This is mainly used as a defense against cross-site scripting (XSS) attacks, in which an attacker is able to inject malicious code into the web app</p>
 </dd>
-<dt id="default-value-61">Default value</dt>
+<dt id="default-value-60">Default value</dt>
 <dd><p><code translate="no" v-pre>true</code></p>
 </dd>
 </dl>
@@ -1984,11 +1963,11 @@ of <code translate="no" v-pre>BLOCK_OPTAUTH_IMAGELINK_FETCHING</code>, which cov
 <p><span class="fw-500">Accepted values</span></p>
 <div class="sub-dl-wrapper">
 <dl>
-<dt id="term-31"><code translate="no" v-pre>apc</code></dt>
+<dt id="term-28"><code translate="no" v-pre>apc</code></dt>
 <dd>In-memory key-value store for PHP</dd>
-<dt id="term-32"><code translate="no" v-pre>cookie</code></dt>
+<dt id="term-29"><code translate="no" v-pre>cookie</code></dt>
 <dd>Sessions are stored in secure, encrypted cookies</dd>
-<dt id="term-33"><code translate="no" v-pre>database</code></dt>
+<dt id="term-30"><code translate="no" v-pre>database</code></dt>
 <dd><p>Sessions are stored in the database set with <doc-anchor-trigger to="#db_connection">DB_CONNECTION</doc-anchor-trigger>.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
@@ -2012,9 +1991,9 @@ of <code translate="no" v-pre>BLOCK_OPTAUTH_IMAGELINK_FETCHING</code>, which cov
 </ul>
 <p>See <a href="https://laravel.com/docs/session#database" target="_blank">how to configure the Database driver</a> on the Laravel documentation.</p>
 </dd>
-<dt id="term-34"><code translate="no" v-pre>file</code></dt>
+<dt id="term-31"><code translate="no" v-pre>file</code></dt>
 <dd>Sessions are stored in <code translate="no" v-pre>[twofauth_directory]/storage/framework/sessions</code></dd>
-<dt id="term-35"><code translate="no" v-pre>memcached</code></dt>
+<dt id="term-32"><code translate="no" v-pre>memcached</code></dt>
 <dd><p>Sessions are stored in Memcached.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
@@ -2034,7 +2013,7 @@ of <code translate="no" v-pre>BLOCK_OPTAUTH_IMAGELINK_FETCHING</code>, which cov
 </div>
 <p>See <doc-anchor-trigger to="#cache_driver">CACHE_DRIVER</doc-anchor-trigger></p>
 </dd>
-<dt id="term-36"><code translate="no" v-pre>redis</code></dt>
+<dt id="term-33"><code translate="no" v-pre>redis</code></dt>
 <dd><p>An in-memory data structure store, used as a database, cache, and message broker (<a href="https://redis.io/" target="_blank">redis.io</a>)</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
@@ -2054,7 +2033,7 @@ of <code translate="no" v-pre>BLOCK_OPTAUTH_IMAGELINK_FETCHING</code>, which cov
 </div>
 <p>See <a href="https://laravel.com/docs/cache#redis" target="_blank">how to configure the Redis driver</a> on the Laravel documentation.</p>
 </dd>
-<dt id="term-37"><code translate="no" v-pre>dynamodb</code></dt>
+<dt id="term-34"><code translate="no" v-pre>dynamodb</code></dt>
 <dd><p>Serverless, NoSQL, fully managed database with single-digit millisecond performance at any scale (<a href="https://aws.amazon.com/dynamodb/" target="_blank">dynamodb</a>)</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-warning"></div>
@@ -2074,14 +2053,14 @@ of <code translate="no" v-pre>BLOCK_OPTAUTH_IMAGELINK_FETCHING</code>, which cov
 </div>
 <p>See <a href="https://laravel.com/docs/cache#dynamodb" target="_blank">how to configure DynamoDB driver</a> on the Laravel documentation.</p>
 </dd>
-<dt id="term-38"><code translate="no" v-pre>array</code></dt>
+<dt id="term-35"><code translate="no" v-pre>array</code></dt>
 <dd><p>sessions are stored in a PHP array and will not be persisted</p>
 </dd>
 </dl>
 </div>
 <div class="env-var-dl-wrapper">
 <dl>
-<dt id="default-value-62">Default value</dt>
+<dt id="default-value-61">Default value</dt>
 <dd><p><code translate="no" v-pre>file</code></p>
 </dd>
 </dl>
@@ -2096,7 +2075,7 @@ of <code translate="no" v-pre>BLOCK_OPTAUTH_IMAGELINK_FETCHING</code>, which cov
 <dd><p>When using the <code translate="no" v-pre>database</code> or <code translate="no" v-pre>redis</code> <doc-anchor-trigger to="#session_driver">session drivers</doc-anchor-trigger>, you may specify a connection that should be used to manage these sessions.</p>
 <p>This should correspond to a connection in your <doc-anchor-trigger to="#db_connection">database configuration</doc-anchor-trigger> options.</p>
 </dd>
-<dt id="default-value-63">Default value</dt>
+<dt id="default-value-62">Default value</dt>
 <dd><p><em>none</em></p>
 </dd>
 </dl>
@@ -2115,7 +2094,7 @@ of <code translate="no" v-pre>BLOCK_OPTAUTH_IMAGELINK_FETCHING</code>, which cov
 <dd><p><code translate="no" v-pre>apc</code>, <code translate="no" v-pre>dynamodb</code>, <code translate="no" v-pre>memcached</code>, <code translate="no" v-pre>redis</code></p>
 <p>(see <doc-anchor-trigger to="#cache_driver">CACHE_DRIVER</doc-anchor-trigger>)</p>
 </dd>
-<dt id="default-value-64">Default value</dt>
+<dt id="default-value-63">Default value</dt>
 <dd><p><em>none</em></p>
 </dd>
 </dl>
@@ -2131,7 +2110,7 @@ of <code translate="no" v-pre>BLOCK_OPTAUTH_IMAGELINK_FETCHING</code>, which cov
 <dt id="description-68">Description</dt>
 <dd>Name of the table to be used to store sessions when using the <code translate="no" v-pre>database</code> session driver.<br />
 See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>.</dd>
-<dt id="default-value-65">Default value</dt>
+<dt id="default-value-64">Default value</dt>
 <dd><p><code translate="no" v-pre>sessions</code></p>
 </dd>
 </dl>
@@ -2146,7 +2125,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 <dd><p>Name of the cookie used to identify a session instance by ID.</p>
 <p>The name specified here will get used every time a new session cookie is created by 2FA-Vault for every driver.</p>
 </dd>
-<dt id="default-value-66">Default value</dt>
+<dt id="default-value-65">Default value</dt>
 <dd><p><code translate="no" v-pre>twofauth_session</code></p>
 </dd>
 </dl>
@@ -2163,7 +2142,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 <dd><p>Domain of the cookie used to identify a session in 2FA-Vault.</p>
 <p>This will determine which domains the cookie is available to in 2FA-Vault.</p>
 </dd>
-<dt id="default-value-67">Default value</dt>
+<dt id="default-value-66">Default value</dt>
 <dd><p>Fallbacks to the 2FA-Vault instance domain</p>
 </dd>
 </dl>
@@ -2178,7 +2157,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 <dd><p>By setting this option to true, session cookies will only be sent back to the server if the browser has a HTTPS connection.</p>
 <p>This will keep the cookie from being sent to you when it can&#x27;t be done securely.</p>
 </dd>
-<dt id="default-value-68">Default value</dt>
+<dt id="default-value-67">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -2193,7 +2172,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 <dl>
 <dt id="description-72">Description</dt>
 <dd>Whether or not session data are encrypted before it is stored.</dd>
-<dt id="default-value-69">Default value</dt>
+<dt id="default-value-68">Default value</dt>
 <dd><p><code translate="no" v-pre>false</code></p>
 </dd>
 </dl>
@@ -2212,7 +2191,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 <dl>
 <dt id="description-73">Description</dt>
 <dd>URL  used during the OpenID SSO flow to request the user&#x27;s authentication and consent</dd>
-<dt id="default-value-70">Default value</dt>
+<dt id="default-value-69">Default value</dt>
 <dd><p><em>none</em></p>
 </dd>
 </dl>
@@ -2229,7 +2208,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 <dl>
 <dt id="description-74">Description</dt>
 <dd>URL  used during the OpenID SSO flow to obtain an ID and / or access token</dd>
-<dt id="default-value-71">Default value</dt>
+<dt id="default-value-70">Default value</dt>
 <dd><p><em>none</em></p>
 </dd>
 </dl>
@@ -2246,7 +2225,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 <dl>
 <dt id="description-75">Description</dt>
 <dd>URL used during the OpenID SSO flow to retrieve profile information and other attributes for a logged-in end-user</dd>
-<dt id="default-value-72">Default value</dt>
+<dt id="default-value-71">Default value</dt>
 <dd><p><em>none</em></p>
 </dd>
 </dl>
@@ -2261,7 +2240,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 <dl>
 <dt id="description-76">Description</dt>
 <dd>A unique identifier for the application</dd>
-<dt id="default-value-73">Default value</dt>
+<dt id="default-value-72">Default value</dt>
 <dd><p><em>none</em></p>
 </dd>
 </dl>
@@ -2276,7 +2255,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 <dl>
 <dt id="description-77">Description</dt>
 <dd>Secret known only to 2FA-Vault and the Open ID authorization server</dd>
-<dt id="default-value-74">Default value</dt>
+<dt id="default-value-73">Default value</dt>
 <dd><p><em>none</em></p>
 </dd>
 </dl>
@@ -2312,7 +2291,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 </dd>
 <dt id="possible-values-2">Possible values</dt>
 <dd><code translate="no" v-pre>true</code>, <code translate="no" v-pre>false</code> or a string representing the path to a custom certificate on disk, like <code translate="no" v-pre>/path/to/cert.pem</code></dd>
-<dt id="default-value-75">Default value</dt>
+<dt id="default-value-74">Default value</dt>
 <dd><p><code translate="no" v-pre>true</code></p>
 </dd>
 </dl>
@@ -2329,7 +2308,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 <dd><p>The OTP generation log retention time, in days.</p>
 <p>Each time a user generates a one-time password for a stored account, an entry is recorded in the OTP generation log. Entries older than this value are purged by the scheduled <code translate="no" v-pre>php artisan 2fauth:purge-otp-log</code> command.</p>
 </dd>
-<dt id="default-value-76">Default value</dt>
+<dt id="default-value-75">Default value</dt>
 <dd><p><code translate="no" v-pre>365</code></p>
 </dd>
 </dl>
@@ -2344,7 +2323,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 <dl>
 <dt id="description-80">Description</dt>
 <dd>A unique identifier for the application</dd>
-<dt id="default-value-77">Default value</dt>
+<dt id="default-value-76">Default value</dt>
 <dd><p><em>none</em></p>
 </dd>
 </dl>
@@ -2359,7 +2338,7 @@ See <doc-anchor-trigger to="#session_driver">SESSION_DRIVER</doc-anchor-trigger>
 <dl>
 <dt id="description-81">Description</dt>
 <dd>Secret known only to 2FA-Vault and Github</dd>
-<dt id="default-value-78">Default value</dt>
+<dt id="default-value-77">Default value</dt>
 <dd><p><em>none</em></p>
 </dd>
 </dl>

@@ -28,13 +28,32 @@ HOTP accounts can advance their counter through `PATCH /api/v1/twofaccounts/{id}
 
 The forked browser extension can unlock an encrypted vault using the same metadata as the web app. After unlock, it decrypts account payloads locally and generates OTPs in the popup session. Locking the extension clears the derived key and decrypted account data from the extension session.
 
-## Biometric unlock
+## Passkey unlock (WebAuthn PRF)
 
-After setting up vault encryption, you can enroll a WebAuthn platform authenticator (fingerprint, Face ID, Windows Hello, etc.) as an alternative to typing the master password on every unlock.
+Since v1.7.0 the vault can be unlocked with a **PRF-capable passkey** (WebAuthn hmac-secret / prf extension) as an alternative to typing the master password. The master-password path always remains available as a fallback — the passkey is an *alternative*, not a replacement.
 
-During enrollment, the browser prompts for biometric verification, then stores the encrypted master password in IndexedDB protected by a locally-generated AES-GCM key. On subsequent unlocks, biometric verification is required to decrypt the stored master password and derive the vault key — the master password itself is never stored in plaintext.
+### How it works (key custody, honest version)
 
-Biometric enrollment is available in **Settings → Encryption** and in the extension popup's unlock screen. The feature is opt-in and the master-password path always remains available as a fallback.
+1. At enrollment the browser asks the authenticator to evaluate its PRF (hmac-secret) for a random per-user salt, stretches that output with HKDF-SHA256 into an AES-256-GCM wrapping key, generates a fresh **RSA-2048 keyset**, and:
+   - wraps the RSA **private key** under the PRF-derived wrapping key,
+   - encapsulates the vault key K under the RSA public key.
+2. Only the three opaque blobs travel to the server (`public_key`, `wrapped_private_key`, `wrapped_vault_key`) — the PRF output and the wrapping key never leave the authenticator/browser, and the server never sees the vault key in the clear.
+3. At unlock, the authenticator re-evaluates the PRF for the stored salt (one UV gesture), the browser unwraps the private key and decapsulates K, verifies it against the encryption test value, and clears everything transient from memory when the vault locks again.
+4. On master-password rotation the client re-encapsulates the new vault key under each enrolled passkey's public key — **no passkey ceremony** (public-key-only operation).
+
+The server stores an opaque blob triple per passkey plus a per-user PRF salt. The blobs are only as recoverable as the passkey itself: **if the passkey is deleted, or the authenticator is lost without a backup, passkey unlock for that credential is gone** — the master password remains the recovery path.
+
+### Enrolling and using passkey unlock
+
+Enrollment is in **Settings → Security devices** (per-passkey "Enable vault unlock" action; the vault must be unlocked). The unlock screen shows an **Unlock with passkey** button whenever at least one enrollment exists. After a master-password change, existing enrollments are re-wrapped automatically at rotation time; if that re-wrap fails (e.g. a racing tab rotated first), Settings → Encryption shows a refresh banner with a one-click retry.
+
+### Requirements and limitations
+
+- The authenticator must support the WebAuthn **prf** extension (most platform authenticators — Touch ID, Windows Hello, Android — and recent security keys do; YubiKey firmware < 5.8 keys show a second touch prompt during enrollment — documented, accepted).
+- The passkey must be registered for the account (Settings → Security devices) before it can be enrolled for vault unlock.
+- SSO-only instances deny the PRF endpoints (the same `manage-webauthn-credentials` gate as WebAuthn management); the password path is unaffected.
+- The passkey unlock button stays hidden until an enrollment exists; the password form is always visible.
+- After a master-password **reset** (device-lost recovery flow), all passkeys and their enrollments are flushed — passkey unlock must be re-enrolled.
 
 ## Key sharing for teams
 

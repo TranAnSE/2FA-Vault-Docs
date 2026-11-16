@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.846879206706">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.848106426169">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -38,11 +38,11 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../static/2fauth_favicon.png" />
-    <link href="../../resources/css/retype.css?v=4.6.0.846879206706" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.848106426169" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.846879206706" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.848106426169" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.846879206706" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.848106426169" data-turbo-eval="false" defer></script>
 
     <link href="/static/custom.css" rel="stylesheet" />
 </head>
@@ -247,10 +247,31 @@
 <p>HOTP accounts can advance their counter through <code translate="no" v-pre>PATCH /api/v1/twofaccounts/{id}/counter</code> without rewriting or revalidating the encrypted secret.</p>
 <h2 id="browser-extension-behavior">Browser extension behavior</h2>
 <p>The forked browser extension can unlock an encrypted vault using the same metadata as the web app. After unlock, it decrypts account payloads locally and generates OTPs in the popup session. Locking the extension clears the derived key and decrypted account data from the extension session.</p>
-<h2 id="biometric-unlock">Biometric unlock</h2>
-<p>After setting up vault encryption, you can enroll a WebAuthn platform authenticator (fingerprint, Face ID, Windows Hello, etc.) as an alternative to typing the master password on every unlock.</p>
-<p>During enrollment, the browser prompts for biometric verification, then stores the encrypted master password in IndexedDB protected by a locally-generated AES-GCM key. On subsequent unlocks, biometric verification is required to decrypt the stored master password and derive the vault key — the master password itself is never stored in plaintext.</p>
-<p>Biometric enrollment is available in <strong>Settings → Encryption</strong> and in the extension popup&#x27;s unlock screen. The feature is opt-in and the master-password path always remains available as a fallback.</p>
+<h2 id="passkey-unlock-webauthn-prf">Passkey unlock (WebAuthn PRF)</h2>
+<p>Since v1.7.0 the vault can be unlocked with a <strong>PRF-capable passkey</strong> (WebAuthn hmac-secret / prf extension) as an alternative to typing the master password. The master-password path always remains available as a fallback — the passkey is an <em>alternative</em>, not a replacement.</p>
+<h3 id="how-it-works-key-custody-honest-version">How it works (key custody, honest version)</h3>
+<ol>
+<li>At enrollment the browser asks the authenticator to evaluate its PRF (hmac-secret) for a random per-user salt, stretches that output with HKDF-SHA256 into an AES-256-GCM wrapping key, generates a fresh <strong>RSA-2048 keyset</strong>, and:
+<ul>
+<li>wraps the RSA <strong>private key</strong> under the PRF-derived wrapping key,</li>
+<li>encapsulates the vault key K under the RSA public key.</li>
+</ul>
+</li>
+<li>Only the three opaque blobs travel to the server (<code translate="no" v-pre>public_key</code>, <code translate="no" v-pre>wrapped_private_key</code>, <code translate="no" v-pre>wrapped_vault_key</code>) — the PRF output and the wrapping key never leave the authenticator/browser, and the server never sees the vault key in the clear.</li>
+<li>At unlock, the authenticator re-evaluates the PRF for the stored salt (one UV gesture), the browser unwraps the private key and decapsulates K, verifies it against the encryption test value, and clears everything transient from memory when the vault locks again.</li>
+<li>On master-password rotation the client re-encapsulates the new vault key under each enrolled passkey&#x27;s public key — <strong>no passkey ceremony</strong> (public-key-only operation).</li>
+</ol>
+<p>The server stores an opaque blob triple per passkey plus a per-user PRF salt. The blobs are only as recoverable as the passkey itself: <strong>if the passkey is deleted, or the authenticator is lost without a backup, passkey unlock for that credential is gone</strong> — the master password remains the recovery path.</p>
+<h3 id="enrolling-and-using-passkey-unlock">Enrolling and using passkey unlock</h3>
+<p>Enrollment is in <strong>Settings → Security devices</strong> (per-passkey &quot;Enable vault unlock&quot; action; the vault must be unlocked). The unlock screen shows an <strong>Unlock with passkey</strong> button whenever at least one enrollment exists. After a master-password change, existing enrollments are re-wrapped automatically at rotation time; if that re-wrap fails (e.g. a racing tab rotated first), Settings → Encryption shows a refresh banner with a one-click retry.</p>
+<h3 id="requirements-and-limitations">Requirements and limitations</h3>
+<ul>
+<li>The authenticator must support the WebAuthn <strong>prf</strong> extension (most platform authenticators — Touch ID, Windows Hello, Android — and recent security keys do; YubiKey firmware &lt; 5.8 keys show a second touch prompt during enrollment — documented, accepted).</li>
+<li>The passkey must be registered for the account (Settings → Security devices) before it can be enrolled for vault unlock.</li>
+<li>SSO-only instances deny the PRF endpoints (the same <code translate="no" v-pre>manage-webauthn-credentials</code> gate as WebAuthn management); the password path is unaffected.</li>
+<li>The passkey unlock button stays hidden until an enrollment exists; the password form is always visible.</li>
+<li>After a master-password <strong>reset</strong> (device-lost recovery flow), all passkeys and their enrollments are flushed — passkey unlock must be re-enrolled.</li>
+</ul>
 <h2 id="key-sharing-for-teams">Key sharing for teams</h2>
 <p>Team owners can share encrypted OTP secrets with members without the server ever learning the plaintext secret. Each user maintains an RSA-2048 key pair: the public key is registered on the server; the private key stays only in the user&#x27;s browser (IndexedDB).</p>
 <p>When sharing, the owner:</p>
