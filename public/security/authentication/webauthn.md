@@ -67,7 +67,7 @@ Don't forget to revoke the lost device in the _Settings > Webauthn_ section.
 Since v1.7.0, a registered passkey with PRF support (hmac-secret extension) can also **unlock the E2EE vault** in addition to logging you in. See [Passkey unlock](/security/end-to-end-encryption/#passkey-unlock-webauthn-prf) for the full key-custody story.
 
 1. Log in, **unlock the vault** (once), open _Settings → Security devices_.
-2. Each passkey row shows an **Enable vault unlock** action.
+2. Each passkey row shows an **Enable vault unlock** action; enrolled rows instead show an enabled badge with a **Refresh** action that re-runs the ceremony to replace the stored key material.
 3. One user-verification gesture — the authenticator evaluates its PRF for the account salt in the same ceremony.
 4. The unlock screen then shows an **Unlock with passkey** button next to the master-password form.
 

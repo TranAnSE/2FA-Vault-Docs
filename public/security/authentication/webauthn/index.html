@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.848106426169">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.848203790897">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -44,11 +44,11 @@
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
     <link id="retype-favicon" rel="icon" href="../../../static/2fauth_favicon.png" />
-    <link href="../../../resources/css/retype.css?v=4.6.0.848106426169" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=4.6.0.848203790897" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.848106426169" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=4.6.0.848203790897" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.848106426169" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=4.6.0.848203790897" data-turbo-eval="false" defer></script>
 
     <link href="/static/custom.css" rel="stylesheet" />
 </head>
@@ -329,7 +329,7 @@ Simply click the relevant <span class="no-link inline-flex align-middle items-ce
 <p>Since v1.7.0, a registered passkey with PRF support (hmac-secret extension) can also <strong>unlock the E2EE vault</strong> in addition to logging you in. See <a href="../../end-to-end-encryption/#passkey-unlock-webauthn-prf">Passkey unlock</a> for the full key-custody story.</p>
 <ol>
 <li>Log in, <strong>unlock the vault</strong> (once), open <em>Settings → Security devices</em>.</li>
-<li>Each passkey row shows an <strong>Enable vault unlock</strong> action.</li>
+<li>Each passkey row shows an <strong>Enable vault unlock</strong> action; enrolled rows instead show an enabled badge with a <strong>Refresh</strong> action that re-runs the ceremony to replace the stored key material.</li>
 <li>One user-verification gesture — the authenticator evaluates its PRF for the account salt in the same ceremony.</li>
 <li>The unlock screen then shows an <strong>Unlock with passkey</strong> button next to the master-password form.</li>
 </ol>
